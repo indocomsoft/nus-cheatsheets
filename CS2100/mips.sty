@@ -1,0 +1,69 @@
+% MIPS Assembly language definition for the LaTeX `listings' package
+%
+% The list of instructions and directives are those understood by the
+% MARS MIPS Simulator [http://courses.missouristate.edu/KenVollmar/MARS/]
+%
+% Author: Eric Walkingshaw <eric@walkingshaw.net>
+%
+% This code is in the public domain.
+%
+% Here is an example style. I like it for slides, but you might want 
+% something a bit less noisy for print. :)
+%
+% \definecolor{CommentGreen}{rgb}{0,.6,0}
+% \lstset{
+%   language=[mips]Assembler,
+%   escapechar=@, % include LaTeX code between `@' characters
+%   keepspaces,   % needed to preserve spacing with lstinline
+%   basicstyle=\footnotesize\ttfamily\bfseries,
+%   commentstyle=\color{CommentGreen},
+%   stringstyle=\color{cyan},
+%   showstringspaces=false,
+%   keywordstyle=[1]\color{blue},    % instructions
+%   keywordstyle=[2]\color{magenta}, % directives
+%   keywordstyle=[3]\color{red},     % registers
+% }
+
+\ProvidesPackage{mips}
+
+\RequirePackage{listings}
+\RequirePackage{color}
+
+\lstdefinelanguage[mips]{Assembler}{%
+  % so listings can detect directives and register names
+  alsoletter={.\$},
+  % strings, characters, and comments
+  morestring=[b]",
+  morestring=[b]',
+  morecomment=[l]\#,
+  % instructions
+  morekeywords={[1]abs,abs.d,abs.s,add,add.d,add.s,addi,addiu,addu,%
+    and,andi,b,bc1f,bc1t,beq,beqz,bge,bgeu,bgez,bgezal,bgt,bgtu,%
+    bgtz,ble,bleu,blez,blt,bltu,bltz,bltzal,bne,bnez,break,c.eq.d,%
+    c.eq.s,c.le.d,c.le.s,c.lt.d,c.lt.s,ceil.w.d,ceil.w.s,clo,clz,%
+    cvt.d.s,cvt.d.w,cvt.s.d,cvt.s.w,cvt.w.d,cvt.w.s,div,div.d,div.s,%
+    divu,eret,floor.w.d,floor.w.s,j,jal,jalr,jr,l.d,l.s,la,lb,lbu,%
+    ld,ldc1,lh,lhu,li,ll,lui,lw,lwc1,lwl,lwr,madd,maddu,mfc0,mfc1,%
+    mfc1.d,mfhi,mflo,mov.d,mov.s,move,movf,movf.d,movf.s,movn,movn.d,%
+    movn.s,movt,movt.d,movt.s,movz,movz.d,movz.s,msub,msubu,mtc0,mtc1,%
+    mtc1.d,mthi,mtlo,mul,mul.d,mul.s,mulo,mulou,mult,multu,mulu,neg,%
+    neg.d,neg.s,negu,nop,nor,not,or,ori,rem,remu,rol,ror,round.w.d,%
+    round.w.s,s.d,s.s,sb,sc,sd,sdc1,seq,sge,sgeu,sgt,sgtu,sh,sle,%
+    sleu,sll,sllv,slt,slti,sltiu,sltu,sne,sqrt.d,sqrt.s,sra,srav,srl,%
+    srlv,sub,sub.d,sub.s,subi,subiu,subu,sw,swc1,swl,swr,syscall,teq,%
+    teqi,tge,tgei,tgeiu,tgeu,tlt,tlti,tltiu,tltu,tne,tnei,trunc.w.d,%
+    trunc.w.s,ulh,ulhu,ulw,ush,usw,xor,xori},keywordstyle=\color{blue},
+  % assembler directives
+  morekeywords={[2].align,.ascii,.asciiz,.byte,.data,.double,.extern,%
+    .float,.globl,.half,.kdata,.ktext,.set,.space,.text,.word},
+  % register names
+  emph={[3]\$0,\$1,\$2,\$3,\$4,\$5,\$6,\$7,\$8,\$9,\$10,\$11,%
+    \$12,\$13,\$14,\$15,\$16,\$17,\$18,\$19,\$20,\$21,\$22,\$23,\$24,%
+    \$25,\$26,\$27,\$28,\$29,\$30,\$31,%
+    \$zero,\$at,\$v0,\$v1,\$a0,\$a1,\$a2,\$a3,\$t0,\$t1,\$t2,\$t3,\$t4,
+    \$t5,\$t6,\$t7,\$s0,\$s1,\$s2,\$s3,\$s4,\$s5,\$s6,\$s7,\$t8,\$t9,%
+    \$k0,\$k1,\$gp,\$sp,\$fp,\$ra},emphstyle=\color{magenta},
+            % keyword style
+  commentstyle=\color{dkgreen},       % comment style
+  stringstyle=\color{mauve},         % string literal style
+}[strings,comments,keywords]
