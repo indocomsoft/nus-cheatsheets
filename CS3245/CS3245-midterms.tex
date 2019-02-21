@@ -1,0 +1,530 @@
+\documentclass[10pt,landscape,a4paper]{article}
+%\usepackage[utf8]{inputenc}
+%\usepackage[ngerman]{babel}
+\usepackage[normalem]{ulem}
+\usepackage{tikz}
+\usetikzlibrary{shapes,positioning,arrows,fit,calc,graphs,graphs.standard}
+\usepackage[nosf]{kpfonts}
+\usepackage[t1]{sourcesanspro}
+%\usepackage[lf]{MyriadPro}
+%\usepackage[lf,minionint]{MinionPro}
+\usepackage{multicol}
+\usepackage{wrapfig}
+\usepackage[top=0mm,bottom=1mm,left=0mm,right=1mm]{geometry}
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage{microtype}
+%\usepackage{physics}
+\usepackage{tabularx}
+\usepackage{hhline}
+\usepackage{makecell}
+\usepackage{mathtools}
+
+\usepackage{listings}
+
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+
+\newcommand\codeblue[1]{\textcolor{blue}{\code{#1}}}
+
+\usepackage{lastpage}
+\usepackage{datetime}
+\yyyymmdddate
+\renewcommand{\dateseparator}{-}
+\let\bar\overline
+
+\definecolor{myblue}{cmyk}{1,.72,0,.38}
+
+\def\firstcircle{(0,0) circle (1.5cm)}
+\def\secondcircle{(0:2cm) circle (1.5cm)}
+
+\colorlet{circle edge}{myblue}
+\colorlet{circle area}{myblue!5}
+
+\tikzset{filled/.style={fill=circle area, draw=circle edge, thick},
+outline/.style={draw=circle edge, thick}}
+
+\pgfdeclarelayer{background}
+\pgfsetlayers{background,main}
+
+%\everymath\expandafter{\the\everymath \color{myblue}}
+%\everydisplay\expandafter{\the\everydisplay \color{myblue}}
+
+
+\renewcommand{\baselinestretch}{.8}
+\pagestyle{empty}
+
+\global\mdfdefinestyle{header}{%
+  linecolor=gray,linewidth=1pt,%
+  leftmargin=0mm,rightmargin=0mm,skipbelow=0mm,skipabove=0mm,
+}
+
+\newcommand{\header}{
+  \begin{mdframed}[style=header]
+    \footnotesize
+    \sffamily
+    CS3245 Midterms Cheatsheet v1.0 (\today)\\
+    by~Julius Putra Tanu Setiaji,~page~\thepage~of~\pageref{LastPage}
+  \end{mdframed}
+}
+
+\let\counterwithout\relax
+\let\counterwithin\relax
+\usepackage{chngcntr}
+
+\usepackage{verbatim}
+
+\usepackage{etoolbox}
+\makeatletter
+\preto{\@verbatim}{\topsep=0pt \partopsep=0pt }
+\makeatother
+
+\counterwithin*{equation}{section}
+\counterwithin*{equation}{subsection}
+\usepackage{enumitem}
+\newlist{legal}{enumerate}{10}
+\setlist[legal]{label*=\arabic*.,leftmargin=2.5mm}
+\setlist[itemize]{leftmargin=3mm}
+\setlist[enumerate]{leftmargin=3.5mm}
+\setlist{nosep}
+\usepackage{minted}
+
+\def\code#1{\texttt{#1}}
+
+\newenvironment{descitemize} % a mixture of description and itemize
+{\begin{description}[leftmargin=*,before=\let\makelabel\descitemlabel]}
+{\end{description}}
+
+\newcommand{\descitemlabel}[1]{%
+  \textbullet\ \textbf{#1}%
+}
+\makeatletter
+
+
+
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+  {.2ex}%
+  {.2ex}%x
+{\color{myblue}\sffamily\small\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{1}{0mm}%
+  {.2ex}%
+  {.2ex}%x
+{\sffamily\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{1}{0mm}%
+  {.2ex}%
+  {.2ex}%x
+{\rmfamily\bfseries}}
+
+
+
+\def\multi@column@out{%
+  \ifnum\outputpenalty <-\@M
+    \speci@ls \else
+  \ifvoid\colbreak@box\else
+    \mult@info\@ne{Re-adding forced
+    break(s) for splitting}%
+    \setbox\@cclv\vbox{%
+      \unvbox\colbreak@box
+    \penalty-\@Mv\unvbox\@cclv}%
+  \fi
+  \splittopskip\topskip
+  \splitmaxdepth\maxdepth
+  \dimen@\@colroom
+  \divide\skip\footins\col@number
+  \ifvoid\footins \else
+    \leave@mult@footins
+  \fi
+  \let\ifshr@kingsaved\ifshr@king
+    \ifvbox \@kludgeins
+      \advance \dimen@ -\ht\@kludgeins
+      \ifdim \wd\@kludgeins>\z@
+        \shr@nkingtrue
+      \fi
+    \fi
+    \process@cols\mult@gfirstbox{%
+      %%%%% START CHANGE
+      \ifnum\count@=\numexpr\mult@rightbox+2\relax
+        \setbox\count@\vsplit\@cclv to \dimexpr \dimen@-1cm\relax
+        \setbox\count@\vbox to \dimen@{\vbox to 1cm{\header}\unvbox\count@\vss}%
+      \else
+        \setbox\count@\vsplit\@cclv to \dimen@
+      \fi
+      %%%%% END CHANGE
+      \set@keptmarks
+      \setbox\count@
+      \vbox to\dimen@
+      {\unvbox\count@
+        \remove@discardable@items
+    \ifshr@nking\vfill\fi}%
+    }%
+    \setbox\mult@rightbox
+    \vsplit\@cclv to\dimen@
+    \set@keptmarks
+    \setbox\mult@rightbox\vbox to\dimen@
+    {\unvbox\mult@rightbox
+      \remove@discardable@items
+  \ifshr@nking\vfill\fi}%
+    \let\ifshr@king\ifshr@kingsaved
+  \ifvoid\@cclv \else
+    \unvbox\@cclv
+    \ifnum\outputpenalty=\@M
+  \else
+    \penalty\outputpenalty
+  \fi
+  \ifvoid\footins\else
+    \PackageWarning{multicol}%
+    {I moved some lines to
+      the next page.\MessageBreak
+      Footnotes on page
+    \thepage\space might be wrong}%
+  \fi
+  \ifnum \c@tracingmulticols>\thr@@
+\hrule\allowbreak \fi
+  \fi
+  \ifx\@empty\kept@firstmark
+    \let\firstmark\kept@topmark
+    \let\botmark\kept@topmark
+  \else
+    \let\firstmark\kept@firstmark
+    \let\botmark\kept@botmark
+  \fi
+  \let\topmark\kept@topmark
+  \mult@info\tw@
+  {Use kept top mark:\MessageBreak
+    \meaning\kept@topmark
+    \MessageBreak
+    Use kept first mark:\MessageBreak
+    \meaning\kept@firstmark
+    \MessageBreak
+    Use kept bot mark:\MessageBreak
+    \meaning\kept@botmark
+    \MessageBreak
+    Produce first mark:\MessageBreak
+    \meaning\firstmark
+    \MessageBreak
+    Produce bot mark:\MessageBreak
+    \meaning\botmark
+  \@gobbletwo}%
+  \setbox\@cclv\vbox{\unvbox\partial@page
+  \page@sofar}%
+  \@makecol\@outputpage
+  \global\let\kept@topmark\botmark
+  \global\let\kept@firstmark\@empty
+  \global\let\kept@botmark\@empty
+  \mult@info\tw@
+  {(Re)Init top mark:\MessageBreak
+    \meaning\kept@topmark
+  \@gobbletwo}%
+  \global\@colroom\@colht
+  \global \@mparbottom \z@
+  \process@deferreds
+\@whilesw\if@fcolmade\fi{\@outputpage
+    \global\@colroom\@colht
+  \process@deferreds}%
+  \mult@info\@ne
+  {Colroom:\MessageBreak
+    \the\@colht\space
+    after float space removed
+  = \the\@colroom \@gobble}%
+  \set@mult@vsize \global
+  \fi}
+  \global\let\tikz@ensure@dollar@catcode=\relax
+
+  \def\mathcolor#1#{\@mathcolor{#1}}
+  \def\@mathcolor#1#2#3{%
+    \protect\leavevmode
+    \begingroup
+    \color#1{#2}#3%
+    \endgroup
+  }
+
+  \makeatother
+  \setlength{\parindent}{0pt}
+
+  \setminted{tabsize=2, breaklines}
+  % Remove belowskip of minted
+  \setlength\partopsep{-\topsep}
+
+
+  \newcolumntype{a}{>{\hsize=1.5\hsize}X}
+  \newcolumntype{b}{>{\hsize=.25\hsize}X}
+
+  \setlength\columnsep{1.5pt}
+  \setlength\columnseprule{0.1pt}
+  
+\begin{document}
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
+
+
+\scriptsize
+\begin{multicols*}{3}
+  \raggedcolumns
+  \section{Language Models}
+  \subsection{Ngram model}
+  \begin{itemize}
+    \item Unigram model (n = 1) does not model word order (just a "bag of words").
+    \item Can be defined as bags of phrases of length n.
+    \item OR a model that can predict a current word from the $(n - 1)$ previous context words, e.g. in a pentagram model $P(?? \mid \text{"Please turn off your hand"})$
+    \item Longer n-gram models are exponentially more costly to construct. Let $\lvert V \rvert$ = size of vocab in a language. In unigram, store probabilities for all $\lvert V \rvert$ words. In bigram, need to store all $\lvert V \rvert \times \lvert V \rvert$ ordered length 2 phrases.
+  \end{itemize}
+  \subsubsection{Markov Assumption}
+  \begin{itemize}
+    \item Presumption that the future behaviour of a dynamical system only depends on its recent history.
+    \item A \textbf{kth-order Markov model}, the next state only depends on the $k$ most recent states.
+    \item Hence, an N-gram model = (N - 1)-order Markov model.
+  \end{itemize}
+  \subsubsection{Add 1 smoothing}
+  \begin{itemize}
+    \item Problem with zero probability.
+    \item Add 1 count to all entries in the LM, including those that are not seen.
+    \item Not used in practice, but most basic to understand.
+    \item Add-one or add-k smoothing represents a uniform belief in all events (i.e. possible ngrams) as it assigns a simple $\frac{1}{n}$ probability to all events.
+    \item Applied to:
+    \begin{itemize}
+      \item \textbf{small} no of observations, \textbf{large} vocab space: \textbf{poor} choice (shifting the probability mass quite drastically, given small no observation but large no of possible outcomes (vocab space). Extreme example: English alphabet, only observe "a", then P(a) = 1.0, but with add-one smoothing, P(a) = $\frac{2}{27} = 0.074$)
+      \item \textbf{large} no of observations, \textbf{small} vocab space: \textbf{good} choice (only shift a small probability mass while maintaining the important guarantee of non-zero probability for all possible events.)
+    \end{itemize}
+  \end{itemize}
+
+  \section{Boolean Retrieval}
+  \subsection{Term-document Incidence}
+  \begin{tabular}{c | c c c}
+      & Harriet & Othello & Macbeth \\ \hline
+    Antony & 0 & 0 & 1 \\
+    Brutus & 1 & 0 & 0 \\
+    Caesar & 1 & 1 & 1 \\
+  \end{tabular}
+  \begin{itemize}
+    \item A vector of 1s and 0s for each term, whether they appear in the document.
+    \item Query processing: take the vectors and perform bitwise AND (complement for NOT)
+    \item Disadvantage: Big, but sparse matrix.
+    \item Better to just store the position of the 1's.
+  \end{itemize}
+  \subsection{Inverted Index}
+  \begin{verbatim}
+Brutus    |8|  => 1, 2, 4, 11, 31, 45, 173, 174
+Caesar    |8|  => 1, 2, 4, 5, 6, 16, 57, 134
+Calpurnia |4|  => 2, 31, 54, 101
+  \end{verbatim}
+  \begin{itemize}
+    \item For each term $t$, we store a list of docIDs that contain $t$
+    \item Requires variable-size postings list. (on disk, continuous run of postings. In memory, linked list or variable length arrays)
+    \item docID inside each term is sorted.
+    \item Construction process:
+    \begin{enumerate}
+      \item \textbf{Tokenise} into a sequence of (modified token, document ID) pairs.
+      \item \textbf{Sort} by terms, and then by docID
+      \item Multiple term entries in a single document are merged, split into \textbf{dictionary} and \textbf{postings}, and store \textbf{document frequency}.
+    \end{enumerate}
+    \item Query processing AND:
+    \begin{itemize}
+      \item Locate both terms in the dictionary, and merge the two postings.
+      \item This is $O(n + m)$ if docID are sorted.
+      \item Optimisation: process in order of increasing frequency
+    \end{itemize}
+  \end{itemize}
+  \subsection{Boolean Queries: Exact match}
+  \begin{itemize}
+    \item Operator precedence: NOT, AND, OR
+  \end{itemize}
+  \section{Postings lists and choosing terms}
+  \subsection{Skip pointers}
+  \begin{itemize}
+    \item Done at indexing time.
+    \item Tradeoff:
+    \begin{itemize}
+      \item \textbf{More skips} -> shorter skip spans -> more likely to skip, bot lots of comparisons.
+      \item \textbf{Fewer skips} -> few pointer comparison, but long skip spans -> few successful skips.
+    \end{itemize}
+    \item \textbf{Simple heuristic}: for postings of length $L$, use $\sqrt{L}$ evenly-placed skip pointers.
+    \begin{itemize}
+      \item Ignores the distribution of query terms (e.g. 1, 2, 3, 4, 5, 6, 10, 20, 40, 50 has skip pointers 1, 4, 10, 50)
+      \item Easy if index is relatively static, harder if $L$ keeps on changing because of updates.
+      \item Used to help , but with modern hardware it may not unless memory-based (because IO cost of loading a bigger postings list can outweigh the gains from quicker in-memory merging)
+    \end{itemize}
+  \end{itemize}
+  \subsection{Phrase Queries}
+  \subsubsection{Biword indexes}
+  \begin{itemize}
+    \item Index every consecutive pair of terms as a phrase.
+    \item 2-word phrase query processing is now immediate.
+    \item Longer phrase processed as booleqn query on biwords. But can have false positives (without the docs, cannot make sure that the biwords appear in that order exactly)
+    \item \textbf{Extended Biwords}
+    \begin{itemize}
+      \item Parse the text and perform part-of-speech-tagging.
+      \item Bucket the terms into Nouns (N) and articles/prepositions (X)
+      \item Call any string of terms of the form \texttt{NX*N} an extended biword.
+      \item Each extended biword is now a term in the dictionary
+      \item E.g. "catcher in the rye" (NXXN) => "catcher rye"
+      \item Disadvantages: False positives, Index blowup (bigger dictionary)
+    \end{itemize}
+  \end{itemize}
+  \subsubsection{Positional indexes}
+  \begin{verbatim}
+  <term, no of docs containing term;
+  doc1: position1, position2, ...;
+  doc2: position1, position2, ...;
+  ...>
+  \end{verbatim}
+  \begin{itemize}
+    \item In the postings, store, for each \textbf{term} the position(s) that the term appear
+    \item For phrase queries, use a merge algorithm recursively at the document level.
+    \item Query processing:
+    \begin{itemize}
+      \item \textbf{Extract} the inverted index entries for each distinct term
+      \item \textbf{Merge} their \texttt{doc:position} lists to enumerate all positions with the given phrase, e.g. searching for "to be", must look for documents that has "to" in which the position of "be" is exactly afterwards
+      \item Same strategy for proximity queries.
+    \end{itemize}
+    \item Expands postings storage substantially. But standard because of the power and usefulness.
+    \item Rules of thumb: A positional index is 2-4x larger as non-posiitonal index, and around 35-50\% of the original text (for English-like languages)
+    \item Can be combined with biwords (e.g. for oft-queried phrases, inefficient to keep on merging positional postings lists)
+  \end{itemize}
+  \subsection{Token and terms}
+  \subsubsection{Extracting text}
+  Granularity: what unit? file/email/group of files?
+  \subsubsection{Tokenization}
+  \begin{itemize}
+    \item Token = instance of a sequence of characters grouped together as a useful semantic unit
+    \item Issues:
+    \begin{itemize}
+      \item Handling apostrophe, hyphens, spaces in proper names, numbers, dates.
+      \item Language issues: e.g. in French, l'ensemble and un ensemble, the non-segmented German noun compounds, Chinese and Japanese have no spaces between words
+      \item LTR, RTL langauges.
+      \item \textbf{Stop words}: exclude words from stop list: most common words from the dictionary (little semantic content), but trend is away from doing this (good compression and query optimization can mitigate the size)
+    \end{itemize}
+  \end{itemize}
+  \subsubsection{Normalization}
+  \begin{itemize}
+    \item Removing dots from abbreviations, hyphens, diacritics.
+    \item Normalization of date forms, (Japanese) kana vs kanji
+    \item \textbf{Case folding}
+    \begin{itemize}
+      \item Reduce all letters to lower case
+      \item Disadvantage: C.A.T. vs cat, MIT vs mit (German)
+    \end{itemize}
+    \item Alternative to equivalence classing is to do asymmetric expansion (e.g. window => window, windows => Windows, windows, window; Windows => Windows)
+    \item \textbf{Thesauri}: handle synonyms and homonyms (car = automobile, color = colour)
+  \end{itemize}
+  \subsubsection{Lemmatization}
+  \begin{itemize}
+    \item Reduce inflectional/variant forms to base form with the proper way (linguistically)
+    \item A most modest benefit for retrieval
+    \item For English, mixed results, but definitely useful for Spanish, German, Finnish (30\% perf gain for Finnish)
+  \end{itemize}
+  \subsubsection{Stemming}
+  \begin{itemize}
+    \item Reduce terms to their roots with crude affix chopping (e.g. automate, automatic, automation => automat)
+    \item \textbf{Porter's algorithm}: most common for stemming English
+    \item Other stemmers, e.g. Lovins stemmer (single-pass, longest suffix removal, about 250 rules)
+  \end{itemize}
+  \section{Dictionaries and tolerant retrieval}
+  \subsection{Hash Table}
+  \begin{itemize}
+    \item Pros: Lookup is faster than for a tree: $O(1)$
+    \item Cons:
+    \begin{itemize}
+      \item No easy way to find minor variants
+      \item No prefix search
+      \item If vocab keeps growing, need to occasionally perform expensive operation of rehasing \textbf{everything}
+    \end{itemize}
+  \end{itemize}
+  \subsection{Tree}
+  \begin{itemize}
+    \item Requires standard ordering of characters and strings: lexicographical ordering
+    \item Pros: solves the prefix problem (\texttt{hyp*})
+    \item Cons:
+    \begin{itemize}
+      \item Slower: $O(\log M)$ and requires a \textbf{balanced} tree
+      \item Rebalancing binary trees is expensive (B-trees mitigate the rebalancing problem)
+    \end{itemize}
+  \end{itemize}
+  \subsubsection{Binary tree}
+  Simplest, whereby each branch divides by two, and only the leaves store the words.
+  \subsubsection{B-tree}
+  Every internal node has a number of children has a number of children in the interval $[a, b]$ where $a, b$ are appropriate natural numbers.
+  \subsection{Wildcard queries}
+  \begin{itemize}
+    \item With B-tree, simple for \texttt{mon*}
+    \item \texttt{*mon}: maintain an additional B-tree for the terms reversed.
+    \item \texttt{A*B}: intersect \texttt{A*} and \texttt{*B}
+    \item However, still have to look up the postings for each enumerated term (expensive)
+  \end{itemize}
+  \subsection{Permuterm Index}
+  \begin{itemize}
+    \item For "hello", index under: "hello\$", "ello\$h", "llo\$he", "lo\$hel", "o\$hell", "\$hello"
+    \item Queries:
+    \begin{itemize}
+      \item \texttt{X} lookup on \texttt{X\$}
+      \item \texttt{*X} lookup on \texttt{X\$*}
+      \item \texttt{X*Y} lookup on \texttt{Y\$X*}
+      \item \texttt{X*} lookup on \texttt{\$X*}
+      \item \texttt{*X*} lookup on \texttt{X*}
+      \item \texttt{X*Y*Z} lookup on \texttt{\$X*} and \texttt{Z\$*}, AND them and find which of them contains \texttt{Y}
+    \end{itemize}
+    \item Problem: lexicon size blows up, proportional to average word length
+  \end{itemize}
+  \subsection{Bigram (k-gram) indexes}
+  \begin{itemize}
+    \item Enumerate all k-grams (sequence of k chars) occuring in any term (per letter)
+    \item Maintain a second inverted index from bigrams to dictionary terms that match each bigram
+    \item E.g. \texttt{mon*} = \texttt{\$m} AND \texttt{mo} AND \texttt{on} (usually not useful to add \texttt{n\$})
+    \item Prone to false positive, e.g. in this case moon, thus must post filter.
+    \item Fast, space efficient (comapred to permuterm)
+  \end{itemize}
+  \subsection{Spelling Correction}
+  \subsubsection{Isolated word correction}
+  \begin{itemize}
+    \item Given query, enumerate all character sequences within a preset (weighted) edit distance (e.g. 2), intersect this set with list of correct words.
+    \item Alternatively:
+    \begin{itemize}
+      \item Look up all possible corrections in our inverted index and return all docs (slow)
+      \item We can run with a single most likely correction
+    \end{itemize}
+    \item However, computing edit distance to every dictionary term is expensive and slow. Alternative: use ngram overlap
+  \end{itemize}
+  How to define closest?
+  \begin{enumerate}
+    \item \textbf{Edit distance (Levenshtein distance)}
+    \begin{itemize}
+      \item Given two strings, the minimum no of ops to convert one to the other.
+      \item Ops: insert, delete, replace (optionally transposition)
+      \item \textbf{Wagner–Fischer algorithm}:\\
+      Create a matrix whereby $E(i, j) = min \{ E(i, j - 1) + 1, E(i - 1, j) + 1, E(i - 1, j - 1) + m \}$ where $m = 1$ if $P_i \neq T_j$, $0$ otherwise
+    \end{itemize}
+    \item \textbf{Weighted edit distance}
+    \begin{itemize}
+      \item As above, but the weight of an operation depends on the characters involved, e.g. keyboard errors, m is more likely to be mistyped as n than as q
+      \item Requires a weighted matrix as input
+    \end{itemize}
+    \item \textbf{Ngram overlap}
+    \begin{itemize}
+      \item Enumerate all ngrams in the query strings as well as in the lexicon
+      \item Use the ngram index (from wildcard search) to retrieve all lexicon terms matching any of the query ngrams
+      \item Threshold by no of matching ngrams (weight by e.g. keyboard layout, assume initial letter correct, etc.)
+      \item \textbf{Jaccard coefficient} = $\frac{X\cap Y}{X \cup Y}$
+      \begin{itemize}
+        \item 1 when X and Y have the same elements, 0 when they are disjoint
+        \item Always assigns a number between 0 and 1.
+        \item Use a threshold to decide if you have a match, e.g. above 0.8 is a match
+        \item To calculate the union, can use $n(X) + n(Y) - n(X \cap Y)$
+      \end{itemize}
+    \end{itemize}
+  \end{enumerate}
+  \subsubsection{Context-Sensitive}
+  \begin{itemize}
+    \item Need surrounding context
+    \item Retrieve dictionary terms close (in weighted edit distance) to each query term
+    \item Try all possible resulting phrases with one word corrected at a time
+    \item \textbf{Hit-based spelling correction}: suggest the alternative that has lots of hits
+    \item Alternative: break phrase queries into conjunctions of biwords, look for ones that need only one term corrected, enumerate phrase matches and rank them.
+  \end{itemize}
+  \subsection{Soundex}
+  \begin{itemize}
+    \item Class of heuristics to expand a query into phonetic equivalents (language specific)
+    \item Invented for the US cencus
+    \item Turn every token to be indexed into a 4-character reduced form
+    \item Build and search an index on the reduced form
+    \item Algorithm: refer to lecture notes
+    \item Not very useful for general IR, okay for high recall tasks, though biased to names of certain nationalities.
+  \end{itemize}
+\end{multicols*}
+\end{document}
