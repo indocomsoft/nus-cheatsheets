@@ -1,0 +1,666 @@
+\documentclass[10pt,landscape,a4paper]{article}
+%\usepackage[utf8]{inputenc}
+%\usepackage[ngerman]{babel}
+\usepackage[normalem]{ulem}
+\usepackage{tikz}
+\usetikzlibrary{shapes,positioning,arrows,fit,calc,graphs,graphs.standard}
+\usepackage[nosf]{kpfonts}
+\usepackage[t1]{sourcesanspro}
+%\usepackage[lf]{MyriadPro}
+%\usepackage[lf,minionint]{MinionPro}
+\usepackage{bold-extra}
+\usepackage{multicol}
+\usepackage{wrapfig}
+\usepackage[top=0mm,bottom=1mm,left=0mm,right=1mm]{geometry}
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage{microtype}
+%\usepackage{physics}
+\usepackage{tabularx}
+\usepackage{hhline}
+\usepackage{makecell}
+\usepackage{mathtools}
+
+\let\oldexists\exists
+\let\exists\relax
+\DeclareMathOperator{\exists}{\oldexists}
+\let\oldforall\forall
+\let\forall\relax
+\DeclareMathOperator{\forall}{\oldforall}
+
+\usepackage{listings}
+
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}%
+
+\newcommand\codeblue[1]{\textcolor{blue}{\code{#1}}}
+
+\usepackage{lastpage}
+\usepackage{datetime}
+\yyyymmdddate
+\renewcommand{\dateseparator}{-}
+\let\bar\overline
+
+\definecolor{myblue}{cmyk}{1,.72,0,.38}
+
+\def\firstcircle{(0,0) circle (1.5cm)}
+\def\secondcircle{(0:2cm) circle (1.5cm)}
+
+\colorlet{circle edge}{myblue}
+\colorlet{circle area}{myblue!5}
+
+\tikzset{filled/.style={fill=circle area, draw=circle edge, thick},
+  outline/.style={draw=circle edge, thick}}
+
+\pgfdeclarelayer{background}
+\pgfsetlayers{background,main}
+
+%\everymath\expandafter{\the\everymath \color{myblue}}
+%\everydisplay\expandafter{\the\everydisplay \color{myblue}}
+
+\everymath\expandafter{\the\everymath\color{myblue}}%\scriptstyle}
+
+\renewcommand{\baselinestretch}{.8}
+\pagestyle{empty}
+
+\global\mdfdefinestyle{header}{%
+  linecolor=gray,linewidth=1pt,%
+  leftmargin=0mm,rightmargin=0mm,skipbelow=0mm,skipabove=0mm,
+}
+
+\newcommand{\header}{
+  \begin{mdframed}[style=header]
+    \footnotesize
+    \sffamily
+    ST2334 Midterms Cheatsheet v1.0 (\today)\\
+    by~Julius Putra Tanu Setiaji,~page~\thepage~of~\pageref{LastPage}
+  \end{mdframed}
+}
+
+\let\counterwithout\relax
+\let\counterwithin\relax
+\usepackage{chngcntr}
+
+\usepackage{verbatim}
+
+\usepackage{etoolbox}
+\makeatletter
+\preto{\@verbatim}{\topsep=0pt \partopsep=0pt }
+\makeatother
+
+\counterwithin*{equation}{section}
+\counterwithin*{equation}{subsection}
+\usepackage{enumitem}
+\newlist{legal}{enumerate}{10}
+\setlist[legal]{label*=\arabic*.,leftmargin=2.5mm}
+\setlist[itemize]{leftmargin=3mm}
+\setlist[enumerate]{leftmargin=4mm}
+\setlist{nosep}
+\usepackage{minted}
+
+\def\code#1{\texttt{#1}}
+
+\newenvironment{descitemize} % a mixture of description and itemize
+{\begin{description}[leftmargin=*,before=\let\makelabel\descitemlabel]}
+  {\end{description}}
+
+\newcommand{\descitemlabel}[1]{%
+  \textbullet\ \textbf{#1}%
+}
+\makeatletter
+
+
+
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+  {.1ex}%
+  {.1ex}%x
+  {\color{myblue}\sffamily\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{1}{0mm}%
+  {.1ex}%
+  {.1ex}%x
+  {\sffamily\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{1}{0mm}%
+  {.1ex}%
+  {.1ex}%x
+  {\rmfamily\bfseries}}
+
+
+
+\def\multi@column@out{%
+  \ifnum\outputpenalty <-\@M
+  \speci@ls \else
+  \ifvoid\colbreak@box\else
+  \mult@info\@ne{Re-adding forced
+    break(s) for splitting}%
+  \setbox\@cclv\vbox{%
+    \unvbox\colbreak@box
+    \penalty-\@Mv\unvbox\@cclv}%
+  \fi
+  \splittopskip\topskip
+  \splitmaxdepth\maxdepth
+  \dimen@\@colroom
+  \divide\skip\footins\col@number
+  \ifvoid\footins \else
+  \leave@mult@footins
+  \fi
+  \let\ifshr@kingsaved\ifshr@king
+  \ifvbox \@kludgeins
+  \advance \dimen@ -\ht\@kludgeins
+  \ifdim \wd\@kludgeins>\z@
+  \shr@nkingtrue
+  \fi
+  \fi
+  \process@cols\mult@gfirstbox{%
+    %%%%% START CHANGE
+    \ifnum\count@=\numexpr\mult@rightbox+2\relax
+    \setbox\count@\vsplit\@cclv to \dimexpr \dimen@-1cm\relax
+    \setbox\count@\vbox to \dimen@{\vbox to 1cm{\header}\unvbox\count@\vss}%
+    \else
+    \setbox\count@\vsplit\@cclv to \dimen@
+    \fi
+    %%%%% END CHANGE
+    \set@keptmarks
+    \setbox\count@
+    \vbox to\dimen@
+    {\unvbox\count@
+      \remove@discardable@items
+      \ifshr@nking\vfill\fi}%
+  }%
+  \setbox\mult@rightbox
+  \vsplit\@cclv to\dimen@
+  \set@keptmarks
+  \setbox\mult@rightbox\vbox to\dimen@
+  {\unvbox\mult@rightbox
+    \remove@discardable@items
+    \ifshr@nking\vfill\fi}%
+  \let\ifshr@king\ifshr@kingsaved
+  \ifvoid\@cclv \else
+  \unvbox\@cclv
+  \ifnum\outputpenalty=\@M
+  \else
+  \penalty\outputpenalty
+  \fi
+  \ifvoid\footins\else
+  \PackageWarning{multicol}%
+  {I moved some lines to
+    the next page.\MessageBreak
+    Footnotes on page
+    \thepage\space might be wrong}%
+  \fi
+  \ifnum \c@tracingmulticols>\thr@@
+  \hrule\allowbreak \fi
+  \fi
+  \ifx\@empty\kept@firstmark
+  \let\firstmark\kept@topmark
+  \let\botmark\kept@topmark
+  \else
+  \let\firstmark\kept@firstmark
+  \let\botmark\kept@botmark
+  \fi
+  \let\topmark\kept@topmark
+  \mult@info\tw@
+  {Use kept top mark:\MessageBreak
+    \meaning\kept@topmark
+    \MessageBreak
+    Use kept first mark:\MessageBreak
+    \meaning\kept@firstmark
+    \MessageBreak
+    Use kept bot mark:\MessageBreak
+    \meaning\kept@botmark
+    \MessageBreak
+    Produce first mark:\MessageBreak
+    \meaning\firstmark
+    \MessageBreak
+    Produce bot mark:\MessageBreak
+    \meaning\botmark
+    \@gobbletwo}%
+  \setbox\@cclv\vbox{\unvbox\partial@page
+    \page@sofar}%
+  \@makecol\@outputpage
+  \global\let\kept@topmark\botmark
+  \global\let\kept@firstmark\@empty
+  \global\let\kept@botmark\@empty
+  \mult@info\tw@
+  {(Re)Init top mark:\MessageBreak
+    \meaning\kept@topmark
+    \@gobbletwo}%
+  \global\@colroom\@colht
+  \global \@mparbottom \z@
+  \process@deferreds
+  \@whilesw\if@fcolmade\fi{\@outputpage
+    \global\@colroom\@colht
+    \process@deferreds}%
+  \mult@info\@ne
+  {Colroom:\MessageBreak
+    \the\@colht\space
+    after float space removed
+    = \the\@colroom \@gobble}%
+  \set@mult@vsize \global
+  \fi}
+\global\let\tikz@ensure@dollar@catcode=\relax
+
+\def\mathcolor#1#{\@mathcolor{#1}}
+\def\@mathcolor#1#2#3{%
+  \protect\leavevmode
+  \begingroup
+  \color#1{#2}#3%
+  \endgroup
+}
+
+\makeatother
+\setlength{\parindent}{0pt}
+
+\setminted{tabsize=2, breaklines}
+% Remove belowskip of minted
+\setlength\partopsep{-\topsep}
+
+\setlength\columnsep{1.5pt}
+\setlength\columnseprule{0.1pt}
+
+\begin{document}
+
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
+\footnotesize
+\begin{multicols*}{4}
+  \raggedcolumns
+  \section{Basic Concepts of Probability}
+  \begin{itemize}
+    \item \textbf{Sample Space} ($S$) = set of all possible outcomes of a statistical experiment
+    \item \textbf{Sample Points} = An element of the sample space
+    \item \textbf{Event} = Subset of a sample space
+    \item Sample space = \textbf{sure event}, subset of $S$ = $\varnothing$ = \textbf{null event}
+    \item \textbf{Mutually exclusive/disjoint} if $A \cap B = \varnothing$
+    \item \textbf{Contained}: $A \subset B \equiv B \supset A$.
+    \item If $A \subset B$ and $B \supset A$, then $A = B$
+  \end{itemize}
+  \subsection{Basic Properties}
+  \begin{minipage}{\columnwidth}
+    \setlength\columnseprule{0pt}
+    \begin{multicols*}{2}
+      \begin{enumerate}
+        \item $A \cap A' = \varnothing$
+        \item $A \cap \varnothing = \varnothing$
+        \item $A \cup A' = S$
+        \item $(A')' = A$
+        \item $(A \cap B)' = A' \cup B'$
+        \item $(A \cup B)' = A' \cap B'$
+        \item $A \cup (B \cap C) = (A \cup B) \cap (A \cup C)$
+        \item $A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$
+        \item $A \cup B = A \cup (B \cap A')$
+        \item $A = (A \cap B) \cup (A \cap B')$
+      \end{enumerate}
+    \end{multicols*}
+  \end{minipage}
+  \subsection{De Morgan's Law}
+  \begin{minipage}{\columnwidth}
+    \setlength\columnseprule{0pt}
+    \begin{multicols*}{2}
+      \begin{enumerate}
+        \item $(\bigcup\limits_{r = 1}^{n} A_r)' = \bigcap\limits_{r=1}^{n} (A_r)'$
+        \item $(\bigcap\limits_{r = 1}^{n} A_r)' = \bigcup\limits_{r=1}^{n} (A_r)'$
+      \end{enumerate}
+    \end{multicols*}
+  \end{minipage}
+  \vspace{1mm}
+  \subsection{Counting Methods}
+  \subsubsection{Multiplication \& Addition Principle}
+  \subsubsection{Permutation}
+  \begin{itemize}
+    \item An arrangement of $r$ objects from a set of $n$ objects, $r \leq n$, order taken into consideration.
+    \item $n$ distinct objects taken $r$ at a time = $_nP_r = \frac{n!}{(n - r)!}$
+    \item In a circle: $(n - 1)!$
+    \item Not all are distinct: $\sum_{r=1}^{k}n_k = n$, $_nP_{n_1, n_2, ..., n_k} = \frac{n!}{n_1!n_2!...n_k!}$
+  \end{itemize}
+  \subsubsection{Combination}
+  \begin{itemize}
+    \item No of ways selecting $r$ from $n$ objects w/o regarding order
+    \item $\binom{n}{r} = _nC_r = \frac{n!}{r!(n-r)!}$, $_nC_r \times r! = _nP_r$
+    \item $\binom{n}{r}$ = binomial coefficient of the term $a^rb^{n-r}$ in binomial expansion of $(a+b)^n$:
+          \begin{enumerate}
+            \item $\binom{n}{r} = \binom{n}{n - r}$ for $r = 0, 1, ..., n$
+            \item $\binom{n}{r} = \binom{n - 1}{r} + \binom{n - 1}{r - 1}$ for $1 \leq r \leq n$
+            \item $\binom{n}{r} = 0$ for $r < 0$ pr $r > n$
+          \end{enumerate}
+  \end{itemize}
+  \subsection{Relative frequency ($f_A$)}
+  $f_A = \frac{n_A}{n}$, event $A$ in $n$ repetitions of experiment $E$, $n_A$ = no of times that event $A$ occured among the $n$ repetitions.
+  \subsubsection{Properties}
+  \begin{enumerate}
+    \item $0 \leq f_A \leq 1$
+    \item $f_A = 1$ iff $A$ occurs every time among the $n$ repetitions
+    \item $f_A = 0$ off $A$ never occurs among the $n$ repetitions
+    \item Events $A$ and $B$ are \textbf{mutually exclusive} $\rightarrow f_{A\cup B} = f_A + f_B$
+    \item $f_A$ "stabilises" near some definite numerical value as the experiment is repeated more and more times.
+  \end{enumerate}
+  \subsection{Axioms of Probability}
+  \begin{enumerate}
+    \item $0 \leq \Pr(A) \leq 1$
+    \item $\Pr(S) = 1$
+    \item If $A_1, A_2, ...$ are mutually exclusive (disjoint),\\ i.e. $A_i \cap A_j = \varnothing$ when $i \neq j$, then $\Pr(\cup_{i=1}^\infty A_i) = \sum_{i=1}^{\infty}\Pr(A_i)$ \\
+          In particular, if events $A$ and $B$ are mutually exclusive, then $\Pr(A\cup B) = \Pr(A) + \Pr(B)$
+  \end{enumerate}
+  \subsection{Properties of Probability}
+  \begin{enumerate}
+    \item $\Pr(\varnothing) = 0$
+    \item If $A_1, A_2, ..., A_n$ are mutually exclusive events, then $\Pr(\cup_{i=1}^{n}A_i) = \sum_{i=1}^{n}\Pr(A_i)$
+    \item $\Pr(A') = 1 - \Pr(A)$
+    \item $\Pr(A) = \Pr(A \cap B) + \Pr(A \cap B')$
+    \item $\Pr(A \cup B) = \Pr(A) + \Pr(B) - \Pr(A \cap B)$
+    \item $Pr (A \cup B \cup C) = \Pr(A) + \Pr(B) + \Pr(C) - \Pr(A \cap B) - \Pr(B \cap C) - \Pr(A \cap C) + \Pr(A \cap B \cap C)$
+    \item \textbf{The Inclusion-Exclusion Principle}\\
+          $\Pr(\bigcup\limits_{i=1}^{n}A_i) = \sum\limits_{i=1}^{n} \Pr(A_i) - \sum\limits_{i=1}^{n - 1}\sum\limits_{j = i + 1}^{n} \Pr(A_i\cap A_j) + \sum\limits_{i = 1}^{n - 2} \sum\limits_{j = i + 1}^{n - 1} \sum\limits_{k = j + 1}^{n} \Pr(A_i\cap A_j\cap A_k) - ...$
+    \item If $A \subset B$, then $\Pr(A) \leq \Pr(B)$
+  \end{enumerate}
+  \subsection{Conditional Probability, $P(A\mid B)$}
+  \begin{itemize}
+    \item $\Pr(A\mid B) = \frac{\Pr(A\cap B)}{\Pr(B)}$, if $\Pr(A) \neq 0$
+    \item For fixed $A$, $\Pr(B\mid A)$ satisfies the postulates of probability.
+    \item False positive: $\Pr(\text{+} \mid \text{condition})$
+  \end{itemize}
+  \subsubsection{Multiplication rule}
+  \begin{itemize}
+    \item $\Pr(A\cap B) = \Pr(A) \Pr(B\mid A) = \Pr(B)\Pr(A\mid B)$, providing $\Pr(A) > 0, \Pr(B) > 0$
+    \item $\Pr(A\cap B \cap C) = \Pr(A)\Pr(B\mid A)\Pr(C\mid A\cap B)$
+    \item $\Pr(A_1\cap...\cap A_n) = \Pr(A_1)\Pr(A_2\mid A_1)\Pr(A_3 \mid A_1 \cap A_2)...\Pr(A_n\mid A_1\cap ... \cap A_{n - 1})$
+  \end{itemize}
+  \subsubsection{The Law of Total Probability}
+  \begin{itemize}
+    \item Let $A_1,A_2,...,A_n$ be a partition of sample space $S$ (mutually exclusive and exhaustive events s.t. $A_i\cap A_j = \varnothing$ for $i\neq j$ and $\cup_{i=1}^n A_i = S$).
+    \item Then $\Pr(B) = \sum_{i=1}^{n}\Pr(B\cap A_i) = \sum_{i=1}^{n}\Pr(A_i)\Pr(B\mid A_i)$
+  \end{itemize}
+  \subsubsection{Bayes' Theorem}
+  \begin{itemize}
+    \item Let $A_1,A_2,...,A_n$ be a partition of $S$
+    \item $\Pr(A_k\mid B) = \frac{\Pr(A_k)\Pr(B\mid A_k)}{\sum_{i=1}^{n}\Pr(A_i)\Pr(B\mid A_i)} = \frac{\Pr(A_k)\Pr(B\mid A_k)}{\Pr(B)}$, $k \in [1, n]$
+  \end{itemize}
+
+  \subsection{Independent Events}
+  \begin{itemize}
+    \item Definition: iff $\Pr(A\cap B) = \Pr(A)\Pr(B)$
+  \end{itemize}
+  \subsubsection{Properties}
+  \begin{itemize}
+    \item Suppose $\Pr(A)>0,\Pr(B)>0$, $A$ and $B$ are independent:
+          \begin{itemize}
+            \item $\Pr(B\mid A) = \Pr(B)$ and $\Pr(A\mid B) = \Pr(A)$
+            \item $A$ and $B$ cannot be mutually exclusive (and vice versa)
+          \end{itemize}
+    \item The sample space $S$ and $\varnothing$ are independent of any event
+    \item If $A \subset B$, then $A$ and $B$ are dependent unless $B = S$
+  \end{itemize}
+  Warning: Indep events can't be shown using Venn Diagram, hence calc! Cannot use intuition
+  \subsubsection{Theorem}
+  If $A, B$ are indep, then so are $A$ and $B'$, $A'$ and $B$, $A'$ and $B'$.
+  \subsubsection{$n$ Independent Events}
+  \begin{itemize}
+    \item \textbf{Pairwise Independent Events}:\\
+          Events $A_1,A_2,...,A_n$ are pairwise indep\\
+          iff $\Pr(A_i\cap A_j) = \Pr(A_i)\Pr(A_j)$
+    \item \textbf{Mutually Independent}:\\
+          Events $A_1,A_2,...,A_n$ are (mutually) independent iff for any subset $\{A_{i_1}, A_{i_2},...,A_{i_k}\}$ of $A_1,A_2,...,A_n$,\\
+          $\Pr(A_{i_1}\cap A_{i_2}\cap ...\cap A_{i_k}) = \Pr(A_{i_1})\Pr(A_{i_2})...\Pr(A_{i_k})$
+  \end{itemize}
+  \subsubsection{Remarks}
+  \begin{itemize}
+    \item $A_1,A_2,...,A_n$ are mutually independent $\Leftrightarrow$ for any pair of events $A_j,A_k$ where $j\neq k$, the multiplication rule holds, for any 3 distinct events, the multiplication rule holds, and so on $\Pr(A_1\cap A_2\cap ... \cap A_n) = \Pr(A_1)\Pr(A_2) ...\Pr(A_n)$. In total there are $2^n - n - 1$ different cases.
+    \item Mutually indep $\Rightarrow$ pairwise indep (not the converse)
+    \item Suppose $A_1,A_2,...,A_n$ are mutually indep events, let $B_i=A_i$ or $A_i'$, $i \in [1, n]$. Then $B_1,B_2,...,B_n$ are also mutually indep events.
+  \end{itemize}
+
+  \section{Concepts of Random Variables}
+  \subsection{Random Variable}
+  \subsubsection{Definition}
+  Let $S$ be sample space assoc with experiment $E$. R.V. is a function $X$, which assigns a number to every element $s \in S$
+  \subsubsection{Notes}
+  \begin{itemize}
+    \item $X$ is a real-valued function
+    \item Range space of $X, R_X=\{x\mid x=X(s), s\in S\}$.
+    \item Each possible value $x$ of $X$ represents an event that is a subset of the sample space $S$
+    \item If $S$ has elements that are themselves real numbers, we take $X(s) = s$. In this case $R_x=S$
+  \end{itemize}
+  \subsection{Equivalent Events}
+  \subsubsection{Definition}
+  \begin{itemize}
+    \item Let $E$ be an experiment in sample space $S$. Let $X$ be an R.V. defined on $S$, and $R_x$ its range space, i.e. $X: S \rightarrow \mathbb{R}$
+    \item Let $B$ be an event w.r.t. $R_X$, i.e. $B \subset R_X$
+    \item Suppose $A = \{s\in S \mid X(s) \in B \}$\\
+          ($A$ consists of all sample points $s$ in $S$ for which $X(s) \in B$)
+    \item $A$ and $B$ are \textbf{equivalent events}, and $\Pr(B) = \Pr(A)$
+  \end{itemize}
+  \subsubsection{Example}
+  \begin{itemize}
+    \item Consider tossing a coin twice, $S = \{ HH, HT, TH, TT \}$
+    \item Let $X$ be no of heads, then $R_X=\{0, 1, 2\}$
+    \item $A_1=\{HH\}$ equiv $B_1=\{2\}$, $A_2=\{HT,TH\}$ equiv $B_2=\{1\}$, $A_3=\{TT\}$ equiv $B_3=\{0\}$, $A_4=\{HH,HT,TH\}$ equiv $B_4=\{2,1\}$
+  \end{itemize}
+  \subsection{Discrete Probability Distributions}
+  \subsubsection{Discrete R.V.}
+  Let $X$ be an R.V. If $R_X$ is \textbf{finite or countable infinite}, $X$ is discrete R.V.
+  \subsubsection{Probability Function (p.f.) or Probability Mass Function (p.m.f.)}
+  \begin{itemize}
+    \item For a discrete R.V., each value $X$ has a certain probability $f(x)$. Such a function $f(x)$ is called the p.f.
+    \item The collection of pairs $(x_i, f(x_i))$ is prob distribution of $X$
+    \item The probability of $X=x_i$ denoted by $f(x_i)$ must satisfy:
+          \begin{enumerate}
+            \item $f(x_i) \geq 0 \forall x_i$
+            \item $\sum_{i=1}^{\infty}f(x_i)=1$
+          \end{enumerate}
+  \end{itemize}
+  \subsection{Continuous Probability Distributions}
+  \subsubsection{Continuous R.V.}
+  Suppose that $R_X$ is an \textbf{interval or a collection of intervals}, then $X$ is a continuous R.V.
+  \subsubsection{Probability Density Function (p.d.f.)}
+  \begin{itemize}
+    \item Let $X$ be a continuous R.V.
+    \item p.d.f. $f(x)$ is a function satisfying:
+          \begin{enumerate}
+            \item $f(x) \geq 0 \forall x \in R_X$
+            \item $\int_{R_X}^{}f(x)\D{x} = 1$ or $\int_{-\infty}^{\infty}f(x)\D{x} = 1$ as $f(x) = 0 \forall x \notin R_X$
+            \item $\forall c, d : c < d$ (i.e. $(c, d) \subset R_X$),
+                  $\Pr(c\leq X \leq d) = \int_{c}^{d}f(x)\D{x}$
+          \end{enumerate}
+  \end{itemize}
+  \subsubsection{Remarks}
+  \begin{itemize}
+    \item $\Pr(c\leq X \leq d) = \int_{c}^{d}f(x)\D{x}$ represents area under the graph of the p.d.f. $f(x)$ between $x=c$ and $x=d$
+    \item Let $x_0$ be a fixed value, $\Pr(X=x_0) = 0$
+    \item $\leq$ and $<$ can be used interchangeably in a prob statement.
+    \item $\Pr(A) = 0$ does not necessarily imply $A = \varnothing$
+    \item $R_X \in [a, b] \Rightarrow f(x) = 0 \forall x \notin [a, b]$
+  \end{itemize}
+  \subsection{Cumulative Distribution Function (c.d.f.)}
+  \begin{itemize}
+    \item Let $X$ be an R.V., discrete or continuous.
+    \item $F(x)$ is a c.d.f. of $X$ where $F(x) = \Pr(X\leq x)$
+  \end{itemize}
+  \subsubsection{c.d.f. for Discrete R.V.}
+  \begin{itemize}
+    \item $F(x) = \sum_{t\leq x}^{}f(t) = \sum_{t\leq x}^{} \Pr(X=t)$
+    \item c.d.f. of a discrete R.V. is a step function
+    \item $\forall a, b$ s.t. $a\leq b$, $\Pr(a\leq X \leq b) = \Pr(X \leq b) - \Pr(X < a) = F(b) - F(a^-)$ where $a^-$ is the largest possible value of $X$ that is strictly less than $a$
+    \item $R_X \subset \mathbb{Z}, a, b \in \mathbb{Z} \Rightarrow$
+          \begin{itemize}
+            \item $\Pr(a \leq X \leq b) = \Pr(X = a$ or $a+1$ or $...$ or $b) = F(b) - F(a - 1)$
+            \item Taking $a = b$, $\Pr(X=a) = F(a) - F(a - 1)$
+          \end{itemize}
+  \end{itemize}
+  \subsubsection{c.d.f. for Continuous R.V.}
+  \begin{itemize}
+    \item $F(x) = \int_{-\infty}^{\infty}f(t)\D{t}$
+    \item $f(x) = \frac{dF(x)}{\D{x}}$ if the derivative exists
+    \item $\Pr(a\leq X \leq b) = \Pr(a < X \leq b) = F(b) - F(a)$
+    \item $F(x)$ is a non-decreasing function: $x_1<x_2 \Rightarrow F(x_1) \leq F(x_2)$
+    \item $0 \leq F(x) \leq 1$
+  \end{itemize}
+  \subsection{Mean and Variance of an R.V.}
+  \subsubsection{Expected Value / Mean / Mathematical Expectation}
+  \begin{itemize}
+    \item \textbf{Discrete:} $E(X) = \mu^{}_X = \sum_i^{} x_i f(x_i) = \sum_x^{} x f(x)$
+    \item If $f(x) = \frac{1}{N}$ for each of the $N$ values of $x$, $E(X) = \frac{1}{N}\sum^{}_i x_i$
+    \item \textbf{Continuous:} $E(X) = \mu^{}_X = \int_{-\infty}^{\infty}xf(x)\D{x}$
+    \item \textbf{Remark}: The expected value exists provided the sum/integral exists
+  \end{itemize}
+  \subsubsection{Expectation of a function of an R.V.}
+  $\forall g(X)$ with p.f. $f^{}_X(x)$
+  \begin{itemize}
+    \item \textbf{Discrete:} $E[g(X)] = \sum_{x}^{} g(x)f^{}_X (x)$
+    \item \textbf{Continuous:} $E[g(X)] = \int_{-\infty}^{\infty} g(x) f_X(x) \D{x}$
+    \item Provided the sum/integral exists.
+  \end{itemize}
+  \subsubsection{Variance ($\sigma_X^2 = V(X)$)}
+  \begin{itemize}
+    \item $g(x) = (x - \mu^{}_{X})^2$, Let $X$ be an R.V. with p.f. $f(x)$
+    \item $\sigma_X^2 = V(X) = E[(X-\mu^{}_X)^2]$
+    \item $E[(X-\mu^{}_X)^2] = \begin{cases}
+              \sum_{x}^{} (x - \mu^{}_X)^2 f_X^{}(x)                & \text{if }X\text{ is discrete}   \\
+              \int_{-\infty}^{\infty}(x-\mu_X^{})^2 f_X^{}(X) \D{x} & \text{if }X\text{ is continuous}
+            \end{cases}$
+    \item $V(X) \geq 0$, $V(X) = E(X^2) - [E(X)]^2$
+    \item \textbf{Standard deviation} = $\sigma_X^{} = \sqrt{V(X)}$
+  \end{itemize}
+  \subsubsection{K-th moment of $X$}
+  \begin{itemize}
+    \item \textbf{Definition:} $E(X^k)$, use $g(x) = x^k$ in expectation of a fn
+  \end{itemize}
+  \subsubsection{Properties of Expectation}
+  \begin{enumerate}
+    \item $E(aX+b) = aE(X) + b$
+    \item $V(X) = E(X^2) - [E(X)]^2$
+    \item $V(aX+b)=a^2V(X)$
+  \end{enumerate}
+  \subsection{Chebyshev's Inequality}
+  \begin{itemize}
+    \item Let $X$ be an R.V. with $E(X) = \mu$, $V(X) = \sigma^2_{}$
+    \item $\forall k > 0$, $\Pr(\abs{X-\mu}>k\sigma) \leq \frac{1}{k^2}$
+    \item Alternatively, $\Pr(\abs{X-\mu}\leq k\sigma) \geq 1 - \frac{1}{k^2}$
+    \item Holds for \textbf{all} distributions with finite mean and variance
+    \item Gives a \textbf{lower bound} but not exact probability.
+  \end{itemize}
+  \section{MA1521 Shit}
+  \subsection{Taylor Series of $f$ at $a$}
+  $f(x) = \sum_{k=0}^{\infty}\frac{f^{(k)}(a)}{k!}(x-a)^k$
+  \subsection{MacLaurin Series}
+  Taylor series of $f$ at $0$, i.e.	$f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(0)}{n!}x^n$
+  \subsection{List of common MacLaurin Series}
+  \begin{itemize}
+    \item $\frac{1}{1-x} = \sum_{n=0}^{\infty} x^n, -1<x<1, R=1$
+    \item $\frac{1}{1+x} = \sum_{n=0}^{\infty} (-1)^n x^n, -1<x<1, R = 1$
+    \item $\frac{1}{1+x^2} = \sum_{n=0}^{\infty} x^2n, -1<x<1, R=1$
+    \item $ln(1+x) = \sum_{n=1}^{\infty} \frac{(-1)^{n-1}x^n}{n}, -1<x<1, R=1$
+    \item $\sin x = \sum_{n=0}^{\infty}\frac{(-1)^n x^{2n+1}}{(2n+1)!}, -\infty<x<\infty, R=\infty$
+    \item $\cos x = \sum_{n=1}^{\infty}\frac{(-1)^n x^2n}{(2n)!}, -\infty<x<\infty, R=\infty$
+    \item $e^x = \sum_{n=0}^{\infty} \frac{x^n}{n!}, -\infty<x<\infty, R=\infty$
+    \item $\tan^{-1} x = \sum_{n=0}^{\infty} \frac{(-1)^n}{2n+1}x^{2n+1}, -1\leq x\leq 1, R=1$
+    \item $\frac{1}{(1-x)^2}=\sum_{n=1}^{\infty}nx^{n-1},-1<x<1, R = 1$
+    \item $\frac{1}{(1-x)^3}=\frac{1}{2}\sum_{n=2}^{\infty}n(n-1)x^{n-2},-1<x<1, R = 1$
+    \item $(1+x)^k=\sum_{n=0}^{\infty} {k \choose n}x^n, -1<x<1,R = 1$
+    \item $(1+x)^n = 1 + nx + \frac{n(n-1)}{2!}x^2 + \frac{n(n-1)(n-2)}{3!}x^3+..., -1<x<1, R=1$
+  \end{itemize}
+  \subsection{Indefinite Integral}
+  Denoted by $\int f(x)dx = F(x) + C$
+  \subsection{Rules of Indefinite Integration}
+  \begin{enumerate}
+    \item $\int kf(x)dx=k\int f(x)dx$
+    \item $\int -f(x)dx=-\int f(x)dx$
+    \item $\int [f(x) \pm g(x)] dx=\int f(x)dx \pm \int g(x)dx$
+  \end{enumerate}
+  \subsection{Integral Formulae}
+  \begin{tabular}{c|c}
+    \hline
+    \textbf{Function}                 & \textbf{Integral}                             \\ \hline
+    $\int \cot x dx$                  & $\ln (\sin x) + C$                            \\ \hline
+    $\int \sec x\tan xdx$             & $\sec x+C$                                    \\ \hline
+    $\int \csc x\cot xdx$             & $\-\csc x+C$                                  \\ \hline
+    $\int \sec^2xdx$                  & $\tan x+C$                                    \\ \hline
+    $\int \csc^2xdx$                  & $-\cot x+C$                                   \\ \hline
+    $\int x^n dx$                     & $\frac{x^{n+1}}{n+1} +C, n\neq-1, n$ rational \\ \hline
+    $\int \frac{1}{\sqrt{a^2-x^2}}dx$ & $\sin^{-1} (\frac{x}{a}) + C$                 \\ \hline
+    $\int \frac{1}{a^2+x^2}dx$        & $\frac{1}{a}\tan^{-1} (\frac{x}{a}) + C$      \\ \hline
+    $\int 1 dx = \int dx$             & $x + C$                                       \\ \hline
+    $\int e^x dx$                     & $e^x + C$                                     \\ \hline
+    $\int a^x dx$                     & $\frac{a^x}{\ln a}$                           \\ \hline
+    $\int \ln x dx$                   & $x\ln x - x + C$                              \\ \hline
+    $\int \frac{1}{x}dx$              & $\ln x + C$                                   \\ \hline
+    $\int \sin kx dx$                 & $-\frac{\cos kx}{k} + C$                      \\ \hline
+    $\int \cos kx dx$                 & $\frac{\sin kx}{k}+C$                         \\ \hline
+    %  $\int \tan x dx$			& $\ln(\sec x)+C$ \textbf{or} $-\ln(\sec x)+C$\\ \hline
+
+
+
+    $\int \tan^2 x dx$                & $\tan x - x + C$                              \\ \hline
+    $\int \sec x dx$                  & $\ln(\sec x + \tan x) + C$                    \\ \hline
+    $\int \csc x dx$                  & $\ln(\csc x - \cot x) + C$                    \\ \hline
+  \end{tabular}
+
+  \subsection{Riemann (Definite) Integrals}
+  Riemann sum on $f$ on $[a,b] \approx \sum_{k=1}^{n}f(c_k)\Delta x$\\
+  Exact area = $\lim\limits_{n\to\infty}\sum_{k=1}^{n}f(c_k)\Delta x$\\
+  \textbf{Riemann Integral of $f$ over $[a,b]$}:\\ $\int_{a}^{b}f(x)dx=\lim\limits_{n\to\infty}\sum_{k=1}^{n}f(c_k)\Delta x$
+  \subsection{Rules of Definite Integrals}
+  \begin{enumerate}
+    \item $\int_{a}^{a} f(x) dx = 0$, $\int_{a}^{b} kf(x)dx = k\int_{a}^{b}f(x)dx$
+    \item $\int_{a}^{b} f(x) dx = -\int_{b}^{a} f(x)dx$
+    \item $\int_{a}^{b} [f(x) \pm g(x)] = \int_{a}^{b} f(x) \pm \int_{a}^{b} g(x)$
+    \item If $f(x) \geq g(x)$ on $[a,b]$, then $\int_{a}^{b} f(x) dc \geq \int_{a}^{b} g(x) dx$\\
+          If $f(x) \geq 0$ on $[a,b]$, then $\int_{a}^{b} f(x)dx \geq 0$
+    \item If $f$ is continuous on the interval joining $a,b$ and $c$,\\
+          then $ \int_{a}^{b}f(x)dx + \int_{b}^{c}f(x)dx = \int_{a}^{c}f(x)dx $
+  \end{enumerate}
+  \subsection{Fundamental Thm of Calculus}
+  $F'(x)=f(x)$
+  If $F$ is an antiderivative of $f$ on $[a,b]$, then
+  $ \int_{a}^{b} F'(x)dx=\int_{a}^{b} f(x)dx=F(b)-F(a) $\\x`
+  Let $f$ be continuous on $[a,b]$. Then\\
+  $ \frac{d}{dx}\int_{a}^{x}f(t)dt=f(x) $\\
+  Note the 2 $x$'s: on $\frac{d}{dx}$ and $\int_{a}^{x}$ and $f(t)$ is indep of $x$
+  \begin{enumerate}
+    \item $\frac{d}{dx} \int_{0}^{2}t^2dt=0$, $\frac{d}{dx}\int_{0}^{x}\sin \sqrt{t}dt=\sin\sqrt{x}$
+    \item $\frac{d}{dx}\left(\int_{1}^{x^4} \frac{t}{\sqrt{t^3+2}} dt\right)=\frac{d}{dx^4}\left(\int_{1}^{x^4} \frac{t}{\sqrt{t^3+2}}dt\right)\frac{dx^4}{dx}\\=\frac{x^4}{\sqrt{(x^4)^3+2}}(4x^3)=\frac{4x^7}{\sqrt{x^12+2}}$
+    \item $\frac{d}{dx} \int_{x}^{a} f(t)dt = -\frac{d}{dx}\int_{a}^{x} f(t)dt$
+    \item $\frac{d}{dx} \int_{x^2}^{x^4} f(t)dt=\frac{d}{dx} \int_{a}^{x^4}f(t)dt-\frac{d}{dx}\int_{a}^{x^2}f(t)dt$
+  \end{enumerate}
+  \subsection{Integration Methods}
+  \begin{descitemize}
+    \item [Integration by Substitution]:\\
+    Use the form $\int f(g(x))dg(x)$ OR use a dummy variable to get to a form in the Integral Formulae (taking into account chain rule)\\
+    \begin{tabular}{ c | c | c}
+      \hline
+      \textbf{Integral} & \textbf{Sub}    & \textbf{Use identity}          \\ \hline
+      $a^2 - u^2$       & $u=a\sin\theta$ & $1-\sin^2\theta=\cos^2\theta$  \\ \hline
+      $a^2 + u^2$       & $u=a\tan\theta$ & $1+\tan^2\theta=\sec^2\theta$  \\ \hline
+      $u^2-a^2$         & $u=a\sec\theta$ & $sec^2\theta - 1=\tan^2\theta$ \\ \hline
+    \end{tabular}
+    \item [Integration by Part]:\\
+    $ \int uv' dx = uv - \int u'v dx$\\
+    Choose $u$ by LIATE (Logarithmic, Inverse trigo, Algebraic, Trigo, Exponential)
+  \end{descitemize}
+  \subsection{Derivative Formulae}
+  \begin{tabular}{c | c}
+    \hline
+    Function        & Derivative                       \\ \hline
+    $(f(x))^n$      & $nf'(x)f(x)^{n-1}$               \\ \hline
+    $\sin f(x)$     & $f'(x)\cos f(x)$                 \\ \hline
+    $\cos f(x)$     & $-f'(x)\sin f(x)$                \\  \hline
+    $\tan f(x)$     & $f'(x)\sec^2 f(x)$               \\ \hline
+    $\cot f(x)$     & $-f'(x)\csc^2 f(x)$              \\ \hline
+    $\sec f(x)$     & $f'(x)\sec f(x) \tan f(x)$       \\ \hline
+    $\csc f(x)$     & $-f'(x)\csc f(x) \cot f(x)$      \\ \hline
+    $a^f(x)$        & $f'(x)a^{f(x)} \ln a$            \\ \hline
+    $k$             & $0$                              \\ \hline
+    $e^f(x)$        & $f'(x)e^{f(x)}$                  \\ \hline
+    $\log_af(x)$    & $\frac{f'(x)}{f(x) \ln a}$       \\ \hline
+    $\ln f(x)$      & $\frac{f'(x)}{f(x)}$             \\ \hline
+    $\sin^{-1}f(x)$ & $\frac{f'(x)}{\sqrt{1-f(x)^2}}$  \\ \hline
+    $\cos^{-1}f(x)$ & $-\frac{f'(x)}{\sqrt{1-f(x)^2}}$ \\ \hline
+    $\tan^{-1}f(x)$ & $\frac{f'(x)}{1+f(x)^2}$         \\ \hline
+  \end{tabular}
+  \subsection{Rules of Differentiation}
+  \begin{descitemize}
+    \item $(kf)'(x) = kf'(x)$
+    \item $(f \pm g)'(x) = f'(x) \pm g'(x)$
+    \item $\frac{d}{dx}uv=u\frac{dv}{dx}+v\frac{du}{dx}$
+    \item $\left(\frac{f}{g}\right)'(x) = \frac{f'(x)g(x)-f(x)g'(x)}{(g(x))^2}$
+    \item $\frac{d}{dx} f(g(x))=f'(g(x)) g'(x)$ or  $\frac{dy}{dx}=\frac{dy}{du}\cdot\frac{du}{dx}$
+  \end{descitemize}
+\end{multicols*}
+\end{document}
