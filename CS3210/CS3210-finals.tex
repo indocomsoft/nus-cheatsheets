@@ -274,10 +274,10 @@ outline/.style={draw=circle edge, thick}}
     \item Share the address space of the process -- all threads belonging to the same process see the same value -> \textbf{shared-memory arch}
     \item Thread generation is faster than process generation, diff threads can be assigned to run on diff cores of a multicore.
     \item 2 types:
-    \begin{itemize}
-      \item \textbf{User-level threads}: managed by a thread lib -- OS unaware of user-level threads. \textbf{Advantages:} switching thread context is fast, \textbf{Disadvantages:} OS cannot map diff threads of same process to diff exec resources -> no parallelism, OS cannot switch to another thread is 1 thread execs a blocking I/O op
-      \item \textbf{Kernel threads}: OS is aware of existence.
-    \end{itemize}
+          \begin{itemize}
+            \item \textbf{User-level threads}: managed by a thread lib -- OS unaware of user-level threads. \textbf{Advantages:} switching thread context is fast, \textbf{Disadvantages:} OS cannot map diff threads of same process to diff exec resources -> no parallelism, OS cannot switch to another thread is 1 thread execs a blocking I/O op
+            \item \textbf{Kernel threads}: OS is aware of existence.
+          \end{itemize}
     \item Global vars and all dynamically allocated data objects can be accessed by any thread
     \item Each thread has a private stack for function stack frames, existing iff the thread is active.
     \item No of threads shld be suitable to parallelism deg of application, available exec resources, not too large to keep the overhead small for thread creation, management, termination
@@ -287,59 +287,59 @@ outline/.style={draw=circle edge, thick}}
     \item \textbf{Race condition} = 2 concurrent threads accessed a shared resource without access sync
     \item Use \textbf{mutual exclusion} to sync access to shared resources, to protect \textbf{critical section} (c.s.)
     \item Requirements:
-    \begin{enumerate}
-      \item \textbf{Mutual exclusion (mutex)}: if one thread is in the critical section, then no other is
-      \item \textbf{Progress}: If some thread T is not in the c.s., then T cannot prevent some other thread S from entering the c.s. A thread in the c.s. will eventually leave it
-      \item \textbf{Bounded waiting (no starvation)}: If some thread T is waiting on the critical section, then T will eventually enter the critical section
-      \item \textbf{Performance}: The overhead of entering \& exiting the critical section is small w.r.t. the work being done within it.
-    \end{enumerate}
+          \begin{enumerate}
+            \item \textbf{Mutual exclusion (mutex)}: if one thread is in the critical section, then no other is
+            \item \textbf{Progress}: If some thread T is not in the c.s., then T cannot prevent some other thread S from entering the c.s. A thread in the c.s. will eventually leave it
+            \item \textbf{Bounded waiting (no starvation)}: If some thread T is waiting on the critical section, then T will eventually enter the critical section
+            \item \textbf{Performance}: The overhead of entering \& exiting the critical section is small w.r.t. the work being done within it.
+          \end{enumerate}
     \item \textbf{Starvation}: a process is prevented from making progressing because some other process has the resource it requires.
     \item \textbf{Deadlock} among a set of processes: if every process is waiting for an event that can be caused only by another process in the set. can arise when processes compete for access to limited resources, incorrectly synced.
     \item Condition for deadlock: if and only if these 4 conditions hold simultaneously:
-    \begin{enumerate}
-      \item \textbf{Mutex}: at least 1 resource must be held in non-sharable mode
-      \item \textbf{Hold and wait}: 1 process holding 1 resource and waiting for another resource
-      \item \textbf{No preemption} -- Resources cannot be preempted (c.s. cannot be aborted externally)
-      \item \textbf{Circular wait} -- There must exist a set of processes $p_1, p_2, ... p_n$ such that $p_1$ is waiting for $p_2$, $p_2$ for $p_3$, so on.
-    \end{enumerate}
+          \begin{enumerate}
+            \item \textbf{Mutex}: at least 1 resource must be held in non-sharable mode
+            \item \textbf{Hold and wait}: 1 process holding 1 resource and waiting for another resource
+            \item \textbf{No preemption} -- Resources cannot be preempted (c.s. cannot be aborted externally)
+            \item \textbf{Circular wait} -- There must exist a set of processes $p_1, p_2, ... p_n$ such that $p_1$ is waiting for $p_2$, $p_2$ for $p_3$, so on.
+          \end{enumerate}
     \item 4 Mechanisms:
   \end{itemize}
   \begin{enumerate}
     \item \textbf{Locks}
-    \begin{itemize}
-      \item 2 operations: \texttt{acquire()} to enter c.s., \texttt{release()} to leave c.s.
-      \item Pair calls to acquire and release, can spin (\textbf{spinlock}) or block (\textbf{mutex})
-    \end{itemize}
+          \begin{itemize}
+            \item 2 operations: \texttt{acquire()} to enter c.s., \texttt{release()} to leave c.s.
+            \item Pair calls to acquire and release, can spin (\textbf{spinlock}) or block (\textbf{mutex})
+          \end{itemize}
     \item \textbf{Semaphores}
-    \begin{itemize}
-      \item Abtract data type that provide mutex through atomic counters
-      \item "Integers" that support 2 operations: \texttt{wait()} -- decrement, block until semaphore is open. \texttt{signal()}, increment, allow another thread to enter
-      \item Safety property: semaphore value $\geq 0$
-      \item 2 Types: \textbf{Mutex/binary semaphore} -- only 1 can enter c.s., \textbf{Counting/general semaphore} -- multiple can enter c.s.
-      \item Drawback: shared global var, no connection b/w semaphore \& data being controlled, used for both c.s. (mutex) and coordination (scheduling), hard to use, bug-prone
-    \end{itemize}
+          \begin{itemize}
+            \item Abtract data type that provide mutex through atomic counters
+            \item "Integers" that support 2 operations: \texttt{wait()} -- decrement, block until semaphore is open. \texttt{signal()}, increment, allow another thread to enter
+            \item Safety property: semaphore value $\geq 0$
+            \item 2 Types: \textbf{Mutex/binary semaphore} -- only 1 can enter c.s., \textbf{Counting/general semaphore} -- multiple can enter c.s.
+            \item Drawback: shared global var, no connection b/w semaphore \& data being controlled, used for both c.s. (mutex) and coordination (scheduling), hard to use, bug-prone
+          \end{itemize}
     \item \textbf{Monitors \textmd{(the thread is "in the monitor")}}
-    \begin{itemize}
-      \item Guarantees mutex, only 1 thread can execute any monitor procedure at any time
-      \item If 2nd thread invokes a monitor procedure when a 1st thread is alr executing, it blocks (monitor has to have a wait queue)
-      \item If a thread within a monitor blocks, another one can enter
-      \item Programming lang construct that controls access to shared data, added by compiler, enforced at runtime
-      \item Encapsulates: Shared data structure, procedures that operate on the shared data structures, sync b/w concurrent threads that invoke the procedures
-    \end{itemize}
+          \begin{itemize}
+            \item Guarantees mutex, only 1 thread can execute any monitor procedure at any time
+            \item If 2nd thread invokes a monitor procedure when a 1st thread is alr executing, it blocks (monitor has to have a wait queue)
+            \item If a thread within a monitor blocks, another one can enter
+            \item Programming lang construct that controls access to shared data, added by compiler, enforced at runtime
+            \item Encapsulates: Shared data structure, procedures that operate on the shared data structures, sync b/w concurrent threads that invoke the procedures
+          \end{itemize}
     \item \textbf{Condition Variables}
-    \begin{itemize}
-      \item Support 3 operations: \texttt{wait()} -- release monitor lock, wait for condition var to be signalled, \texttt{signal()} wake up one waiting thread, \texttt{broadcast} wake up all waiting threads
-    \end{itemize}
+          \begin{itemize}
+            \item Support 3 operations: \texttt{wait()} -- release monitor lock, wait for condition var to be signalled, \texttt{signal()} wake up one waiting thread, \texttt{broadcast} wake up all waiting threads
+          \end{itemize}
     \item \textbf{Barrier}
     \item \textbf{Messages}\\
-    Simple model of communication \& sync based on atomic transfer of data across a channel
+          Simple model of communication \& sync based on atomic transfer of data across a channel
   \end{enumerate}
   \subsubsection{Classical Synchronisation Problems}
   Producer-consumer (finite, infinite buffer), Readers-writers, dining philosophers, barbershop
   \begin{enumerate}
     \item \textbf{Producer-consumer}
   \end{enumerate}
-\begin{verbatim}
+  \begin{verbatim}
 mutex = Semaphore(1)
 items = Semaphore(0)
 
@@ -370,14 +370,14 @@ void release(lock) { lock->held = 0; }
     \item Recap: $\text{CPU Time} = \frac{\text{Instructions}}{\text{Program}}\times\frac{\text{cycles}}{\text{instruction}}\times\frac{\text{seconds}}{\text{cycle}} = \frac{\text{seconds}}{\text{program}}$
     \item \textbf{Instruction/Program} affected by compiler \& ISA, \textbf{Cycles/Instruction} affected by processor implementation, \textbf{seconds/cycle} affected by clock speed (clock freq)
   \end{itemize}
-   \subsection{Sources of processor performance gain: ($x$ parallelism, $x$ is ...)}
-    \begin{itemize}
-      \item \textbf{Bit level}: word size, larger so no need bitslicing
-      \item \textbf{Instruction level}: \textbf{pipelining} (parallelism across time, split instr exec in multiple stages, allow multiple instr to occupy different stages in the same clock cycle given no data/control deps), \textbf{superscalar} (paralellism across space, duplicate pipelines, allow multiple instr to pass through the same stage, dispatching multiple instr to diff exec units in the processor, but scheduling is challenging (deciding which instr can be exec together))
-      \item \textbf{Thread level}: processor provides HW support for the thread context -- info specific to each thread (PC, Registers, etc) so software threads can execute in parallel. E.g. SMT: Intel HT
-      \item \textbf{Process level} -- process has independent memory space, communicate with IPC through OS. can be mapped to multiple processor cores
-      \item \textbf{Processor level}: \textbf{Shared memory}, \textbf{Distributed Memory}
-    \end{itemize}
+  \subsection{Sources of processor performance gain: ($x$ parallelism, $x$ is ...)}
+  \begin{itemize}
+    \item \textbf{Bit level}: word size, larger so no need bitslicing
+    \item \textbf{Instruction level}: \textbf{pipelining} (parallelism across time, split instr exec in multiple stages, allow multiple instr to occupy different stages in the same clock cycle given no data/control deps), \textbf{superscalar} (paralellism across space, duplicate pipelines, allow multiple instr to pass through the same stage, dispatching multiple instr to diff exec units in the processor, but scheduling is challenging (deciding which instr can be exec together))
+    \item \textbf{Thread level}: processor provides HW support for the thread context -- info specific to each thread (PC, Registers, etc) so software threads can execute in parallel. E.g. SMT: Intel HT
+    \item \textbf{Process level} -- process has independent memory space, communicate with IPC through OS. can be mapped to multiple processor cores
+    \item \textbf{Processor level}: \textbf{Shared memory}, \textbf{Distributed Memory}
+  \end{itemize}
   \subsection{Flynn's Parallel Architecture Taxonomy}
   \textbf{SISD (Single Instruction Single Data)}: Single instruction stream is executed, each instruction work on single data. E.g. uniprocessor; \textbf{SIMD}
   Single instruction stream, working on multiple data, exploting data parallelism, known as vector processor. E.g. SSE, AVX in x86; \textbf{MISD}
@@ -504,10 +504,10 @@ void release(lock) { lock->held = 0; }
   \begin{itemize}
     \item DAG, \textbf{node}: task, value = expected exec time; \textbf{edge}: control dep b/w task
     \item \textbf{Properties}:
-    \begin{itemize}
-      \item \textbf{Critical Path Length}: min (fastest) completion time
-      \item \textbf{Degree of concurrency} = total work / critical path length (indication of amount of work that can be done concurrently)
-    \end{itemize}
+          \begin{itemize}
+            \item \textbf{Critical Path Length}: min (fastest) completion time
+            \item \textbf{Degree of concurrency} = total work / critical path length (indication of amount of work that can be done concurrently)
+          \end{itemize}
   \end{itemize}
   \subsection{Representation of parallelism}
   \begin{tabularx}{0.5\columnwidth}{X}
@@ -574,19 +574,19 @@ void release(lock) { lock->held = 0; }
     \item $Time_{user}(A) = N_{cycle}(A) \times Time_{cycle}$, $N_{cycle}(A) = \sum\limits_{i = 1}^{n} n_i(A)\times CPI_i$
     \item Thus, $Time_{user}(A) = N_{instr}(A)\times CPI(A) \times Time_{cycle}$
     \item Refinement with memory access time:\\
-    $Time_{user}(A) = (N_{cycle}(A) + N_{mm\_cycle}(A)) \times Time_{cycle}$
+          $Time_{user}(A) = (N_{cycle}(A) + N_{mm\_cycle}(A)) \times Time_{cycle}$
     \item One-level cache: $N_{mm\_cycle}(A) = N_{read\_cycle}(A) + N_{write\_cycle}(A)$, $N_{read\_cycle}(A) = N_{read\_op}(A)\times R_{read\_miss}(A) \times N_{miss\_cycles}(A)$
     \item $Time_{user}(A) = (N_{instr}(A)\times CPI(A)) + N_{rw\_op}(A)\times R_{miss}(A) \times N_{miss\_cycles} \times Time_{cycle}$ ($R_{miss}(A)$ r/w miss rate)
     \item \textbf{Average memory access time}:\\
-    $T_{read\_access}(A) = T_{read\_hit} + R_{read\_miss}(A) \times T_{read\_miss}$
+          $T_{read\_access}(A) = T_{read\_hit} + R_{read\_miss}(A) \times T_{read\_miss}$
     \item \textbf{Two-level cache}:\\
-    $T_{read\_access}(A) = T^{L1}_{read\_hit} + R^{L1}_{read\_miss}(A) \times T^{L1}_{read\_miss}$\\
-    $T^{L1}_{read\_miss}(A)= T^{L2}_{read\_hit}(A) + R^{L2}_{read\_miss}(A) \times T^{L2}_{read\_miss}$\\
-    Global miss rate = $R^{L1}_{read\_miss}(A) \times R^{L2}_{read\_miss}(A)$
+          $T_{read\_access}(A) = T^{L1}_{read\_hit} + R^{L1}_{read\_miss}(A) \times T^{L1}_{read\_miss}$\\
+          $T^{L1}_{read\_miss}(A)= T^{L2}_{read\_hit}(A) + R^{L2}_{read\_miss}(A) \times T^{L2}_{read\_miss}$\\
+          Global miss rate = $R^{L1}_{read\_miss}(A) \times R^{L2}_{read\_miss}(A)$
   \end{itemize}
   \subsubsection{Throughput: MIPS (Million-Instruction-Per-Second)}
   $MIPS(A) = \frac{N_{instr}(A)}{Time_{user}(A)\times 10^6} = \frac{clock freq}{CPI(A) \times 10^6}$
-  
+
   \textbf{Drawbacks}: Consider only the no of instr, easily manipulated
   \subsubsection{Million-FLoating-point-Operations-Per-Second}
   $MFLOPS(A) = \frac{N_{flops}(A)}{Time_{user}(A) \times 10^6}$, \textbf{Drawbacks}: No differentiation between diff types of flops
@@ -661,13 +661,13 @@ void release(lock) { lock->held = 0; }
   Major Tasks:
   \begin{itemize}
     \item \textbf{Track cache line sharing status}, 2 major categories:
-    \begin{itemize}
-      \item \textbf{Snooping-based}: no centralised directory, each cache keeps track of the sharing status, cache \textbf{monitors/snoops} on the bus to update the status of cache line \& take appropriate action. Most common in arch with a bus. Granularity is cache block.
-      \begin{itemize}
-        \item All the processors on the bus can observe every bus transactions (\textbf{write propagation}), Bus transactions visible to the processors in the same order (\textbf{write serialisation})
-      \end{itemize}
-      \item \textbf{Directory based}: sharing status kept in a centralised location. Most common in NUMA
-    \end{itemize}
+          \begin{itemize}
+            \item \textbf{Snooping-based}: no centralised directory, each cache keeps track of the sharing status, cache \textbf{monitors/snoops} on the bus to update the status of cache line \& take appropriate action. Most common in arch with a bus. Granularity is cache block.
+                  \begin{itemize}
+                    \item All the processors on the bus can observe every bus transactions (\textbf{write propagation}), Bus transactions visible to the processors in the same order (\textbf{write serialisation})
+                  \end{itemize}
+            \item \textbf{Directory based}: sharing status kept in a centralised location. Most common in NUMA
+          \end{itemize}
     \item Handle the update to a shared cache line (maintain coherence)
   \end{itemize}
   \subsection{Memory Consistency Models}
@@ -722,15 +722,15 @@ void release(lock) { lock->held = 0; }
     \item \textbf{Baseline Network} -- Node $(\alpha, i)$ connects to 2 nodes $(\beta, i + 1)$ where $\beta = $ cyclic right shift of last (k-1) bits of $\alpha$ OR inversion of the LSBit of $\alpha$ + cyclic right shift of last (k-i) bits.
   \end{itemize}
   \begin{tabularx}{0.35\linewidth}{X}
-    Omega\\
+    Omega \\
     \includegraphics[width=\linewidth]{omega}
   \end{tabularx}
   \begin{tabularx}{0.3\linewidth}{X}
-    Butterfly\\
+    Butterfly \\
     \includegraphics[width=\linewidth]{butterfly}
   \end{tabularx}
   \begin{tabularx}{0.3\linewidth}{X}
-    Baseline\\
+    Baseline \\
     \includegraphics[width=\linewidth]{baseline}
   \end{tabularx}
   \subsection{Routing}
@@ -745,9 +745,9 @@ void release(lock) { lock->held = 0; }
   No of bits difference b/w 2 pairs of nodes = number of hops (hamming distance). Start from MSB to LSB (vice versa), find first different bit, go to neighbouring node with the bit corrected.
   \subsubsection{XOR-Tag Routing for Omega Network (Deterministic)}
   $T =$ Source Id $\oplus$ (XOR) Destination ID
-  
+
   A t stage-$k$: go straight if bit $k$ of $T$ is $0$, crossover if bit $k$ of $T$ is $1$
-  
+
   \section{Parallel Programming Models}
   \subsection{Data Distribution}
   \textbf{Assumptions:} $p$ identical processors, array starts from 1, Block size = B = $\left\lceil\frac{n}{p}\right\rceil$
@@ -777,267 +777,267 @@ void release(lock) { lock->held = 0; }
     \item Assumes disjoint memory space -- data exchange through dedicated comm ops
     \item 2 main types of data exchange: point-to-point and global communication
     \item Examples:
-    \begin{itemize}
-      \item \textbf{Single transfer}: point-to-point, \texttt{send} and \texttt{receive}
-      \item \textbf{Scatter/Gather}: takes elements and distributes them in order of process rank
-      \item \textbf{Single Broadcast}: takes a single data element at the root and copies it to all other
-      \item \textbf{Multi Broadcast}: (\texttt{MPI\_Allgather}) "Gather + Single Broadcast"
-      \item \textbf{Single accumulation}: reduction (binary, associative, commutative) op applied to all elements, result stored in root (Gather + Reduce)
-      \item \textbf{Multi accumulation}: "Accumulation + Scatter"
-      \item \textbf{Total Exchange}: (\texttt{MPI\_Alltoall}) "transpose"
-    \end{itemize}
+          \begin{itemize}
+            \item \textbf{Single transfer}: point-to-point, \texttt{send} and \texttt{receive}
+            \item \textbf{Scatter/Gather}: takes elements and distributes them in order of process rank
+            \item \textbf{Single Broadcast}: takes a single data element at the root and copies it to all other
+            \item \textbf{Multi Broadcast}: (\texttt{MPI\_Allgather}) "Gather + Single Broadcast"
+            \item \textbf{Single accumulation}: reduction (binary, associative, commutative) op applied to all elements, result stored in root (Gather + Reduce)
+            \item \textbf{Multi accumulation}: "Accumulation + Scatter"
+            \item \textbf{Total Exchange}: (\texttt{MPI\_Alltoall}) "transpose"
+          \end{itemize}
   \end{itemize}
-\includegraphics[width=0.33\linewidth]{scattergather}
-\includegraphics[width=0.33\linewidth]{singlebcast}
-\includegraphics[width=0.33\linewidth]{multibcast}
-\includegraphics[width=0.33\linewidth]{singleaccu}
-\includegraphics[width=0.33\linewidth]{multiaccu}
-\includegraphics[width=0.33\linewidth]{totalexch}
+  \includegraphics[width=0.33\linewidth]{scattergather}
+  \includegraphics[width=0.33\linewidth]{singlebcast}
+  \includegraphics[width=0.33\linewidth]{multibcast}
+  \includegraphics[width=0.33\linewidth]{singleaccu}
+  \includegraphics[width=0.33\linewidth]{multiaccu}
+  \includegraphics[width=0.33\linewidth]{totalexch}
   \begin{itemize}
     \item \textbf{Duality of comm ops}: interconnection can be represented by a spanning tree. Duality if the same spanning tree can be used for both ops
   \end{itemize}
-\includegraphics[width=0.5\linewidth]{duality1}
-\includegraphics[width=0.5\linewidth]{duality2}
-\section{Message Passing Programming}
-Loosely synchronous paradigm, tasks sync to perform interactions, but otherwise exec is async: \textbf{SPMD} (Single Program Multiple Data) model
-\begin{tabularx}{\columnwidth}{l | X | X}
-  & \textbf{Blocking} & \textbf{Non-Blocking} \\ \hline
-  \textbf{Buffered} & Sending process returns after data has been copied into comm buffer & Sending process returns after initiating DMA transfer to buffer, may not be complete \\ \hline
-  \textbf{Non-bufferred} & Sending process blocks until matching receive operation has been encountered & \\
-\end{tabularx}
-\begin{itemize}
-  \item \textbf{Blocking} = send op blocks until it is safe. Issue: deadlock
-  \item \textbf{Non-blocking} = send/recv returns before it is safe -- generally accompanied by a check-status op. Used correctly, can overlap comm overheads with useful computations
-  \item \textbf{Non-buffered}, issues: idling (timing mismatch sender <-> recvr)
-  \item \textbf{Buffered}: buffers at both ends, trades idling overhead for buffer copying overhead
-\end{itemize}
-Summary = \textbf{Overhead}: idling (non-buffered) vs buffer management (buffered), \textbf{Side effect}: safe and easier programming (blocking) vs hiding comm overhead (non-blocking)
-\subsection{Message Passing Interface (MPI)}
-\subsubsection{Semantic, Local View}
-\begin{itemize}
-  \item \textbf{Blocking}: return from lib call indicates user is allowed to reuse resources specified
-  \item \textbf{Non-blocking}: may return before op completes, before user is allowed to reuse resources
-\end{itemize}
-\subsubsection{Semantic, Global View}
-\begin{itemize}
-  \item \textbf{Synchronous}: comm op doesn't complete before both processes have started their comm op
-  \item \textbf{Asynchronous}: sender can execute its comm op without any coordination with the receiver
-\end{itemize}
-\begin{tabularx}{\columnwidth}{l | X | X}
- & \textbf{Synchronous} & \textbf{Asynchronous} \\ \hline
-\textbf{Blocking} & \texttt{MPI\_SSend}, \texttt{MPI\_SRecv} & \texttt{MPI\_Send}, \texttt{MPI\_Recv} \\ \hline
-\textbf{Non-blocking} & \texttt{MPI\_ISSend}, \texttt{MPI\_ISRecv} & \texttt{MPI\_ISend}, \texttt{MPI\_IRecv}
-\end{tabularx}
-\subsubsection{Initialisation, Finalisation, Abort}
-\begin{itemize}
-  \item \mintinline{C}{int MPI_Init(int* argc, char** argv[])}, initialise MPI program, called only once
-  \item \mintinline{C}{int MPI_Finalize(void)}, terminate all MPI processing, last MPI call
-  \item \mintinline{C}{int MPI_Abort(MPI_Comm comm, int errorCode)}, force all processes to terminate, return errorCode to \texttt{mpirun}
-  \item Other functions: \texttt{MPI\_Comm\_size}, \texttt{MPI\_Comm\_rank}
-\end{itemize}
-\subsubsection{MPI Messages Format}
-\begin{itemize}
-  \item \textbf{Message} = data + envelope (how to route the data)
-  \item \textbf{Data} = start-buffer (pointer to data) + count + datatype
-  \item \textbf{Envelope} = destination/source (using rank in a communicator) + tag (arbitrary number to distinguish messages) + communicator
-\end{itemize}
-\subsubsection{Process Group}
-\begin{itemize}
-  \item An ordered set or processes where each process has a unique rank
-  \item A process may be member of multiple groups (and may have diff ranks in each of these groups) -- handled by MPI
-\end{itemize}
-\subsubsection{Communicator}
-\begin{itemize}
-  \item Communication domain for a group of processes
-  \item 2 types: \textbf{Intra-communicators} (supports the execution of arbitrary collective comm op on a single group, default: \texttt{MPI\_COMM\_WORLD}), \textbf{Inter-communicators} (supports the point-to-point comm op b/w 2 process groups)
-  \item Allows to organise tasks based on func into task groups, Enable collective communication operations across a subset of related tasks, Provide basis for user-defined virtual topologies
-\end{itemize}
-\subsubsection{Process Virtual Topologies}
-\begin{itemize}
-  \item A communicator with a Cartesian style of addressing the ranks of the processes
-  \item \texttt{MPI\_Cartdim\_get} and \texttt{MPI\_Cart} prefix: \texttt{create}, \texttt{get}, \texttt{coords}, \texttt{rank}, \texttt{shift}
-\end{itemize}
-\subsubsection{MPI Point-to-Point communication}
-\begin{tabularx}{0.6\linewidth}{X}
-  \includegraphics[width=\linewidth]{mpi}
-\end{tabularx}
-\begin{tabularx}{0.4\linewidth}{X}
-  Messages to one particular destination are delivered in the order they are sent.\\
-  \\
-  No guarantee for multiple messages to multiple destinations
-\end{tabularx}
-\subsubsection{Deadlocks}
-\begin{verbatim}
+  \includegraphics[width=0.5\linewidth]{duality1}
+  \includegraphics[width=0.5\linewidth]{duality2}
+  \section{Message Passing Programming}
+  Loosely synchronous paradigm, tasks sync to perform interactions, but otherwise exec is async: \textbf{SPMD} (Single Program Multiple Data) model
+  \begin{tabularx}{\columnwidth}{l | X | X}
+                           & \textbf{Blocking}                                                            & \textbf{Non-Blocking}                                                                \\ \hline
+    \textbf{Buffered}      & Sending process returns after data has been copied into comm buffer          & Sending process returns after initiating DMA transfer to buffer, may not be complete \\ \hline
+    \textbf{Non-bufferred} & Sending process blocks until matching receive operation has been encountered &                                                                                      \\
+  \end{tabularx}
+  \begin{itemize}
+    \item \textbf{Blocking} = send op blocks until it is safe. Issue: deadlock
+    \item \textbf{Non-blocking} = send/recv returns before it is safe -- generally accompanied by a check-status op. Used correctly, can overlap comm overheads with useful computations
+    \item \textbf{Non-buffered}, issues: idling (timing mismatch sender <-> recvr)
+    \item \textbf{Buffered}: buffers at both ends, trades idling overhead for buffer copying overhead
+  \end{itemize}
+  Summary = \textbf{Overhead}: idling (non-buffered) vs buffer management (buffered), \textbf{Side effect}: safe and easier programming (blocking) vs hiding comm overhead (non-blocking)
+  \subsection{Message Passing Interface (MPI)}
+  \subsubsection{Semantic, Local View}
+  \begin{itemize}
+    \item \textbf{Blocking}: return from lib call indicates user is allowed to reuse resources specified
+    \item \textbf{Non-blocking}: may return before op completes, before user is allowed to reuse resources
+  \end{itemize}
+  \subsubsection{Semantic, Global View}
+  \begin{itemize}
+    \item \textbf{Synchronous}: comm op doesn't complete before both processes have started their comm op
+    \item \textbf{Asynchronous}: sender can execute its comm op without any coordination with the receiver
+  \end{itemize}
+  \begin{tabularx}{\columnwidth}{l | X | X}
+                          & \textbf{Synchronous}                       & \textbf{Asynchronous}                    \\ \hline
+    \textbf{Blocking}     & \texttt{MPI\_SSend}, \texttt{MPI\_SRecv}   & \texttt{MPI\_Send}, \texttt{MPI\_Recv}   \\ \hline
+    \textbf{Non-blocking} & \texttt{MPI\_ISSend}, \texttt{MPI\_ISRecv} & \texttt{MPI\_ISend}, \texttt{MPI\_IRecv}
+  \end{tabularx}
+  \subsubsection{Initialisation, Finalisation, Abort}
+  \begin{itemize}
+    \item \mintinline{C}{int MPI_Init(int* argc, char** argv[])}, initialise MPI program, called only once
+    \item \mintinline{C}{int MPI_Finalize(void)}, terminate all MPI processing, last MPI call
+    \item \mintinline{C}{int MPI_Abort(MPI_Comm comm, int errorCode)}, force all processes to terminate, return errorCode to \texttt{mpirun}
+    \item Other functions: \texttt{MPI\_Comm\_size}, \texttt{MPI\_Comm\_rank}
+  \end{itemize}
+  \subsubsection{MPI Messages Format}
+  \begin{itemize}
+    \item \textbf{Message} = data + envelope (how to route the data)
+    \item \textbf{Data} = start-buffer (pointer to data) + count + datatype
+    \item \textbf{Envelope} = destination/source (using rank in a communicator) + tag (arbitrary number to distinguish messages) + communicator
+  \end{itemize}
+  \subsubsection{Process Group}
+  \begin{itemize}
+    \item An ordered set or processes where each process has a unique rank
+    \item A process may be member of multiple groups (and may have diff ranks in each of these groups) -- handled by MPI
+  \end{itemize}
+  \subsubsection{Communicator}
+  \begin{itemize}
+    \item Communication domain for a group of processes
+    \item 2 types: \textbf{Intra-communicators} (supports the execution of arbitrary collective comm op on a single group, default: \texttt{MPI\_COMM\_WORLD}), \textbf{Inter-communicators} (supports the point-to-point comm op b/w 2 process groups)
+    \item Allows to organise tasks based on func into task groups, Enable collective communication operations across a subset of related tasks, Provide basis for user-defined virtual topologies
+  \end{itemize}
+  \subsubsection{Process Virtual Topologies}
+  \begin{itemize}
+    \item A communicator with a Cartesian style of addressing the ranks of the processes
+    \item \texttt{MPI\_Cartdim\_get} and \texttt{MPI\_Cart} prefix: \texttt{create}, \texttt{get}, \texttt{coords}, \texttt{rank}, \texttt{shift}
+  \end{itemize}
+  \subsubsection{MPI Point-to-Point communication}
+  \begin{tabularx}{0.6\linewidth}{X}
+    \includegraphics[width=\linewidth]{mpi}
+  \end{tabularx}
+  \begin{tabularx}{0.4\linewidth}{X}
+    Messages to one particular destination are delivered in the order they are sent. \\
+    \\
+    No guarantee for multiple messages to multiple destinations
+  \end{tabularx}
+  \subsubsection{Deadlocks}
+  \begin{verbatim}
 MPI_Recv(recvbuf, ...);          MPI_Recv(recvbuf, ...);
 MPI_Send(sendbuf, ...);          MPI_Send(sendbuf, ...);
 \end{verbatim}
-\begin{itemize}
-  \item For \texttt{MPI\_Recv}, as above
-  \item For \texttt{MPI\_Send}, occurs when runtime doesn't use system buffers/system buffers are too small.
-  \item \textbf{Deadlock-free logical ring}: procs w/ even rank: send -> receive; odd rank: receive -> send
-\end{itemize}
-\subsubsection{Collective Communication}
-\begin{tabularx}{0.5\linewidth}{X}
-\includegraphics[width=\linewidth]{mpicollective}
-\end{tabularx}
-\begin{tabularx}{0.5\linewidth}{X}
   \begin{itemize}
-    \item Operations involving all procs in a communicator, blocking by default
-    \item \textbf{Scatter}: one-to-many
-    \item \textbf{Gather}: many-to-one (with/without accumulation)
-    \item \texttt{int MPI\_Barrier(MPI\_Comm);} the only collective sync op -- all procs must execute, blocks until all procs reach the barrier
+    \item For \texttt{MPI\_Recv}, as above
+    \item For \texttt{MPI\_Send}, occurs when runtime doesn't use system buffers/system buffers are too small.
+    \item \textbf{Deadlock-free logical ring}: procs w/ even rank: send -> receive; odd rank: receive -> send
   \end{itemize}
-\end{tabularx}
-\subsubsection{Measuring Program Timing}
-\begin{itemize}
-  \item \mintinline{C}{double MPI_Wtime(void)} Time in seconds since an arbitrary time in the past.
-  \item \mintinline{C}{double MPI_Wtick(void)} Time in seconds of resolution of \texttt{MPI\_Wtime}
-\end{itemize}
-\section{CUDA Programming}
-\subsection{GPU Architecture}
-\begin{itemize}
-  \item Multiple \textbf{Streaming Multiprocessors} (SMs) -- memory, cache, connecting interface
-  \item SM consists of multiple compute cores, memories (registers, L1 cache, texture memory, shared memory), logic for thread \& instruction management
-\end{itemize}
-\subsection{CUDA Kernel and Threads}
-\begin{itemize}
-  \item \textbf{Device} = GPU, \textbf{Host} = CPU, \textbf{Kernel} = function that runs on device
-  \item Parallel portions execute on device as kernels, one kernel at a time, 1 kernel = many threads
-  \item CUDA threads are extremely lightweight, very little creation overhead, instant switching
-  \item All threads run the same code -- SPMD (Single Program Multiple Data)
-\end{itemize}
-\subsection{Thread Cooperation}
-\begin{itemize}
-  \item Share results to save computation, share memory accesses to reduce bandwidth
-  \item Divide monolithic thread array into multiple blocks
-  \item In a block: \textbf{shared memory, atomic ops, barrier sync}. Threads in diff blocks can't cooperate
-  \item HW is free to schedule thread blocks to any processor at any time
-\end{itemize}
-\subsection{Thread Hierarchy}
-\begin{itemize}
-  \item A kernel is executed by a grid of thread blocks. A block executes on 1 SM, does not migrate.
-  \item Several blocks can reside concurrently on 1 SM, limited by control limitations (32 blocks/SM, 1024 threads/block) and resources (register file and shared memory are partitioned among all resident threads)
-\end{itemize}
-\subsection{Thread Execution Mapping to Architecture}
-\begin{itemize}
-  \item SIMT (Single Instruction Multiple Thread) execution model
-  \item SM creates, manages, schedules, executes threads in SIMT warps (group of 32 parallel threads). Threads in a warp start together at the same program address. A block is always split into warps the same way
-  \item Warp executes 1 common instruction at a time. Scheduler optimises by grouping threads with the same exec paths in the same SIMT unit
-\end{itemize}
-\subsection{CUDA Memory Model}
-\begin{tabularx}{\columnwidth}{l|l|l|l|l|l}
-  \textbf{Memory} & \textbf{Location} & \textbf{Cached} & \textbf{Access} & \textbf{Scope} & \textbf{Lifetime} \\ \hline
-  Register & on chip & n/a & R/W & 1 thread & thread \\ \hline
-  Local & off chip & No & R/W & 1 thread & thread \\ \hline
-  Shared & on chip & n/a & R/W & All threads in block & block \\ \hline
-  Global & off chip & No & R/W & All threads + host & host alloc \\ \hline
-  Constant & off chip & Yes & R & All threads + host & host alloc \\ \hline
-  Texture & off chip & Yes & R & All threads + host & host alloc \\
-\end{tabularx}
-\begin{itemize}
-  \item \textbf{Shared} = higher bandwidth and lower latency than local/global. Divided into equal-sized mem mods called \textbf{banks}. Access to diff banks can be simultaneous. \textbf{Bank conflict}: mem request in the same bank, has to be serialised
-  \item \textbf{Local}: automatic array vars alloc by compiler, \textbf{Texture}: for spatially coherent random-access r/o data (provides filtering, address clamping, wrapping)
-\end{itemize}
-\subsection{Programming in CUDA}
-\begin{itemize}
-  \item \textbf{Func qual}: \mintinline{C}{__host__}, \mintinline{C}{__device__}, \mintinline{C}{__global__}, \textbf{Launching kernel:} \mintinline{C}{kernel<<<80, 64>>>}, \textbf{Var qual:} \mintinline{C}{__device__}, \mintinline{C}{__constant__}, \mintinline{C}{__shared__}, \textbf{unqualified}: scalar, built-in vector  stored in registers, arrays of more than 4 elements orruntime indices stored in local mem
-  \item \textbf{Thread synchronisation}: \mintinline{C}{void __syncthreads()}, generates barrier sync instruction
-\end{itemize}
-\subsection{Memory Optimisations}
-Minimise data transfer between host and device mem, use page-locked/pinned mem transfer. Overlapping async transfers with GPU computations
-\subsubsection{Coalesced access to Global Mem}
-Simultaneous accesses to global mem by threads in a half-warp can be coalesced into as few as a single mem txn of 32, 64, or 128 bytes
-\subsubsection{Overall Memory Optimisations}
-Minimize data transfer between host and device, Ensure global memory accesses are coalesced whenever possible, Minimize global memory accesses by using shared memory, Minimize bank conflicts in shared memory accesses
-\subsection{Overall Optimisation}
-\begin{itemize}
-  \item \textbf{Maximise parallel exec}: restructure algo to expose as much data parallelism as possible, map to HW carefully choosing exec config of each kernel invocation
-  \item \textbf{Optimizing memory usage} to achieve maximum memory bandwidth: diff mem spaces and access patterns
-  \item \textbf{Optimizing instruction usage} to achieve maximum instruction throughput: Use high throughput arithmetic instructions, avoid diff exec paths within the same warp
-\end{itemize}
-\section{Parallel Algorithm Design}
-\subsection{Overheads of Parallelism}
-\textbf{Tradeoff}: task granularity -- small to reduce overhead, large to still have enough parallel work
-\subsection{General Design Approach}
-\begin{itemize}
-  \item Consider machine independent issues before machine specific aspects of design
-  \item Task/Channel model: \textbf{Tasks} interact by sending messages through \textbf{channels} 
-\end{itemize}
-\subsection{Foster's Design Methodology}
-\subsubsection{Partitioning}
-\begin{itemize}
-  \item Divide \textbf{computation} \& \textbf{data} into independent pieces to discover max parallelism.
-  \item Data centric -- \textbf{Domain decomposition}: divide data into pieces of approx. equal size, determine how to associate computations with the data
-  \item Computation centric -- \textbf{Functional decomposition}: divide computation into pieces, determine how to associate data with the computations.
-  \item \textbf{Rules of thumb}: at least 10x more primitive tasks than processors, minimise redundant computations and data storage, primitive tasks roughly same size, no of tasks an increasing function of problem size
-\end{itemize}
-\subsubsection{Communication}
-\vspace{-1mm}
-\begin{tabularx}{0.5\linewidth}{X}
-  \includegraphics[width=\linewidth]{localcomm}
-\end{tabularx}
-\begin{tabularx}{0.5\linewidth}{X}
-\begin{itemize}
-  \item \textbf{Local communication}: task needs data from a small no of other tasks ("neighbours"), create channels illustrating data flow
-  \item \textbf{Global communication}: significant no of tasks contribute data to perform a computation, don't create channels for them early in design
-  \item Ideally, distribute and overlap computation and communication
-\end{itemize}
-\end{tabularx}
-\begin{itemize}
-  \item Local comm: 2 finite diff update strategies. Parallel: time t unshaded, time (t+1) shaded
-  \item Global comm: optimisation through pipeline/divide-and-conquer
-\end{itemize}
-\subsubsection{Agglomeration}
-\begin{itemize}
-  \item Combine tasks into larger tasks to improve perf (reduce task creation and comm overhead), maintain scalability, simplify programming
-  \item In MPI, goal: create 1 agglomerated task/processor
-  \item E.g. reduce dim of decomposition from 3 to 2, \textbf{3D decomposition}: combine adjacent tasks, \textbf{divide-and-conquer}: coalesce sub-trees, \textbf{tree algo} -- nodes are combined
-  \item Rules of thumb: increase locality of parallel algo, no of tasks increases with problem size, no of tasks suitable for target, reasonable trade-off b/w agglomeration and code modification
-\end{itemize}
-\subsubsection{Mapping}
-\begin{itemize}
-  \item Assigning tasks to processors, performed by OS (centralised multiprocessor), User (distributed mem systems)
-  \item Conflicting goals: \textbf{Maximise processor util} -- place tasks on diff processors to increase parallelism, \textbf{Minimise inter-processor comm} -- place tasks that communicate frequently on the same processor to increase locality
-\end{itemize}
-\begin{tabularx}{0.68\linewidth}{X}
-  \includegraphics[width=\linewidth]{map}
-\end{tabularx}
-\begin{tabularx}{0.3\linewidth}{X}
-  \textbf{Rules of thumb}: Finding optimal mapping in general is NP-hard (thus, must rely on heuristic), consider designs based on 1 task/processor and multiple tasks/processor, evaluate static \& dynamic alloc (dynamic -> ensure task allocator not a bottleneck, static -> ratio of tasks:processors at least 10:1) 
-\end{tabularx}
-\section{Energy-efficient Computing and Data Centers}
-\subsubsection{ARM Cortex-A family Vs general purpose Intel/AMD x86 servers}
-\begin{tabularx}{\columnwidth}{X|X}
-\textbf{Similarities} & \textbf{Differences} \\ \hline
-\begin{itemize}
-  \item Processors cores + RAM + I/O interfaces + misc. peripherals
-  \item Cores use similar exec model (pipelines)
-  \item Memory hierarchy (L1 + L2 + RAM)
-  \item Uses Virtual Memory
-  \item Uses commodity Linux -- Supports all programming models available on Linux, most server SW is available, Porting is trivial
-  \item Hardware virtualization, hardware-level security
-\end{itemize} &
-\begin{itemize}
-  \item RISC Instruction-Set Architecture
-  \item Heterogeneous cores (big.LITTLE) -- Fast cores / slow cores
-  \item Lower instruction-level parallelism exploitation
-  \item Smaller L1/L2 caches
-  \item Less RAM (0.5 GB – 4GB), typically non-upgradable, depends on config
-  \item Lower main-memory bandwidth
-  \item Simpler I/O interfaces (USB2.0/USB 3.0/SATA2), next gen: PCI-Express, SATA 3
-\end{itemize}
-\end{tabularx}
-\subsection{Cloud Computing}
-\begin{itemize}
-  \item Abstraction of underlying applications, information, content and resources, allows resources to be provided and consumed in a more elastic manner and on demand.
-  \item Models: Software/Platform/Infrastructure as a Service (SaaS e.g. Google Apps; PaaS, e.g. Google App Engine; IaaS, e.g. Amazon EC2)
-  \item Deployment models: Private, Community, Public, Hybrid Cloud
-  \item Characteristics: On-demand self-service, Broad network access, Resource pooling, Rapid elasticity, Measured service
-\end{itemize}
-\subsection{Virtualisation}
-\begin{itemize}
-  \item Creation of a virtual version of something. Access resource without being concerned with where and how the resource is physically located/managed.
-  \item Types: \textbf{Services}, \textbf{Server}, \textbf{Storage}, \textbf{Network}
-\end{itemize}
+  \subsubsection{Collective Communication}
+  \begin{tabularx}{0.5\linewidth}{X}
+    \includegraphics[width=\linewidth]{mpicollective}
+  \end{tabularx}
+  \begin{tabularx}{0.5\linewidth}{X}
+    \begin{itemize}
+      \item Operations involving all procs in a communicator, blocking by default
+      \item \textbf{Scatter}: one-to-many
+      \item \textbf{Gather}: many-to-one (with/without accumulation)
+      \item \texttt{int MPI\_Barrier(MPI\_Comm);} the only collective sync op -- all procs must execute, blocks until all procs reach the barrier
+    \end{itemize}
+  \end{tabularx}
+  \subsubsection{Measuring Program Timing}
+  \begin{itemize}
+    \item \mintinline{C}{double MPI_Wtime(void)} Time in seconds since an arbitrary time in the past.
+    \item \mintinline{C}{double MPI_Wtick(void)} Time in seconds of resolution of \texttt{MPI\_Wtime}
+  \end{itemize}
+  \section{CUDA Programming}
+  \subsection{GPU Architecture}
+  \begin{itemize}
+    \item Multiple \textbf{Streaming Multiprocessors} (SMs) -- memory, cache, connecting interface
+    \item SM consists of multiple compute cores, memories (registers, L1 cache, texture memory, shared memory), logic for thread \& instruction management
+  \end{itemize}
+  \subsection{CUDA Kernel and Threads}
+  \begin{itemize}
+    \item \textbf{Device} = GPU, \textbf{Host} = CPU, \textbf{Kernel} = function that runs on device
+    \item Parallel portions execute on device as kernels, one kernel at a time, 1 kernel = many threads
+    \item CUDA threads are extremely lightweight, very little creation overhead, instant switching
+    \item All threads run the same code -- SPMD (Single Program Multiple Data)
+  \end{itemize}
+  \subsection{Thread Cooperation}
+  \begin{itemize}
+    \item Share results to save computation, share memory accesses to reduce bandwidth
+    \item Divide monolithic thread array into multiple blocks
+    \item In a block: \textbf{shared memory, atomic ops, barrier sync}. Threads in diff blocks can't cooperate
+    \item HW is free to schedule thread blocks to any processor at any time
+  \end{itemize}
+  \subsection{Thread Hierarchy}
+  \begin{itemize}
+    \item A kernel is executed by a grid of thread blocks. A block executes on 1 SM, does not migrate.
+    \item Several blocks can reside concurrently on 1 SM, limited by control limitations (32 blocks/SM, 1024 threads/block) and resources (register file and shared memory are partitioned among all resident threads)
+  \end{itemize}
+  \subsection{Thread Execution Mapping to Architecture}
+  \begin{itemize}
+    \item SIMT (Single Instruction Multiple Thread) execution model
+    \item SM creates, manages, schedules, executes threads in SIMT warps (group of 32 parallel threads). Threads in a warp start together at the same program address. A block is always split into warps the same way
+    \item Warp executes 1 common instruction at a time. Scheduler optimises by grouping threads with the same exec paths in the same SIMT unit
+  \end{itemize}
+  \subsection{CUDA Memory Model}
+  \begin{tabularx}{\columnwidth}{l|l|l|l|l|l}
+    \textbf{Memory} & \textbf{Location} & \textbf{Cached} & \textbf{Access} & \textbf{Scope}       & \textbf{Lifetime} \\ \hline
+    Register        & on chip           & n/a             & R/W             & 1 thread             & thread            \\ \hline
+    Local           & off chip          & No              & R/W             & 1 thread             & thread            \\ \hline
+    Shared          & on chip           & n/a             & R/W             & All threads in block & block             \\ \hline
+    Global          & off chip          & No              & R/W             & All threads + host   & host alloc        \\ \hline
+    Constant        & off chip          & Yes             & R               & All threads + host   & host alloc        \\ \hline
+    Texture         & off chip          & Yes             & R               & All threads + host   & host alloc        \\
+  \end{tabularx}
+  \begin{itemize}
+    \item \textbf{Shared} = higher bandwidth and lower latency than local/global. Divided into equal-sized mem mods called \textbf{banks}. Access to diff banks can be simultaneous. \textbf{Bank conflict}: mem request in the same bank, has to be serialised
+    \item \textbf{Local}: automatic array vars alloc by compiler, \textbf{Texture}: for spatially coherent random-access r/o data (provides filtering, address clamping, wrapping)
+  \end{itemize}
+  \subsection{Programming in CUDA}
+  \begin{itemize}
+    \item \textbf{Func qual}: \mintinline{C}{__host__}, \mintinline{C}{__device__}, \mintinline{C}{__global__}, \textbf{Launching kernel:} \mintinline{C}{kernel<<<80, 64>>>}, \textbf{Var qual:} \mintinline{C}{__device__}, \mintinline{C}{__constant__}, \mintinline{C}{__shared__}, \textbf{unqualified}: scalar, built-in vector  stored in registers, arrays of more than 4 elements orruntime indices stored in local mem
+    \item \textbf{Thread synchronisation}: \mintinline{C}{void __syncthreads()}, generates barrier sync instruction
+  \end{itemize}
+  \subsection{Memory Optimisations}
+  Minimise data transfer between host and device mem, use page-locked/pinned mem transfer. Overlapping async transfers with GPU computations
+  \subsubsection{Coalesced access to Global Mem}
+  Simultaneous accesses to global mem by threads in a half-warp can be coalesced into as few as a single mem txn of 32, 64, or 128 bytes
+  \subsubsection{Overall Memory Optimisations}
+  Minimize data transfer between host and device, Ensure global memory accesses are coalesced whenever possible, Minimize global memory accesses by using shared memory, Minimize bank conflicts in shared memory accesses
+  \subsection{Overall Optimisation}
+  \begin{itemize}
+    \item \textbf{Maximise parallel exec}: restructure algo to expose as much data parallelism as possible, map to HW carefully choosing exec config of each kernel invocation
+    \item \textbf{Optimizing memory usage} to achieve maximum memory bandwidth: diff mem spaces and access patterns
+    \item \textbf{Optimizing instruction usage} to achieve maximum instruction throughput: Use high throughput arithmetic instructions, avoid diff exec paths within the same warp
+  \end{itemize}
+  \section{Parallel Algorithm Design}
+  \subsection{Overheads of Parallelism}
+  \textbf{Tradeoff}: task granularity -- small to reduce overhead, large to still have enough parallel work
+  \subsection{General Design Approach}
+  \begin{itemize}
+    \item Consider machine independent issues before machine specific aspects of design
+    \item Task/Channel model: \textbf{Tasks} interact by sending messages through \textbf{channels}
+  \end{itemize}
+  \subsection{Foster's Design Methodology}
+  \subsubsection{Partitioning}
+  \begin{itemize}
+    \item Divide \textbf{computation} \& \textbf{data} into independent pieces to discover max parallelism.
+    \item Data centric -- \textbf{Domain decomposition}: divide data into pieces of approx. equal size, determine how to associate computations with the data
+    \item Computation centric -- \textbf{Functional decomposition}: divide computation into pieces, determine how to associate data with the computations.
+    \item \textbf{Rules of thumb}: at least 10x more primitive tasks than processors, minimise redundant computations and data storage, primitive tasks roughly same size, no of tasks an increasing function of problem size
+  \end{itemize}
+  \subsubsection{Communication}
+  \vspace{-1mm}
+  \begin{tabularx}{0.5\linewidth}{X}
+    \includegraphics[width=\linewidth]{localcomm}
+  \end{tabularx}
+  \begin{tabularx}{0.5\linewidth}{X}
+    \begin{itemize}
+      \item \textbf{Local communication}: task needs data from a small no of other tasks ("neighbours"), create channels illustrating data flow
+      \item \textbf{Global communication}: significant no of tasks contribute data to perform a computation, don't create channels for them early in design
+      \item Ideally, distribute and overlap computation and communication
+    \end{itemize}
+  \end{tabularx}
+  \begin{itemize}
+    \item Local comm: 2 finite diff update strategies. Parallel: time t unshaded, time (t+1) shaded
+    \item Global comm: optimisation through pipeline/divide-and-conquer
+  \end{itemize}
+  \subsubsection{Agglomeration}
+  \begin{itemize}
+    \item Combine tasks into larger tasks to improve perf (reduce task creation and comm overhead), maintain scalability, simplify programming
+    \item In MPI, goal: create 1 agglomerated task/processor
+    \item E.g. reduce dim of decomposition from 3 to 2, \textbf{3D decomposition}: combine adjacent tasks, \textbf{divide-and-conquer}: coalesce sub-trees, \textbf{tree algo} -- nodes are combined
+    \item Rules of thumb: increase locality of parallel algo, no of tasks increases with problem size, no of tasks suitable for target, reasonable trade-off b/w agglomeration and code modification
+  \end{itemize}
+  \subsubsection{Mapping}
+  \begin{itemize}
+    \item Assigning tasks to processors, performed by OS (centralised multiprocessor), User (distributed mem systems)
+    \item Conflicting goals: \textbf{Maximise processor util} -- place tasks on diff processors to increase parallelism, \textbf{Minimise inter-processor comm} -- place tasks that communicate frequently on the same processor to increase locality
+  \end{itemize}
+  \begin{tabularx}{0.68\linewidth}{X}
+    \includegraphics[width=\linewidth]{map}
+  \end{tabularx}
+  \begin{tabularx}{0.3\linewidth}{X}
+    \textbf{Rules of thumb}: Finding optimal mapping in general is NP-hard (thus, must rely on heuristic), consider designs based on 1 task/processor and multiple tasks/processor, evaluate static \& dynamic alloc (dynamic -> ensure task allocator not a bottleneck, static -> ratio of tasks:processors at least 10:1)
+  \end{tabularx}
+  \section{Energy-efficient Computing and Data Centers}
+  \subsubsection{ARM Cortex-A family Vs general purpose Intel/AMD x86 servers}
+  \begin{tabularx}{\columnwidth}{X|X}
+    \textbf{Similarities}       & \textbf{Differences} \\ \hline
+    \begin{itemize}
+      \item Processors cores + RAM + I/O interfaces + misc. peripherals
+      \item Cores use similar exec model (pipelines)
+      \item Memory hierarchy (L1 + L2 + RAM)
+      \item Uses Virtual Memory
+      \item Uses commodity Linux -- Supports all programming models available on Linux, most server SW is available, Porting is trivial
+      \item Hardware virtualization, hardware-level security
+    \end{itemize} &
+    \begin{itemize}
+      \item RISC Instruction-Set Architecture
+      \item Heterogeneous cores (big.LITTLE) -- Fast cores / slow cores
+      \item Lower instruction-level parallelism exploitation
+      \item Smaller L1/L2 caches
+      \item Less RAM (0.5 GB – 4GB), typically non-upgradable, depends on config
+      \item Lower main-memory bandwidth
+      \item Simpler I/O interfaces (USB2.0/USB 3.0/SATA2), next gen: PCI-Express, SATA 3
+    \end{itemize}
+  \end{tabularx}
+  \subsection{Cloud Computing}
+  \begin{itemize}
+    \item Abstraction of underlying applications, information, content and resources, allows resources to be provided and consumed in a more elastic manner and on demand.
+    \item Models: Software/Platform/Infrastructure as a Service (SaaS e.g. Google Apps; PaaS, e.g. Google App Engine; IaaS, e.g. Amazon EC2)
+    \item Deployment models: Private, Community, Public, Hybrid Cloud
+    \item Characteristics: On-demand self-service, Broad network access, Resource pooling, Rapid elasticity, Measured service
+  \end{itemize}
+  \subsection{Virtualisation}
+  \begin{itemize}
+    \item Creation of a virtual version of something. Access resource without being concerned with where and how the resource is physically located/managed.
+    \item Types: \textbf{Services}, \textbf{Server}, \textbf{Storage}, \textbf{Network}
+  \end{itemize}
 \end{multicols*}
 \end{document}

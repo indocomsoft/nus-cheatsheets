@@ -285,11 +285,11 @@ outline/.style={draw=circle edge, thick}}
     \item Thread generation is faster than process generation
     \item Diff threads can be assigned to run on diff cores of a multicore
     \item 2 types:
-    \begin{itemize}
-      \item \textbf{User-level threads}: managed by a thread lib -- OS unaware of user-level threads. \textbf{Advantages:} switching thread context is fast, \textbf{Disadvantages:} OS cannot map diff threads of same process to diff exec resources -> no parallelism, OS cannot switch to another thread is 1 thread execs a blocking I/O op
-      \item \textbf{Kernel threads}: OS is aware of existence.
-      \item \textbf{Mapping User to Kernel Threads}
-    \end{itemize}
+          \begin{itemize}
+            \item \textbf{User-level threads}: managed by a thread lib -- OS unaware of user-level threads. \textbf{Advantages:} switching thread context is fast, \textbf{Disadvantages:} OS cannot map diff threads of same process to diff exec resources -> no parallelism, OS cannot switch to another thread is 1 thread execs a blocking I/O op
+            \item \textbf{Kernel threads}: OS is aware of existence.
+            \item \textbf{Mapping User to Kernel Threads}
+          \end{itemize}
     \item Global vars and all dynamically allocated data objects can be accessed by any thread
     \item Each thread has a private stack for function stack frames, existing iff the thread is active.
     \item No of threads should be suitable to parallelism degree of application, available execution resources, not too large to keep the overhead for thread creation, management, termination small
@@ -299,63 +299,63 @@ outline/.style={draw=circle edge, thick}}
     \item \textbf{Race condition} = 2 concurrent threads accessed a shared resource without any access synchronisation
     \item Use \textbf{mutual exclusion} to sync access to shared resources. Code sequence that uses mutex is called \textbf{critical section} (c.s.)
     \item Requirements:
-    \begin{enumerate}
-      \item \textbf{Mutual exclusion (mutex)}: if one thread is in the critical section, then no other is
-      \item \textbf{Progress}: If some thread T is not in the critical section, then T cannot prevent some other thread S from entering the critical section. A thread in the critical section will eventually leave it
-      \item \textbf{Bounded waiting (no starvation)}: If some thread T is waiting on the critical section, then T will eventually enter the critical section
-      \item \textbf{Performance}: The overhead of entering \& exiting the critical section is small w.r.t. the work being done within it.
-    \end{enumerate}
+          \begin{enumerate}
+            \item \textbf{Mutual exclusion (mutex)}: if one thread is in the critical section, then no other is
+            \item \textbf{Progress}: If some thread T is not in the critical section, then T cannot prevent some other thread S from entering the critical section. A thread in the critical section will eventually leave it
+            \item \textbf{Bounded waiting (no starvation)}: If some thread T is waiting on the critical section, then T will eventually enter the critical section
+            \item \textbf{Performance}: The overhead of entering \& exiting the critical section is small w.r.t. the work being done within it.
+          \end{enumerate}
     \item \textbf{Starvation}: a process is prevented from making progressing because some other process has the resource it requires.
     \item \textbf{Deadlock} among a set of processes: if every process is waiting for an event that can be caused only by another process in the set. can arise when processes compete for access to limited resources, incorrectly synced.
     \item Condition for deadlock: if and only if these 4 conditions hold simultaneously:
-    \begin{enumerate}
-      \item \textbf{Mutex}: at least 1 resource must be held in non-sharable mode
-      \item \textbf{Hold and wait}: There must be 1 process hilding 1 resource and waiting for another resource
-      \item \textbf{No preemption} -- Resources cannot be preempted (critical sections cannot be aborted externally)
-      \item \textbf{Circular wait} -- There must exist a set of processes $p_1, p_2, ... p_n$ such that $p_1$ is waiting for $p_2$, $p_2$ for $p_3$, so on.
-    \end{enumerate}
+          \begin{enumerate}
+            \item \textbf{Mutex}: at least 1 resource must be held in non-sharable mode
+            \item \textbf{Hold and wait}: There must be 1 process hilding 1 resource and waiting for another resource
+            \item \textbf{No preemption} -- Resources cannot be preempted (critical sections cannot be aborted externally)
+            \item \textbf{Circular wait} -- There must exist a set of processes $p_1, p_2, ... p_n$ such that $p_1$ is waiting for $p_2$, $p_2$ for $p_3$, so on.
+          \end{enumerate}
     \item 4 Mechanisms:
   \end{itemize}
   \begin{enumerate}
     \item \textbf{Locks}
-    \begin{itemize}
-      \item 2 operations: \texttt{acquire()} to enter c.s., \texttt{release()} to leave c.s.
-      \item Pair calls to acquire and release, can spin (\textbf{spinlock}) or block (\textbf{mutex})
-    \end{itemize}
+          \begin{itemize}
+            \item 2 operations: \texttt{acquire()} to enter c.s., \texttt{release()} to leave c.s.
+            \item Pair calls to acquire and release, can spin (\textbf{spinlock}) or block (\textbf{mutex})
+          \end{itemize}
     \item \textbf{Semaphores}
-    \begin{itemize}
-      \item Abtract data type that provide mutex through atomic counters
-      \item "Integers" that support 2 operations: \texttt{wait()} -- decrement, block until semaphore is open. \texttt{signal()}, increment, allow another thread to enter
-      \item Safety property: semaphore value $\geq 0$
-      \item 2 Types: Mutex/binary semaphore -- only 1 can enter c.s., Counting/general semaphore -- multiple can enter c.s.
-      \item Drawback: shared global variable, no connection between the semaphore and the data being controlled, used for both c.s. (mutex) and coordination (scheduling), hard to use, prone to bugs
-    \end{itemize}
+          \begin{itemize}
+            \item Abtract data type that provide mutex through atomic counters
+            \item "Integers" that support 2 operations: \texttt{wait()} -- decrement, block until semaphore is open. \texttt{signal()}, increment, allow another thread to enter
+            \item Safety property: semaphore value $\geq 0$
+            \item 2 Types: Mutex/binary semaphore -- only 1 can enter c.s., Counting/general semaphore -- multiple can enter c.s.
+            \item Drawback: shared global variable, no connection between the semaphore and the data being controlled, used for both c.s. (mutex) and coordination (scheduling), hard to use, prone to bugs
+          \end{itemize}
     \item \textbf{Monitors}
-    \begin{itemize}
-      \item Guarantees mutex, only 1 thread can execute any monitor procedure at any time (the thread is "in the monitor")
-      \item If 2nd thread invokes a monitor procedure when a 1st thread is alr executing, it blocks (monitor has to have a wait queue)
-      \item If a thread within a monitor blocks, another one can enter
-      \item Programming lang construct that controls access to shared data, added by compiler, enforced at runtime
-      \item Encapsulates: Shared data structure, procedures that operate on the shared data structures, sync b/w concurrent threads that invoke the procedures
-    \end{itemize}
+          \begin{itemize}
+            \item Guarantees mutex, only 1 thread can execute any monitor procedure at any time (the thread is "in the monitor")
+            \item If 2nd thread invokes a monitor procedure when a 1st thread is alr executing, it blocks (monitor has to have a wait queue)
+            \item If a thread within a monitor blocks, another one can enter
+            \item Programming lang construct that controls access to shared data, added by compiler, enforced at runtime
+            \item Encapsulates: Shared data structure, procedures that operate on the shared data structures, sync b/w concurrent threads that invoke the procedures
+          \end{itemize}
     \item \textbf{Condition Variables}
-    \begin{itemize}
-      \item Support 3 operations: \texttt{wait()} -- release monitor lock, wait for condition var to be signalled, \texttt{signal()} wake up one waiting thread, \texttt{broadcast} wake up all waiting threads
-    \end{itemize}
+          \begin{itemize}
+            \item Support 3 operations: \texttt{wait()} -- release monitor lock, wait for condition var to be signalled, \texttt{signal()} wake up one waiting thread, \texttt{broadcast} wake up all waiting threads
+          \end{itemize}
     \item \textbf{Barrier}
     \item \textbf{Messages}\\
-    Simple model of communication \& sync based on atomic transfer of data across a channel, Direct application to distributed systems, Messages for synchronisation are straightforward
+          Simple model of communication \& sync based on atomic transfer of data across a channel, Direct application to distributed systems, Messages for synchronisation are straightforward
   \end{enumerate}
   \subsubsection{Classical Synchronisation Problems}
   Producer-consumer (finite, infinite buffer), Readers-writers, dining philosophers, barbershop
   \begin{enumerate}
     \item \textbf{Producer-consumer}
-    \begin{verbatim}
+          \begin{verbatim}
     mutex = Semaphore(1)
     items = Semaphore(0)
     \end{verbatim}
-    \begin{multicols*}{2}
-      \begin{verbatim}
+          \begin{multicols*}{2}
+            \begin{verbatim}
 // Producer
 event = waitForEvent()
 // finite: spaces.wait()
@@ -364,7 +364,7 @@ buffer.add(event)
 mutex.signal()
 items.signal()
       \end{verbatim}
-      \begin{verbatim}
+            \begin{verbatim}
 // Consumer
 items.wait()
 mutex.wait()
@@ -373,7 +373,7 @@ mutex.signal()
 // finite: spaces.signal()
 event.proces()
       \end{verbatim}
-    \end{multicols*}
+          \end{multicols*}
   \end{enumerate}
   \subsection{Implementing Locks}
   \begin{itemize}
@@ -394,14 +394,14 @@ void release(lock) { lock->held = 0; }
     \item Recap: $\text{CPU Time} = \frac{\text{Instructions}}{\text{Program}}\times\frac{\text{cycles}}{\text{instruction}}\times\frac{\text{seconds}}{\text{cycle}} = \frac{\text{seconds}}{\text{program}}$
     \item \textbf{Instruction/Program} affected by compiler \& ISA, \textbf{Cycles/Instruction} affected by processor implementation, \textbf{seconds/cycle} affected by clock speed (clock freq)
   \end{itemize}
-   \subsection{Sources of processor performance gain: ($x$ parallelism, $x$ is ...)}
-    \begin{itemize}
-      \item \textbf{Bit level}: word size, larger so no need bitslicing
-      \item \textbf{Instruction level}: \textbf{pipelining} (parallelism across time, split instruction execution in multiple stages, allow multiple instructions to occupy different stages in the same clock cycle given no data/control dependencies), \textbf{superscalar} (paralellism across space, duplicate pipelines, allow multiple instructions to pass through the same stage, dispatching multiple instructions to diff execution units in the processor, but scheduling is challenging (deciding which instructions can be executed together))
-      \item \textbf{Thread level}: processor provides hardware support for the "thread context" -- information specific to each thread (PC, Registers, etc) so software threads can execute in parallel. E.g. SMT: Intel Hyper-threading
-      \item \textbf{Process level} -- process has independent memory space, communicate with IPC through OS. can be mapped to multiple processor cores
-      \item \textbf{Processor level}: \textbf{Shared memory}, \textbf{Distributed Memory}
-    \end{itemize}
+  \subsection{Sources of processor performance gain: ($x$ parallelism, $x$ is ...)}
+  \begin{itemize}
+    \item \textbf{Bit level}: word size, larger so no need bitslicing
+    \item \textbf{Instruction level}: \textbf{pipelining} (parallelism across time, split instruction execution in multiple stages, allow multiple instructions to occupy different stages in the same clock cycle given no data/control dependencies), \textbf{superscalar} (paralellism across space, duplicate pipelines, allow multiple instructions to pass through the same stage, dispatching multiple instructions to diff execution units in the processor, but scheduling is challenging (deciding which instructions can be executed together))
+    \item \textbf{Thread level}: processor provides hardware support for the "thread context" -- information specific to each thread (PC, Registers, etc) so software threads can execute in parallel. E.g. SMT: Intel Hyper-threading
+    \item \textbf{Process level} -- process has independent memory space, communicate with IPC through OS. can be mapped to multiple processor cores
+    \item \textbf{Processor level}: \textbf{Shared memory}, \textbf{Distributed Memory}
+  \end{itemize}
   \subsection{Flynn's Parallel Architecture Taxonomy}
   \textbf{SISD (Single Instruction Single Data)}: A single instruction stream is executed, each instruction work on single data. E.g. uniprocessor; \textbf{SIMD}
   A single instruction stream, working on multiple data, exploting data parallelism, known as vector processor. E.g. SSE, AVX in x86; \textbf{MISD}
@@ -526,10 +526,10 @@ void release(lock) { lock->held = 0; }
   \begin{itemize}
     \item A directed acyclic graph, \textbf{node}: task, value = expected exec time; \textbf{edge}: control dep b/w task
     \item \textbf{Properties}:
-    \begin{itemize}
-      \item \textbf{Critical Path Length}: min (fastest) completion time
-      \item \textbf{Degree of concurrency} = total work / critical path length (indication of amount of work that can be done concurrently)
-    \end{itemize}
+          \begin{itemize}
+            \item \textbf{Critical Path Length}: min (fastest) completion time
+            \item \textbf{Degree of concurrency} = total work / critical path length (indication of amount of work that can be done concurrently)
+          \end{itemize}
   \end{itemize}
   \subsection{Representation of parallelism}
   %\includegraphics[width=0.55\linewidth]{parallelism-rep}
@@ -593,15 +593,15 @@ void release(lock) { lock->held = 0; }
     \item $Time_{user}(A) = N_{cycle}(A) \times Time_{cycle}$, $N_{cycle}(A) = \sum\limits_{i = 1}^{n} n_i(A)\times CPI_i$
     \item Thus, $Time_{user}(A) = N_{instr}(A)\times CPI(A) \times Time_{cycle}$
     \item Refinement with memory access time:\\
-    $Time_{user}(A) = (N_{cycle}(A) + N_{mm\_cycle}(A)) \times Time_{cycle}$
+          $Time_{user}(A) = (N_{cycle}(A) + N_{mm\_cycle}(A)) \times Time_{cycle}$
     \item One-level cache: $N_{mm\_cycle}(A) = N_{read\_cycle}(A) + N_{write\_cycle}(A)$, $N_{read\_cycle}(A) = N_{read\_op}(A)\times R_{read\_miss}(A) \times N_{miss\_cycles}(A)$
     \item $Time_{user}(A) = (N_{instr}(A)\times CPI(A)) + N_{rw\_op}(A)\times R_{miss}(A) \times N_{miss\_cycles} \times Time_{cycle}$ ($R_{miss}(A)$ r/w miss rate)
     \item \textbf{Average memory access time}:\\
-    $T_{read\_access}(A) = T_{read\_hit} + R_{read\_miss}(A) \times T_{read\_miss}$
+          $T_{read\_access}(A) = T_{read\_hit} + R_{read\_miss}(A) \times T_{read\_miss}$
     \item \textbf{Two-level cache}:\\
-    $T_{read\_access}(A) = T^{L1}_{read\_hit} + R^{L1}_{read\_miss}(A) \times T^{L1}_{read\_miss}$\\
-    $T^{L1}_{read\_miss}(A)= T^{L2}_{read\_hit}(A) + R^{L2}_{read\_miss}(A) \times T^{L2}_{read\_miss}$\\
-    Global miss rate = $R^{L1}_{read\_miss}(A) \times R^{L2}_{read\_miss}(A)$
+          $T_{read\_access}(A) = T^{L1}_{read\_hit} + R^{L1}_{read\_miss}(A) \times T^{L1}_{read\_miss}$\\
+          $T^{L1}_{read\_miss}(A)= T^{L2}_{read\_hit}(A) + R^{L2}_{read\_miss}(A) \times T^{L2}_{read\_miss}$\\
+          Global miss rate = $R^{L1}_{read\_miss}(A) \times R^{L2}_{read\_miss}(A)$
   \end{itemize}
   \subsubsection{Throughput: MIPS (Million-Instruction-Per-Second)}
   \begin{itemize}
@@ -684,13 +684,13 @@ void release(lock) { lock->held = 0; }
   Major Tasks:
   \begin{itemize}
     \item \textbf{Track cache line sharing status}, 2 major categories:
-    \begin{itemize}
-      \item \textbf{Snooping-based}: no centralised directory, each cache keeps track of the sharing status, cache \textbf{monitors/snoops} on the bus to update the status of cache line \& take appropriate action. Most common in arch with a bus. Granularity is cache block.
-      \begin{itemize}
-        \item All the processors on the bus can observe every bus transactions (\textbf{write propagation}), Bus transactions visible to the processors in the same order (\textbf{write serialisation})
-      \end{itemize}
-      \item \textbf{Directory based}: sharing status kept in a centralised location. Most common in NUMA
-    \end{itemize}
+          \begin{itemize}
+            \item \textbf{Snooping-based}: no centralised directory, each cache keeps track of the sharing status, cache \textbf{monitors/snoops} on the bus to update the status of cache line \& take appropriate action. Most common in arch with a bus. Granularity is cache block.
+                  \begin{itemize}
+                    \item All the processors on the bus can observe every bus transactions (\textbf{write propagation}), Bus transactions visible to the processors in the same order (\textbf{write serialisation})
+                  \end{itemize}
+            \item \textbf{Directory based}: sharing status kept in a centralised location. Most common in NUMA
+          \end{itemize}
     \item Handle the update to a shared cache line (maintain coherence)
   \end{itemize}
   \subsection{Memory Consistency Models}
@@ -745,15 +745,15 @@ void release(lock) { lock->held = 0; }
     \item \textbf{Baseline Network} -- Node $(\alpha, i)$ connects to 2 nodes $(\beta, i + 1)$ where $\beta = $ cyclic right shift of last (k-1) bits of $\alpha$ OR inversion of the LSBit of $\alpha$ + cyclic right shift of last (k-i) bits.
   \end{itemize}
   \begin{tabularx}{0.32\linewidth}{X}
-    Omega\\
+    Omega \\
     \includegraphics[width=\linewidth]{omega}
   \end{tabularx}
   \begin{tabularx}{0.32\linewidth}{X}
-    Butterfly\\
+    Butterfly \\
     \includegraphics[width=\linewidth]{butterfly}
   \end{tabularx}
   \begin{tabularx}{0.32\linewidth}{X}
-    Baseline\\
+    Baseline \\
     \includegraphics[width=\linewidth]{baseline}
   \end{tabularx}
   \subsection{Routing}
