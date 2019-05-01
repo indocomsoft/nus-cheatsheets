@@ -249,7 +249,7 @@ outline/.style={draw=circle edge, thick}}
 
   \setlength\columnsep{1.5pt}
   \setlength\columnseprule{0.1pt}
-  
+
 \begin{document}
 \setlength{\abovedisplayskip}{0pt}
 \setlength{\belowdisplayskip}{0pt}
@@ -279,9 +279,9 @@ outline/.style={draw=circle edge, thick}}
   A software emulation of hardware -- \textbf{virtualisation} of underlying hardware (illusion of complete hardware).
   \begin{itemize}
     \item \textbf{Type 1 Hypervisor}:\\
-      Provides individual VMs to guest OS's (e.g. IBM VM/370)
+          Provides individual VMs to guest OS's (e.g. IBM VM/370)
     \item \textbf{Type 2 Hypervisor}:\\
-      Runs in host OS, guest OS runs inside VM (e.g. VMware)
+          Runs in host OS, guest OS runs inside VM (e.g. VMware)
   \end{itemize}
 
   \section{Process Abstraction}
@@ -291,19 +291,19 @@ outline/.style={draw=circle edge, thick}}
     \item Information required to describe a running program (Memory context, hardware context, OS context)
     \item An executable binary consists of two major components: instructions and data
     \item During execution, more information:
-    \begin{itemize}
-      \item \textbf{Memory context}: text, data, stack, heap
-      \item \textbf{Hardware context}: General Purpose Registers, Program Counter, Stack Pointer, Stack FP, ...
-      \item \textbf{OS context}: PID, Process state, ...
-    \end{itemize}
+          \begin{itemize}
+            \item \textbf{Memory context}: text, data, stack, heap
+            \item \textbf{Hardware context}: General Purpose Registers, Program Counter, Stack Pointer, Stack FP, ...
+            \item \textbf{OS context}: PID, Process state, ...
+          \end{itemize}
   \end{itemize}
   \begin{tabularx}{0.72\columnwidth}{X}
     \includegraphics[width=\linewidth]{stack-memory}
   \end{tabularx}
   \begin{tabularx}{0.25\columnwidth}{X}
-    Note:\\ in this case, stack grows upwards, heap grows downwards
+    Note: \\ in this case, stack grows upwards, heap grows downwards
   \end{tabularx}
-  
+
   \subsection{Stack Memory}
   \begin{itemize}
     \item New memory region to store information of a function invocation
@@ -323,13 +323,13 @@ outline/.style={draw=circle edge, thick}}
     \item OS dependent: Are PID's reused? Are there reserved PID's? Does it limit max number of processes?
   \end{itemize}
   \begin{tabular}{l}
-    \textbf{5 State Process Model}:\\
+    \textbf{5 State Process Model}: \\
     \includegraphics[width=0.55\linewidth]{process-state}
   \end{tabular}
   \begin{tabularx}{0.4\columnwidth}{X}
-  \begin{itemize}
-    \item \textbf{Process State} = indication of the execution status
-  \end{itemize}
+    \begin{itemize}
+      \item \textbf{Process State} = indication of the execution status
+    \end{itemize}
   \end{tabularx}
   \begin{enumerate}
     \item \textbf{New}: process created, may still be initialising, not yet ready
@@ -358,15 +358,15 @@ outline/.style={draw=circle edge, thick}}
   \begin{itemize}
     \item API to OS -- different from normal function call in that have to change from user mode -> kernel mode
     \item General System Call Mechanism:
-    \begin{enumerate}
-      \item User program invokes the library call (using normal function call mechanism)
-      \item Library call places the system call number in a designated location (e.g. register)
-      \item Library call executes a special instruction to switch user -> kernel mode (commonly known as TRAP)
-      \item In kernel mode, the dispatching to the appropriate system call handler by dispatcher
-      \item System call handler is executed
-      \item System call handler ended, control return to library call, switch kernel -> user mode
-      \item Library call return to user program via normal function return mechanism
-    \end{enumerate}
+          \begin{enumerate}
+            \item User program invokes the library call (using normal function call mechanism)
+            \item Library call places the system call number in a designated location (e.g. register)
+            \item Library call executes a special instruction to switch user -> kernel mode (commonly known as TRAP)
+            \item In kernel mode, the dispatching to the appropriate system call handler by dispatcher
+            \item System call handler is executed
+            \item System call handler ended, control return to library call, switch kernel -> user mode
+            \item Library call return to user program via normal function return mechanism
+          \end{enumerate}
   \end{itemize}
   \subsection{Exception \& Interrupt}
   \textbf{Exception}:
@@ -426,7 +426,7 @@ outline/.style={draw=circle edge, thick}}
     \item Select the task with the smallest total CPU time, thus \textbf{guaranteeing} smallest average waiting time.
     \item Shortcomings: Need to know total CPU time for a task in advance (have to guess if not available), starvation is possible (biased towards short jobs, long jobs may never get a chance)
     \item Predicting CPU Time, common approach (\textbf{Exponential Average}):\\
-    $\text{Predicted}_{n+1} = \alpha \text{Actual}_n + (1-\alpha)\text{Predicted}_n$, where $\alpha =$ degree of weighting decrease, higher $\alpha$ discounts older observations faster
+          $\text{Predicted}_{n+1} = \alpha \text{Actual}_n + (1-\alpha)\text{Predicted}_n$, where $\alpha =$ degree of weighting decrease, higher $\alpha$ discounts older observations faster
   \end{itemize}
   \subsubsection{Shortest Remaining Time (SRT)}
   \begin{itemize}
@@ -438,12 +438,12 @@ outline/.style={draw=circle edge, thick}}
 
   \subsection{Scheduling for Interactive Systems}
   \begin{itemize}
-    \item 
-    Criteria:
-    \begin{itemize}
-      \item \textbf{Response time}: Time between request and response by system
-      \item \textbf{Predictability}: Lesser variation in response time
-    \end{itemize}
+    \item
+          Criteria:
+          \begin{itemize}
+            \item \textbf{Response time}: Time between request and response by system
+            \item \textbf{Predictability}: Lesser variation in response time
+          \end{itemize}
     \item Preemptive scheduling algorithms are used to ensure good response time, thus scheduler needs to run periodically.
     \item \textbf{Timer interrupt} = interrupt that goes off periodically based on hardware clock
     \item Timer interrupt handler \textbf{invokes OS scheduler}.
@@ -471,19 +471,19 @@ outline/.style={draw=circle edge, thick}}
   \begin{itemize}
     \item Adaptive, minimising both response time for IO-bound and turnaround time for CPU-bound
     \item Rules:
-    \begin{itemize}
-      \item Priority(A) $>$ Priority(B) -> A runs
-      \item Priority(A) == Priority(B) -> A and B in RR
-      \item New job -> highest priority
-      \item If a job fully utilised its time slice -> priority reduced
-      \item If a job gives up/blocks before it finishes the time slice -> priority retained
-    \end{itemize}
+          \begin{itemize}
+            \item Priority(A) $>$ Priority(B) -> A runs
+            \item Priority(A) == Priority(B) -> A and B in RR
+            \item New job -> highest priority
+            \item If a job fully utilised its time slice -> priority reduced
+            \item If a job gives up/blocks before it finishes the time slice -> priority retained
+          \end{itemize}
     \item \textbf{Shortcomings}: (1) Starvation -- if there are too many interactive jobs, long-running jobs will starve, (2) gaming the scheduler by running for 99\% of time quantum, then relinquish the CPU, (3) a program may change its behaviour CPU-bound -> interactive
     \item Possible solution:
-    \begin{itemize}
-      \item \textbf{Priority boost}: after some time period S, move all jobs to the highest priority. Guaranteeing no starvation as highest priority -> RR, and the case when CPU-bound job has become interactive
-      \item \textbf{Better accounting}: Once a job uses up its time allotment at a given level, its priority is reduced
-    \end{itemize}
+          \begin{itemize}
+            \item \textbf{Priority boost}: after some time period S, move all jobs to the highest priority. Guaranteeing no starvation as highest priority -> RR, and the case when CPU-bound job has become interactive
+            \item \textbf{Better accounting}: Once a job uses up its time allotment at a given level, its priority is reduced
+          \end{itemize}
   \end{itemize}
   \subsubsection{Lottery Scheduling}
   \begin{itemize}
@@ -497,10 +497,10 @@ outline/.style={draw=circle edge, thick}}
   \section{Process Alternative -- Threads}
   \begin{itemize}
     \item Motivation:
-    \begin{itemize}
-      \item Process is expensive: under \texttt{fork()} model -- duplicate memory space and process context, context switch requires saving/restoration of process information
-      \item Hard for independent processes to communicate with each other: independent memory space -- no easy way to pass information, requires Inter-Process Communication (IPC)
-    \end{itemize}
+          \begin{itemize}
+            \item Process is expensive: under \texttt{fork()} model -- duplicate memory space and process context, context switch requires saving/restoration of process information
+            \item Hard for independent processes to communicate with each other: independent memory space -- no easy way to pass information, requires Inter-Process Communication (IPC)
+          \end{itemize}
     \item A traditional process has a single thread of control -- only one instruction of the whole program is executing at any one time. Instead, we add more threads of control such that multiple parts of the program are executing simultaneously conceptually.
   \end{itemize}
   \subsection{Process and Thread}
@@ -526,25 +526,25 @@ outline/.style={draw=circle edge, thick}}
   \subsection{Thread Models}
   \begin{itemize}
     \item \textbf{User Thread}
-    \begin{itemize}
-      \item Implemented as a user library, a runtime system in the process handles thread operations
-      \item Kernel is not aware of threads in the process.
-      \item \textbf{Advantages}: Multithreaded program on ANY OS, thread operations are just library calls, more conigurable and flexible (such as customised thread scheduling policy)
-      \item \textbf{Disadvantages}: OS is not aware of threads, scheduling is performed at process level. One thread blocked -> process blocked -> all threads blocked, cannot exploit multiple CPUs
-    \end{itemize}
+          \begin{itemize}
+            \item Implemented as a user library, a runtime system in the process handles thread operations
+            \item Kernel is not aware of threads in the process.
+            \item \textbf{Advantages}: Multithreaded program on ANY OS, thread operations are just library calls, more conigurable and flexible (such as customised thread scheduling policy)
+            \item \textbf{Disadvantages}: OS is not aware of threads, scheduling is performed at process level. One thread blocked -> process blocked -> all threads blocked, cannot exploit multiple CPUs
+          \end{itemize}
     \item \textbf{Kernel Thread}
-    \begin{itemize}
-      \item Implemented in the OS, thread operation as system calls.
-      \item Thread-level scheduling is possible
-      \item Kernel may make use of threads for its own execution
-      \item \textbf{Advantages}: Kernel can schedule on thread level
-      \item \textbf{Disadvantages}: Thread operation is a syscall (slower and more resource intensive), generally less flexible (used by all multithreaded programs -- many features: expensive, overkill for simple program, few features: not flexible enough for some)
-    \end{itemize}
+          \begin{itemize}
+            \item Implemented in the OS, thread operation as system calls.
+            \item Thread-level scheduling is possible
+            \item Kernel may make use of threads for its own execution
+            \item \textbf{Advantages}: Kernel can schedule on thread level
+            \item \textbf{Disadvantages}: Thread operation is a syscall (slower and more resource intensive), generally less flexible (used by all multithreaded programs -- many features: expensive, overkill for simple program, few features: not flexible enough for some)
+          \end{itemize}
     \item \textbf{Hybrid Thread Model}:
-    \begin{itemize}
-      \item Have both kernel and user threads, OS schedule on kernel threads only, user thread can bind to a kernel thread.
-      \item Great flexibility (can limit concurrency of any process/user)
-    \end{itemize}
+          \begin{itemize}
+            \item Have both kernel and user threads, OS schedule on kernel threads only, user thread can bind to a kernel thread.
+            \item Great flexibility (can limit concurrency of any process/user)
+          \end{itemize}
   \end{itemize}
   \subsection{Threads on Modern Processor (Intel Hyperthreading)}
   \begin{itemize}
@@ -583,15 +583,15 @@ outline/.style={draw=circle edge, thick}}
   \subsubsection{Naming \textmd{(how to identify the other party in the comm):}}
   \begin{itemize}
     \item \textbf{Direct Communication}
-    \begin{itemize}
-      \item Sender/receiver explicitly name the other party
-      \item Characteristics: 1 link/pair of communicating processes, need to know the identity of the other party
-    \end{itemize}
+          \begin{itemize}
+            \item Sender/receiver explicitly name the other party
+            \item Characteristics: 1 link/pair of communicating processes, need to know the identity of the other party
+          \end{itemize}
     \item \textbf{Indirect Communication}
-    \begin{itemize}
-      \item Message are sent to/received from message storage (known as mailbox or port)
-      \item Characteristic: 1 mailbox can be shared among a number of processes
-    \end{itemize}
+          \begin{itemize}
+            \item Message are sent to/received from message storage (known as mailbox or port)
+            \item Characteristic: 1 mailbox can be shared among a number of processes
+          \end{itemize}
   \end{itemize}
   \subsubsection{Synchronisation \textmd{(behaviour of the sending/receiving ops)}}
   \begin{itemize}
@@ -683,7 +683,7 @@ flag[1] = false;
     \item \textbf{Invariant}: $S_\text{current} = S_\text{initial} +$ \#signal(S) $- $ \#wait(S)
   \end{itemize}
   Binary semaphore, $S = 0$ or $1$ known as mutex (mutual exclusion)\\
-  Deadlock still possible 
+  Deadlock still possible
   \subsection{Classical Synchronisation Problems}
   \begin{itemize}
     \item \textbf{Producer-Consumer}: produce only if buffer not full, consume only if buffer not empty
@@ -696,23 +696,23 @@ flag[1] = false;
     \item pthread\_mutex\_t: \texttt{pthread\_mutex\_lock}, \texttt{pthread\_mutex\_unlock}
     \item pthread\_cond\_t: \texttt{pthread\_cond\_wait}, \texttt{pthread\_cond\_signal}, \texttt{pthread\_cond\_broadcast}
   \end{itemize}
-  
+
   \section{Memory Management}
   \begin{itemize}
     \item \textbf{Logical address}: how the process views its memory space
     \item \textbf{Base register}: start offset
     \item \textbf{Limit register}: range of memory space of current process
   \end{itemize}
-  
+
   \subsection{Contiguous Memory Management}
   \begin{itemize}
     \item 2 schemes of allocating memory partition:
-    \begin{itemize}
-      \item \textbf{Fixed-size}\\
-      \textbf{Pros}: Easy to manage, fast to allocate (all free partitions are the same, no need to choose), \textbf{Cons}: partition size need to be large enough to contain the largest process (internal fragmentation)
-      \item \textbf{Variable-size}\\
-      \textbf{Pros}: Flexible, removes internal fragmentation, \textbf{Cons:} Need to maintain more information in OS, takes more time to locate appropriate region, external fragmentation
-    \end{itemize}
+          \begin{itemize}
+            \item \textbf{Fixed-size}\\
+                  \textbf{Pros}: Easy to manage, fast to allocate (all free partitions are the same, no need to choose), \textbf{Cons}: partition size need to be large enough to contain the largest process (internal fragmentation)
+            \item \textbf{Variable-size}\\
+                  \textbf{Pros}: Flexible, removes internal fragmentation, \textbf{Cons:} Need to maintain more information in OS, takes more time to locate appropriate region, external fragmentation
+          \end{itemize}
     \item \textbf{Merging and Compaction}: consolidate holes (time-consuming)
     \item \textbf{Allocation algo}: \textbf{First-Fit}: first large enough hole, \textbf{Best-Fit}: smallest large enough hole, \textbf{Worst-Fit}: largest hole
   \end{itemize}
@@ -725,7 +725,7 @@ flag[1] = false;
     \item Blocks $B$ and $C$ are buddy of size $S$, if the $S$th bit of B and C are complements (0 and 1) and the leading bits up to the $S$th bit are the same (e.g. 10100 and 10000)
     \item Allocating a block of size $N$:
   \end{itemize}
-\begin{minted}{Ruby}
+  \begin{minted}{Ruby}
 S = Math.log2(N).ceil # smallest S s.t. 2^S <= N
 while true
   # If got free block, remove from list and allocate
@@ -739,7 +739,7 @@ end
   \begin{itemize}
     \item To free a block $B$:
   \end{itemize}
-\begin{minted}{Ruby}
+  \begin{minted}{Ruby}
 def free(B)
   S = Math.log2(B.size).ceil
   C = A[S].find_free_buddy_of(B)
@@ -750,446 +750,446 @@ def free(B)
 end
 \end{minted}
 
-\section{Disjoint Memory Schemes}
-\subsection{Paging Scheme}
-\begin{itemize}
-  \item Physical mem is split into fixed-size regions: \textbf{Physical Frame}
-  \item Logical mem of a process is split into regions of the same size: \textbf{Logical Page}
-  \item Logical memory space is contiguous but occupied physical memory region can be disjointed.
-  \item Paging removes external but \textbf{not internal} fragmentation.
-\end{itemize}
-\subsubsection{Logical Address Translation}
-\begin{itemize}
-  \item \textbf{Page Table}: lookup table for logical address translation (logical page <-> physical frame). Need to know 2 things: $F = $ physical frame number, Offset = from start of physical frame
-  \item Physical address = $F \times$ physical frame size $+$ Offset
-  \item Given: frame size = $2^n$, $m$ bits of logical address
-
-\end{itemize}
-\begin{tabularx}{0.5\columnwidth}{X}
-  \includegraphics[width=\linewidth]{translation}
-\end{tabularx}
-\begin{tabularx}{0.5\columnwidth}{X}
-  \textbf{Logical Address} $LA$:\\$p$ = most significant $m-n$ bits of $LA$,\\
-  $d$ = remaining $n$ bits of $LA$
-  \\ \\
-  \textbf{Physical Address}\\$PA = f \times 2^n + d$
-\end{tabularx}
-\subsubsection{Implementation}
-\begin{itemize}
-  \item \textbf{Pure-software}: OS stores page table information in the PCB\\
-  \textbf{Issues}: require 2 mem access for every mem ref (1) read indexed page table entry to get frame number, (2) access actual mem item
-  \item \textbf{Hardware support}: Translation Look-aside Buffer (TLB) = cache of a few page table entries
+  \section{Disjoint Memory Schemes}
+  \subsection{Paging Scheme}
   \begin{itemize}
-    \item Use page number to search TLB, either TLB-Hit or TLB-Miss
-    \item TLB is part of hardware context. Thus, context switch -> TLB entries are flushed
+    \item Physical mem is split into fixed-size regions: \textbf{Physical Frame}
+    \item Logical mem of a process is split into regions of the same size: \textbf{Logical Page}
+    \item Logical memory space is contiguous but occupied physical memory region can be disjointed.
+    \item Paging removes external but \textbf{not internal} fragmentation.
   \end{itemize}
-\end{itemize}
-\begin{enumerate}
-  \item \textbf{(HW)} LA is decomposed into \texttt{<Page\#, Offset>}
-  \item \textbf{(HW)} Search TLB for \texttt{Page\#}:
-  \begin{enumerate}
-    \item TLB-Hit: Use \texttt{<Frame\#, Offset>} to access physical mem. Done.
-    \item TLB-Miss: Trap to OS (TLB Fault)
-  \end{enumerate}
-  \item \textbf{(OS - TLB Fault)} Access full table of the process (in PCB), \texttt{<Page\#>} is the index:
-  \begin{enumerate}
-    \item If memory resident, replace a TLB entry, return from trap, retry step 1
-    \item If non-memory-resident, trap to OS (Page Fault)
-  \end{enumerate}
-  \item \textbf{(OS - Page Fault)} Locate the page in secondary swap pages. Load the page into a physical frame (applying replacement algo if needed). Update PTE, return from trap, retry step 3
-\end{enumerate}
-\subsubsection{Protection}
-\begin{itemize}
-  \item \textbf{Access Right Bits}: each page table entries has several bits to indicate rwx, mem access is checked against the access right bits
-  \item \textbf{Valid bit}: each page table entries has a bit to indicate if the page is valid for the process to access. OOB access caught by OS
-\end{itemize}
-\subsubsection{Page sharing}
-Deduplication. Possible usage:
-\begin{itemize}
-  \item \textbf{Shared code page}: used by many processes, e.g. C stdlib, syscalls
-  \item \textbf{Implement CoW}: upon forking, before any mem value mutation
-\end{itemize}
-\subsection{Segmentation Scheme}
-\begin{itemize}
-  \item Some regions may grow/shrink at exec time. Thus putting them in non-contiguous mem space to allow them to grow/shrink freely and easier check whether access is in-range.
-  \item Mem space of a process separated into different segments: user code, global vars, heap, stack, lib code, etc.
-  \item Logical mem space of a process is a collection of segments
-  \item Each segment: has a name and a limit
-  \item All mem ref is \texttt{Segment Name + Offset} (e.g. Heap + 245)
-  \item Each segment mapped to a contiguous physical mem region (base address + limit)
-  \item \textbf{segment id} =  single number representing segment name 
-  \item Logical address: \texttt{<SegID, Offset>} (\texttt{SegID} used to look up \texttt{<Base, Limit>} in a segment table)
-  \item $PA =$ Base + Offset, Offset $<$ Limit for valid access
-  \item \textbf{Pros}: Each segment is an independent contiguous mem space (can grow/shrink, protected/shared independently)
-  \item \textbf{Cons}: Requires variable-size contiguous memory regions, external fragmentation
-\end{itemize}
-\includegraphics[width=\linewidth]{segmentation}
-\subsection{Segmentation: Hardware Support and combined with Paging}
-Each segment is now composed of several pages instead of a contiguous memory region (each segment has a page table)
-
-Table: (Segment\#, Page Limit, Page Table Base)
-
-\includegraphics[width=0.8\linewidth]{s}
-
-\includegraphics[width=0.8\linewidth]{swp}
-
-\section{Virtual Memory Management}
-\begin{itemize}
-  \item Use page table to translate \textbf{virtual} -> physical address
-  \item Extend paging scheme: Some pages may be in physical memory, others in secondary storage.
-  \item Use a \texttt{memory\_resident?} bit to distinguish between 2 page-types: \textbf{memory-resident} and \textbf{non-memory-resident}
-  \item CPU can only access memory-resident pages. \textbf{Page Fault} (PF) when CPU tries to access non-memory-resident page. OS needs to bring them into physical memory.
-  \item Just like cache, exploit \textbf{Temporal} \& \textbf{Spatial} Locality
-  \item Accessing page X:
-  \begin{enumerate}
-    \item If page X \textbf{memory resident}: Access physical mem. Done.
-    \item Else \textbf{PF}: Trap to OS
-    \item Locate page X in secondary storage
-    \item Load page X into a physical memory frame
-    \item Update page table
-    \item Go to step 1
-  \end{enumerate}
-\end{itemize}
-\subsection{Page Table Structure}
-\subsubsection{Direct Paging}
-\begin{itemize}
-  \item Keep all entries in a single table
-  \item With $2^p$ pages in logical mem space, $p$ bits to specify one unique page, $2^p$ PTE (each containing physical frame number + additional info bits), e.g. Virtual Address: 32 bits, page size = 4 KB, $p = 32 - 12 = 20$, size of PTE = 2 B, PT Size = $2^{20}\times 2$ bytes = 2MB
-\end{itemize}
-\subsubsection{2-Level Paging}
-\begin{itemize}
-  \item Split page table into smaller page tables, each with a \textbf{PT number}
-  \item Total $2^P$ entries, with $2^M$ smaller PTs, $M$ bits to identify 1 PT, each smaller PT contains $2^{(P-M)}$ entries
-  \item Use \textbf{page directory} to keep track, containing $2^M$ indices. Ideally, size of page dir = page size
-  \item \textbf{Advantages}: corresponding PT to empty entries in page dir need not be allocated
-\end{itemize}
-\subsubsection{Inverted Page Table}
-\begin{itemize}
-  \item Instead of keeping per-process PT, only a \textbf{single} mapping of physical frame to \texttt{<pid, page\#>} (ordered by frame\# instead of page\#)
-  \item \textbf{Advantage}: Memory saving, 1 table for all processes
-  \item \textbf{Disadvantage}: Slow translation ($O(n)$ to look up a page\#)
-\end{itemize}
-\subsection{Page Replacement Algorithms}
-\begin{itemize}
-  \item When a page is evicted: \textbf{clean page} (not modified), \textbf{dirty page} (modified, must write back)
-  \item Memory access time: $T_{access} = (1-p)\times T_{mem}+p\times T_{page\_fault}$ where $p$ = prob of PF, $T_{mem}$ = access time for mem-resident page, $T_{page\_fault}$ = access time if PF occurs
-  \item Since $T_{page\_fault} >> T_{mem}$, need to reduce $p$ to keep $T_{access}$ reasonable (reduce total no of PF)
-\end{itemize}
-\subsubsection{Optimal Page Replacement (OPT)}
-\begin{itemize}
-  \item Replace the page that will not be used again for the longest period of time. Guarantees min no of PF
-  \item However, not realisable, need \textbf{future knowledge} of mem refs
-  \item Base comparison for other algorithms
-\end{itemize}
-\subsubsection{FIFO}
-\begin{itemize}
-  \item Mem pages are evicted based on their loading time
-  \item Implementation: OS maintain a queue of resident page numbers. Remove the first page in queue if replacement is needed. Update the queue during PF trap.
-  \item \textbf{Advantage}: simple to implement (no HW support needed)
-  \item \textbf{Problems}: Belady's Anomaly (more frames, more PF) because FIFO does not exploit temporal locality
-\end{itemize}
-\subsubsection{Least Recently Used (LRU)}
-\begin{itemize}
-  \item Make use of temporal locality. Does not suffer from Belady's Anomaly
-  \item \textbf{Impl 1}: A logical time counter, incremented for every mem ref. PTE has a time of use field, replace page with smallest time of use.
-  \item However, need to search through all pages, and counter is forever increasing (overflow)
-  \item \textbf{Impl 2}: Use a stack. If page X is referenced, remove from stack, push on top of stack. Replace the page at bottom of stack.
-  \item However, not a pure stack. Entries can be removed from anywhere in the stack. Hard to implement in hardware.
-\end{itemize}
-\subsubsection{Second-Chance Page Replacement (CLOCK)}
-\begin{itemize}
-  \item Modified FIFO to give a second chance to pages that are accessed.
-  \item Each PTE maintains a reference bit: \textbf{1} = accessed, \textbf{0} = not accessed
-  \item Algo:
-  \begin{enumerate}
-    \item Select oldest FIFO page.
-    \item If ref\_bit == 0, page is replaced.
-    \item If ref\_bit == 1, page is given 2nd chance: ref\_bit cleared to 0. Arrival time reset (as if newly loaded). Next FIFO page is selected, go to step 2
-  \end{enumerate}
-  \item Impl: use a \textbf{circular queue} to maintain the pages, with a pointer to the oldest page. To find a page to be replaced, advance until a page with ref\_bit == 0, and clear reference bit as pointer passes.
-  \item When all ref\_bit == 1, degenerate into FIFO
-\end{itemize}
-\subsection{Frame Allocation}
-\begin{itemize}
-  \item $N$ physical mem frames, $M$ processes competing for frames.
-  \item \textbf{Equal allocation} (each process gets $\frac{N}{M}$ frames), \textbf{Proportional Allocation} (Let $size_p$ = size of process $p$, $size_{total}$ = total size of all processes, each process gets $\frac{size_p}{size_{total}} \times N$ frames)
-  \item Insufficient physical frame -> Thrashing (heavy IO to bring non-resident pages into RAM)
-\end{itemize}
-\subsection{Page Replacement}
-\begin{itemize}
-  \item \textbf{Local Replacement}: victim page selected among pages of the process that causes PF\\
-  \textbf{Pros}: Frames allocated to a process remain constant, perf is stable between runs. \textbf{Cons}: if frame allocated not enough, hinder progress of a process\\
-  A thrashing process steals page from other process causing other process to thrash (\textbf{cascading thrashing})
-  \item \textbf{Global Replacement}: victim page chosen among all physical frames\\
-  \textbf{Pros}: Allow self-adjustment between processes (process that needs more can get from other). \textbf{Cons}: badly-behaved process can affect others, frames allocated to a process can be different from run to run (thrashing can be limited to one process, but that process can hog the IO and degrade perf of other processes)
-\end{itemize}
-\subsection{Working Set Model}
-\begin{itemize}
-  \item In a new locality, a process will cause PF for the set of pages. Afterwards no/few PF until process transits to a new locality
-  \item Defines \textbf{Working Set Windows} $\Delta$ = time interval
-  \item $W(t,\Delta)$ = active pages in the interval at time $t$
-  \item interval = looking back
-  \item Allocate enough frames for pages in $W(t, \Delta)$ to reduce prob of PF
-  \item Accuracy of working set model directly affected by choice of $\Delta$. \textbf{Too small}: may miss pages in the current locality, \textbf{Too big}: may contain pages from different locality
-\end{itemize}
-
-
-
-\section{File System}
-General Criteria: \textbf{Self-contained}, \textbf{persistent}, \textbf{efficient}
-\subsection{File System Abstraction}
-\subsubsection{File}
-\begin{itemize}
-  \item logical unit created by process, contains data and metadata (name, identifier, type [regular \{ASCII, Binary\}, directories, special files], size, access rights, timedate, owner, table of content)
-  \item File \textbf{protection}: permission bits (owner, group, universe) (rwx), Access Control List (minimal ACL -- same as permission bits/extended ACL -- added named users/group)
-  \item \textbf{Operations} on metadata: Rename, Change/Read attributes
-  \item \textbf{Structure}: \textbf{Array of bytes}, \textbf{Fixed-length records} (array of records, can grow/shrink/jump to any record easily), \textbf{Variable length records} (flexible, but harder to locate a record)
-  \item \textbf{Access methods:} \textbf{Sequential} (data read in order from beginning, cannot skip but can rewind), \textbf{Random} (data can be read in any order, \textbf{Direct access} (for file containing fixed-length records, allow random access to any record directly)
-  \item \textbf{Generic operations}: create, open, r/w, repositioning, truncate
-  \item OS provides file ops as syscalls. Information kept for opened file: \textbf{File pointer} current loc in file, \textbf{disk location}: actual file loc on disk, \textbf{open count}: how many process opens this file
-  \item Organise open file information: \textbf{System-wide open-file table} (1 entry/unique file), \textbf{Per-process open-file table} (1 entry/file used in the process, each entry points to the system-wide table)
-  \item Processes sharing file in unix: (1) diff file descriptors, I/O can occur at indep offsets, (2) same file descriptor, only 1 offset, I/O changes the offset for the other process (e.g. \texttt{fork} after file is opened)
-\end{itemize}
-\subsubsection{Directory}
-\begin{itemize}
-  \item Used to (1) provide logical grouping of files, keep track of files
-  \item Ways to structure directory:
+  \subsubsection{Logical Address Translation}
   \begin{itemize}
-    \item \textbf{Single-level}
-    \item \textbf{Tree-structured}\\
-    Dirs can be recursively embedded in other directories. 2 ways of referring to the file: \textbf{absolute/relative pathname}
-    \item \textbf{DAG}\\
-    A file can be shared, only 1 copy of actual content appearing in multiple directories with diff path names. In Unix: hard link (pointers to the same actual file on disk, pros: low overhead, cons: deltion problems)/symbolic link (special link file containing pathanme, pros: simple deletion, cons: larger overhead)
-    \item \textbf{General Graph}\\
-    Generally not desirable: hard to traverse (need to prevent infinite looping), hard to determine when to remove a file/dir.
+    \item \textbf{Page Table}: lookup table for logical address translation (logical page <-> physical frame). Need to know 2 things: $F = $ physical frame number, Offset = from start of physical frame
+    \item Physical address = $F \times$ physical frame size $+$ Offset
+    \item Given: frame size = $2^n$, $m$ bits of logical address
+
   \end{itemize}
-\end{itemize}
+  \begin{tabularx}{0.5\columnwidth}{X}
+    \includegraphics[width=\linewidth]{translation}
+  \end{tabularx}
+  \begin{tabularx}{0.5\columnwidth}{X}
+    \textbf{Logical Address} $LA$: \\$p$ = most significant $m-n$ bits of $LA$,\\
+    $d$ = remaining $n$ bits of $LA$
+      \\ \\
+      \textbf{Physical Address}    \\$PA = f \times 2^n + d$
+  \end{tabularx}
+  \subsubsection{Implementation}
+  \begin{itemize}
+    \item \textbf{Pure-software}: OS stores page table information in the PCB\\
+          \textbf{Issues}: require 2 mem access for every mem ref (1) read indexed page table entry to get frame number, (2) access actual mem item
+    \item \textbf{Hardware support}: Translation Look-aside Buffer (TLB) = cache of a few page table entries
+          \begin{itemize}
+            \item Use page number to search TLB, either TLB-Hit or TLB-Miss
+            \item TLB is part of hardware context. Thus, context switch -> TLB entries are flushed
+          \end{itemize}
+  \end{itemize}
+  \begin{enumerate}
+    \item \textbf{(HW)} LA is decomposed into \texttt{<Page\#, Offset>}
+    \item \textbf{(HW)} Search TLB for \texttt{Page\#}:
+          \begin{enumerate}
+            \item TLB-Hit: Use \texttt{<Frame\#, Offset>} to access physical mem. Done.
+            \item TLB-Miss: Trap to OS (TLB Fault)
+          \end{enumerate}
+    \item \textbf{(OS - TLB Fault)} Access full table of the process (in PCB), \texttt{<Page\#>} is the index:
+          \begin{enumerate}
+            \item If memory resident, replace a TLB entry, return from trap, retry step 1
+            \item If non-memory-resident, trap to OS (Page Fault)
+          \end{enumerate}
+    \item \textbf{(OS - Page Fault)} Locate the page in secondary swap pages. Load the page into a physical frame (applying replacement algo if needed). Update PTE, return from trap, retry step 3
+  \end{enumerate}
+  \subsubsection{Protection}
+  \begin{itemize}
+    \item \textbf{Access Right Bits}: each page table entries has several bits to indicate rwx, mem access is checked against the access right bits
+    \item \textbf{Valid bit}: each page table entries has a bit to indicate if the page is valid for the process to access. OOB access caught by OS
+  \end{itemize}
+  \subsubsection{Page sharing}
+  Deduplication. Possible usage:
+  \begin{itemize}
+    \item \textbf{Shared code page}: used by many processes, e.g. C stdlib, syscalls
+    \item \textbf{Implement CoW}: upon forking, before any mem value mutation
+  \end{itemize}
+  \subsection{Segmentation Scheme}
+  \begin{itemize}
+    \item Some regions may grow/shrink at exec time. Thus putting them in non-contiguous mem space to allow them to grow/shrink freely and easier check whether access is in-range.
+    \item Mem space of a process separated into different segments: user code, global vars, heap, stack, lib code, etc.
+    \item Logical mem space of a process is a collection of segments
+    \item Each segment: has a name and a limit
+    \item All mem ref is \texttt{Segment Name + Offset} (e.g. Heap + 245)
+    \item Each segment mapped to a contiguous physical mem region (base address + limit)
+    \item \textbf{segment id} =  single number representing segment name
+    \item Logical address: \texttt{<SegID, Offset>} (\texttt{SegID} used to look up \texttt{<Base, Limit>} in a segment table)
+    \item $PA =$ Base + Offset, Offset $<$ Limit for valid access
+    \item \textbf{Pros}: Each segment is an independent contiguous mem space (can grow/shrink, protected/shared independently)
+    \item \textbf{Cons}: Requires variable-size contiguous memory regions, external fragmentation
+  \end{itemize}
+  \includegraphics[width=\linewidth]{segmentation}
+  \subsection{Segmentation: Hardware Support and combined with Paging}
+  Each segment is now composed of several pages instead of a contiguous memory region (each segment has a page table)
 
-\section{File System Implementations}
-\subsection{Disk Organisation}
-\begin{itemize}
-  \item \textbf{Master Boot Record} at sector 0 with partition table, followed by 1/more partitions, each containing an independent file system.
-  \item Logical view, file = a collection of logical blocks
-  \item When file size $\neq$ multiple of logical blocks, last block may contain wasted space (\textbf{internal fragmentation})
-  \item Good file implementation: keep track of the logical blocks, allow efficient access, disk space is utilised effectively. (focus on how to allocate file data on disk)
-\end{itemize}
-\subsection{File Block Allocation}
-\subsubsection{Contiguous}
-\begin{itemize}
-  \item Allocate consecutive disk blocks to a file
-  \item \textbf{Pros}: simple to keep track (each file only needs startinb block number + length), fast access (only need to seek to first block)
-  \item \textbf{Cons}: External frag, file size needs to be specified in advance
-\end{itemize}
-\subsubsection{Linked List}
-\begin{itemize}
-  \item Keep a linked list of disk blocks, each disk block stores the next disk block numbers (pointer) and actual file data
-  \item File information stores first and last disk block number
-  \item \textbf{Pros}: solve fragmentation 
-  \item \textbf{Cons}: slow random access in a file, part of disk block is used for pointer, less reliable
-\end{itemize}
-\subsubsection{Linked List Variant: FAT}
-\begin{itemize}
-  \item All block pointers in a single table: \textbf{File Allocation Table} (FAT)
-  \item \textbf{Pros}: Faster Random Access (linked list done in memory)
-  \item \textbf{Cons}: FAT can be huge when disk is large
-\end{itemize}
-\subsubsection{Indexed Allocation}
-\begin{itemize}
-  \item Each file has an \textbf{index block} (an array of disk block addresses where \texttt{indexBlock[N]} = Nth block address)
-  \item \textbf{Pros}: Lesser memory overhead (only index block of opened file needs to be in memory), fast direct access
-  \item Cons: Limited maximum file size (max no of blocks == no of index block entries), index block overhead
-\end{itemize}
-\subsubsection{Indexed Allocation Variations}
-\begin{itemize}
-  \item Schemes to allow larger file size
-  \item \textbf{Linked scheme}: keep a linked list of index blocks
-  \item \textbf{Multilevel index}: 1st level index block points to a number of 2nd level index blocks. Each 2nd level index blocks point to actual disk block. This can be generalised to any number of levels.
-  \item \textbf{Combined scheme}: combination of direct indexing and multi-level index scheme, e.g. Unix I-node has 12 direct pointers, 1 single indirect, 1 double indirect, 1 triple indirect
-\end{itemize}
-\subsection{Free Space Management}
-\textbf{Free space list} to know which disk block is free during file alloc
-\subsubsection{Bitmap}
-\begin{itemize}
-  \item Each disk block represented by a bit, 1 = free, 0 = occupied
-  \item \textbf{Pros}: provide a good set of manipulations using bit-level ops
-  \item \textbf{Cons}: need to keep in memory for efficiency reason
-\end{itemize}
-\subsubsection{Linked List}
-\begin{itemize}
-  \item A linked list of disk blocks, each disk block contains a number of free disk block numbers; a pointer to next free space disk block
-  \item \textbf{Pros}: Easy to locate block, only 1st pointer is needed in memory
-  \item \textbf{Cons}: High overhead (mitigated by storing the list in free blocks)
-\end{itemize}
-\subsection{Directory Structure}
-\begin{itemize}
-  \item Given a full path name, recursively search the directories along the path to arrive at the file information
-  \item Each dir entry stores file name, metadata, (pointer to) file information, disk blocks information
-\end{itemize}
-\subsubsection{Linear List}
-\begin{itemize}
-  \item Directory = a list of files 
-  \item Locate a file using list requires a linear search (inefficient for large directories or deep tree traversal). \textbf{Common solution}: use cache to remember the latest few searches
-\end{itemize}
-\subsubsection{Hash Table}
-\begin{itemize}
-  \item Directory = hash table of size $N$
-  \item Locate a file by file name: File name is hashed into index $K \in [0,N)$. \textbf{HashTable[K]} inspected to match file name, using chained collision resolution
-  \item \textbf{Pros}: fast lookup
-  \item \textbf{Cons}: hash table has limited size, depends on good hash function
-\end{itemize}
-\subsection{File System in Action}
-\subsubsection{Create /.../parent/F}
-\begin{enumerate}
-  \item Use full path name to locate parent dir, search for filename F to avoid duplicates. Search could be on cached dir structure
-  \item Use free space list to find free disk block(s)
-  \item Add an entry to parent directory with relevant file information
-\end{enumerate}
-\subsubsection{Process $P$ open file /.../F}
-\begin{enumerate}
-  \item Search system-wide table for existing entry $E$. Not found, use full pathname to locate file $F$ and load its file information to a new entry $E$ in system-wide table. If not found terminate
-  \item Create an entry in the $P$'s table, pointing to $E$
-  \item Return pointer to this entry.
-\end{enumerate}
-\subsection{Disk I/O Scheduling Algorithms}
-\textbf{Time taken = Seek Time + Rotational Latency + Transfer Time}
-\begin{itemize}
-  \item Seek time = position disk head over proper track (average 2-10ms, approaches $\frac{1}{3}N$, where N = time for max seek distance)
-  \item Rotational latency = wait for desired sector to rotate under the head (4800-15000 RPM, 12.5ms to 4ms, average 6.25ms at 4800 RPM, 2ms at 15000 RPM)
-  \item Transfer Time = $\frac{\text{xfer size}}{\text{xfer rate}}$ (least sig factor) (xfer rate 70-125 MB/s)
-  \item Problem: due to significant seek \& rotational latency, OS should schedule disk I/O requests to reduce overall waiting time.
-  \item Rotational latency hard to mitigate, focus on reducing seek time
-\end{itemize}
-\subsubsection{FCFS}
-\subsubsection{Shortest Seek First (SSF)}
-\subsubsection{SCAN family (aka Elevator)}
-\begin{itemize}
-  \item Bi-directional (innermost <-> outermost) (SCAN)
-  \item unidirectional (outermost -> innermost) (C-SCAN -- Circular SCAN)
-\end{itemize}
-\section{File System Case Studies}
-\subsection{Microsoft FAT}
-\includegraphics[width=\linewidth]{fatlayout}
-\begin{itemize}
-  \item FAT12 -> FAT16 -> FAT32
-  \item File data allocated to a number of data blocks/data block clusters
-  \item Allocation info kept as a linked list, kept separately in the File Allocation Table (FAT) which is cached in RAM for linked list traversal: 1 entry per data block/cluster, store disk block information (FREE/EOF/BAD/next block number)
-  \item Dir represented as special type of file
-  \item Root dir is stored in a special location, other dirs are stored in the data blocks.
-  \item Each file/subdir within the dir represented as \textbf{directory entry}
-  \item Directory Entry 32-bytes, 8B+3B for file name+ext (first byte of file name may have special meaning: deleted, end of DE, parent dir, etc.), 1B for attributes, 10B reserved, 2B+2B for creation date+time (Year 1980-2107, time resolution $\pm2$ seconds), for the first disk block index (different variant diff number of bits, 12, 16, 32 for FAT12, FAT16, FAT32 respectively), 4B for file size in bytes.
-\end{itemize}
-\subsubsection{Accessing File/Dir}
-For a dir, disk blocks contain DE for files/subdirs within that dir
-\begin{enumerate}
-  \item Use first disk block number stored in DE to find starting point
-  \item Use FAT to find out subsequent disk block numbers
-  \item Use disk block number to perform actual disk access on the data blocks.
-\end{enumerate}
-\subsubsection{File Deletion}
-\begin{enumerate}
-  \item ``Delete'' the DE (set first letter in filename to \texttt{0xE5})
-  \item Free data blocks: set FAT entries in linked list to FREE
-\end{enumerate}
-Do not keep track of free space information -- must be calculated by going through the FAT
-\subsubsection{Variants: FAT12, FAT16, FAT32}
-Support larger hard disk as a single partition
-\begin{itemize}
-  \item \textbf{Disk cluster}: instead of using a single disk block as smallest alloc unit, use a number of contiguous disk blocks
-  \item \textbf{Pros}: Larger cluster size -> larger usable partition
-  \item \textbf{Cons}: Larger cluster size -> larger internal fragmentation
-  \item On FAT32, further limitation: 32-bit sector count, only 28-bit used in disk block/cluster index.
-  \item \textbf{Bigger FAT Size}
-  \item e.g. 4KB cluster\\
-  \begin{tabular}{| l | l | l |}
-    FAT12 & FAT16 & FAT32 \\ \hline
-    $2^{12}$ clusters & $2^{16}$ clusters & $2^{28}$ clusters \\
-    4KB $\times 2^{12} = 16$MB & 4KB $\times 2^{16} = 256$MB & 4KB $\times 2^{28} = 1$TB \\
-  \end{tabular}
-  \item Actual size is a little lesser, special values (EOF, FREE, etc) reduces total number of valid data block/cluster indices.
-\end{itemize}
-\subsubsection{Long File Name Support}
-\begin{itemize}
-  \item Virtual FAT (VFAT) supports long file names up to 255 chars
-  \item Use multiple DE for a file with long filename.
-  \item Use a previously invalid file attribute so non-VFAT will ignore these additional entries
-  \item Use the first byte in the filename to indicate sequence
-  \item Keep the 8+3 short version for backward compatibility
-\end{itemize}
-\includegraphics[width=0.6\linewidth]{vfat}
-\subsection{Extended-2 File System}
-\begin{itemize}
-  \item Disk space split into \textbf{blocks}, blocks grouped into \textbf{Block Groups}
-  \item Each file/dir is described by \textbf{I-Node} (Index Node) containing file metadata \& data block addresses
-  \item For all bitmaps, 1 = Occupied, 0 = Free
-\end{itemize}
-\includegraphics[width=\linewidth]{ext2layout}
-\subsubsection{Superblock}
-\begin{itemize}
-  \item Describes the whole filesystem
-  \item Duplicated in each block group for redundancy
-  \item Includes total I-Nodes number, I-Nodes/group, total disk blocks, disk blocks/group, etc.
-\end{itemize}
-\subsubsection{Group Descriptors}
-\begin{itemize}
-  \item Describes each of the block group -- no of free disk blocks, free I-nodes, location of the bitmaps
-  \item Duplicated in each block group
-\end{itemize}
-\subsubsection{Block Bitmap}
-Keep track of the usage status of blocks of this block group
-\subsubsection{I-Node Bitmap}
-Keep track of the usage status of I-Nodes of this block group
-\subsubsection{I-Node Table}
-An array of I-Nodes, containing only I-Nodes of this block group
-\subsubsection{I-Node Structure (128 Bytes)}
-\begin{itemize}
-  \item 2B for Mode: Filetype (regular, dir, special, etc) + File permission
-  \item 2B user id, 2B group id
-  \item 4B for file size in bytes, 8B for regular files
-  \item 4B each for access, creation, modification, deletion timestamps
-  \item 4B each for 15 data block pointers: 12 direct, 1 single indirect, 1 double indirect, 1 triple indirect
-  \item 2B for refcount (no of times this I-Node is references by DE)
-\end{itemize}
-\subsubsection{I-Node Data Block}
-\begin{itemize}
-  \item Allows fast access to small file, flexibility in handling huge file
-  \item e.g. disk block address = 4B, each disk block is 1KB, so each indirect block can store $\frac{1\text{KB}}{4}=256$ addresses
-  \item Max file size = direct + single indirect + double indirect + triple indirect = $12 \times 1$KB + $256 \times 1$KB + $256^2 \times 1$KB + $256^3 \times 1$KB = 12KB + 256KB + 64MB + 16GB = 16843020 KB
-\end{itemize}
-\subsubsection{Directory Structure}
-Data blocks of a dir store a linked list of DE for files/subdirs information within this dir
-\begin{itemize}
-  \item I-Node number for that file/subdir (0 indicates unused DE)
-  \item Size of this DE (to locate next DE)
-  \item Length of the file/subdir name
-  \item Type: File/subdir (or other special file type)
-  \item File/subdir name (up to 255 chars)
-\end{itemize}
-\subsubsection{Accessing file/dir}
-\begin{enumerate}
-  \item Root directory has a fixed I-Node (e.g. 2), read the actual I-Node
-  \item Look at the next part in pathname, locate DE in current dir, retrieve I-Node number, read actual I-Node
-  \item If dir, set current dir to this dir (read DE in pointed by I-Node)
-  \item Else if a file, read content from blocks pointed by I-Node
-\end{enumerate}
-\subsubsection{File deletion}
-\begin{enumerate}
-  \item Remove DE from parent dir (point prev entry to the next entry/end, if first entry, DE is replaced with blank record)
-  \item Update I-Node bitmap (mark as free)
-  \item Update block bitmap (mark as free)
-\end{enumerate}
-\subsubsection{Hard/Symbolic Link with I-Node}
-Dir A contains a file X, with I-Node\# N, dir B wants to share X
-\begin{itemize}
-  \item \textbf{Hard Link}: creates a DE in B, using same I-Node\# N, can have diff filename. Increase refcount of I-Node\# N
-  \item \textbf{Symbolic Link}: creates a new file Y in B, Y contains the pathname of X
-\end{itemize}
+  Table: (Segment\#, Page Limit, Page Table Base)
 
-\section{Additional Notes}
-\subsection{Internal vs External Fragmentation}
+  \includegraphics[width=0.8\linewidth]{s}
+
+  \includegraphics[width=0.8\linewidth]{swp}
+
+  \section{Virtual Memory Management}
+  \begin{itemize}
+    \item Use page table to translate \textbf{virtual} -> physical address
+    \item Extend paging scheme: Some pages may be in physical memory, others in secondary storage.
+    \item Use a \texttt{memory\_resident?} bit to distinguish between 2 page-types: \textbf{memory-resident} and \textbf{non-memory-resident}
+    \item CPU can only access memory-resident pages. \textbf{Page Fault} (PF) when CPU tries to access non-memory-resident page. OS needs to bring them into physical memory.
+    \item Just like cache, exploit \textbf{Temporal} \& \textbf{Spatial} Locality
+    \item Accessing page X:
+          \begin{enumerate}
+            \item If page X \textbf{memory resident}: Access physical mem. Done.
+            \item Else \textbf{PF}: Trap to OS
+            \item Locate page X in secondary storage
+            \item Load page X into a physical memory frame
+            \item Update page table
+            \item Go to step 1
+          \end{enumerate}
+  \end{itemize}
+  \subsection{Page Table Structure}
+  \subsubsection{Direct Paging}
+  \begin{itemize}
+    \item Keep all entries in a single table
+    \item With $2^p$ pages in logical mem space, $p$ bits to specify one unique page, $2^p$ PTE (each containing physical frame number + additional info bits), e.g. Virtual Address: 32 bits, page size = 4 KB, $p = 32 - 12 = 20$, size of PTE = 2 B, PT Size = $2^{20}\times 2$ bytes = 2MB
+  \end{itemize}
+  \subsubsection{2-Level Paging}
+  \begin{itemize}
+    \item Split page table into smaller page tables, each with a \textbf{PT number}
+    \item Total $2^P$ entries, with $2^M$ smaller PTs, $M$ bits to identify 1 PT, each smaller PT contains $2^{(P-M)}$ entries
+    \item Use \textbf{page directory} to keep track, containing $2^M$ indices. Ideally, size of page dir = page size
+    \item \textbf{Advantages}: corresponding PT to empty entries in page dir need not be allocated
+  \end{itemize}
+  \subsubsection{Inverted Page Table}
+  \begin{itemize}
+    \item Instead of keeping per-process PT, only a \textbf{single} mapping of physical frame to \texttt{<pid, page\#>} (ordered by frame\# instead of page\#)
+    \item \textbf{Advantage}: Memory saving, 1 table for all processes
+    \item \textbf{Disadvantage}: Slow translation ($O(n)$ to look up a page\#)
+  \end{itemize}
+  \subsection{Page Replacement Algorithms}
+  \begin{itemize}
+    \item When a page is evicted: \textbf{clean page} (not modified), \textbf{dirty page} (modified, must write back)
+    \item Memory access time: $T_{access} = (1-p)\times T_{mem}+p\times T_{page\_fault}$ where $p$ = prob of PF, $T_{mem}$ = access time for mem-resident page, $T_{page\_fault}$ = access time if PF occurs
+    \item Since $T_{page\_fault} >> T_{mem}$, need to reduce $p$ to keep $T_{access}$ reasonable (reduce total no of PF)
+  \end{itemize}
+  \subsubsection{Optimal Page Replacement (OPT)}
+  \begin{itemize}
+    \item Replace the page that will not be used again for the longest period of time. Guarantees min no of PF
+    \item However, not realisable, need \textbf{future knowledge} of mem refs
+    \item Base comparison for other algorithms
+  \end{itemize}
+  \subsubsection{FIFO}
+  \begin{itemize}
+    \item Mem pages are evicted based on their loading time
+    \item Implementation: OS maintain a queue of resident page numbers. Remove the first page in queue if replacement is needed. Update the queue during PF trap.
+    \item \textbf{Advantage}: simple to implement (no HW support needed)
+    \item \textbf{Problems}: Belady's Anomaly (more frames, more PF) because FIFO does not exploit temporal locality
+  \end{itemize}
+  \subsubsection{Least Recently Used (LRU)}
+  \begin{itemize}
+    \item Make use of temporal locality. Does not suffer from Belady's Anomaly
+    \item \textbf{Impl 1}: A logical time counter, incremented for every mem ref. PTE has a time of use field, replace page with smallest time of use.
+    \item However, need to search through all pages, and counter is forever increasing (overflow)
+    \item \textbf{Impl 2}: Use a stack. If page X is referenced, remove from stack, push on top of stack. Replace the page at bottom of stack.
+    \item However, not a pure stack. Entries can be removed from anywhere in the stack. Hard to implement in hardware.
+  \end{itemize}
+  \subsubsection{Second-Chance Page Replacement (CLOCK)}
+  \begin{itemize}
+    \item Modified FIFO to give a second chance to pages that are accessed.
+    \item Each PTE maintains a reference bit: \textbf{1} = accessed, \textbf{0} = not accessed
+    \item Algo:
+          \begin{enumerate}
+            \item Select oldest FIFO page.
+            \item If ref\_bit == 0, page is replaced.
+            \item If ref\_bit == 1, page is given 2nd chance: ref\_bit cleared to 0. Arrival time reset (as if newly loaded). Next FIFO page is selected, go to step 2
+          \end{enumerate}
+    \item Impl: use a \textbf{circular queue} to maintain the pages, with a pointer to the oldest page. To find a page to be replaced, advance until a page with ref\_bit == 0, and clear reference bit as pointer passes.
+    \item When all ref\_bit == 1, degenerate into FIFO
+  \end{itemize}
+  \subsection{Frame Allocation}
+  \begin{itemize}
+    \item $N$ physical mem frames, $M$ processes competing for frames.
+    \item \textbf{Equal allocation} (each process gets $\frac{N}{M}$ frames), \textbf{Proportional Allocation} (Let $size_p$ = size of process $p$, $size_{total}$ = total size of all processes, each process gets $\frac{size_p}{size_{total}} \times N$ frames)
+    \item Insufficient physical frame -> Thrashing (heavy IO to bring non-resident pages into RAM)
+  \end{itemize}
+  \subsection{Page Replacement}
+  \begin{itemize}
+    \item \textbf{Local Replacement}: victim page selected among pages of the process that causes PF\\
+          \textbf{Pros}: Frames allocated to a process remain constant, perf is stable between runs. \textbf{Cons}: if frame allocated not enough, hinder progress of a process\\
+          A thrashing process steals page from other process causing other process to thrash (\textbf{cascading thrashing})
+    \item \textbf{Global Replacement}: victim page chosen among all physical frames\\
+          \textbf{Pros}: Allow self-adjustment between processes (process that needs more can get from other). \textbf{Cons}: badly-behaved process can affect others, frames allocated to a process can be different from run to run (thrashing can be limited to one process, but that process can hog the IO and degrade perf of other processes)
+  \end{itemize}
+  \subsection{Working Set Model}
+  \begin{itemize}
+    \item In a new locality, a process will cause PF for the set of pages. Afterwards no/few PF until process transits to a new locality
+    \item Defines \textbf{Working Set Windows} $\Delta$ = time interval
+    \item $W(t,\Delta)$ = active pages in the interval at time $t$
+    \item interval = looking back
+    \item Allocate enough frames for pages in $W(t, \Delta)$ to reduce prob of PF
+    \item Accuracy of working set model directly affected by choice of $\Delta$. \textbf{Too small}: may miss pages in the current locality, \textbf{Too big}: may contain pages from different locality
+  \end{itemize}
+
+
+
+  \section{File System}
+  General Criteria: \textbf{Self-contained}, \textbf{persistent}, \textbf{efficient}
+  \subsection{File System Abstraction}
+  \subsubsection{File}
+  \begin{itemize}
+    \item logical unit created by process, contains data and metadata (name, identifier, type [regular \{ASCII, Binary\}, directories, special files], size, access rights, timedate, owner, table of content)
+    \item File \textbf{protection}: permission bits (owner, group, universe) (rwx), Access Control List (minimal ACL -- same as permission bits/extended ACL -- added named users/group)
+    \item \textbf{Operations} on metadata: Rename, Change/Read attributes
+    \item \textbf{Structure}: \textbf{Array of bytes}, \textbf{Fixed-length records} (array of records, can grow/shrink/jump to any record easily), \textbf{Variable length records} (flexible, but harder to locate a record)
+    \item \textbf{Access methods:} \textbf{Sequential} (data read in order from beginning, cannot skip but can rewind), \textbf{Random} (data can be read in any order, \textbf{Direct access} (for file containing fixed-length records, allow random access to any record directly)
+    \item \textbf{Generic operations}: create, open, r/w, repositioning, truncate
+    \item OS provides file ops as syscalls. Information kept for opened file: \textbf{File pointer} current loc in file, \textbf{disk location}: actual file loc on disk, \textbf{open count}: how many process opens this file
+    \item Organise open file information: \textbf{System-wide open-file table} (1 entry/unique file), \textbf{Per-process open-file table} (1 entry/file used in the process, each entry points to the system-wide table)
+    \item Processes sharing file in unix: (1) diff file descriptors, I/O can occur at indep offsets, (2) same file descriptor, only 1 offset, I/O changes the offset for the other process (e.g. \texttt{fork} after file is opened)
+  \end{itemize}
+  \subsubsection{Directory}
+  \begin{itemize}
+    \item Used to (1) provide logical grouping of files, keep track of files
+    \item Ways to structure directory:
+          \begin{itemize}
+            \item \textbf{Single-level}
+            \item \textbf{Tree-structured}\\
+                  Dirs can be recursively embedded in other directories. 2 ways of referring to the file: \textbf{absolute/relative pathname}
+            \item \textbf{DAG}\\
+                  A file can be shared, only 1 copy of actual content appearing in multiple directories with diff path names. In Unix: hard link (pointers to the same actual file on disk, pros: low overhead, cons: deltion problems)/symbolic link (special link file containing pathanme, pros: simple deletion, cons: larger overhead)
+            \item \textbf{General Graph}\\
+                  Generally not desirable: hard to traverse (need to prevent infinite looping), hard to determine when to remove a file/dir.
+          \end{itemize}
+  \end{itemize}
+
+  \section{File System Implementations}
+  \subsection{Disk Organisation}
+  \begin{itemize}
+    \item \textbf{Master Boot Record} at sector 0 with partition table, followed by 1/more partitions, each containing an independent file system.
+    \item Logical view, file = a collection of logical blocks
+    \item When file size $\neq$ multiple of logical blocks, last block may contain wasted space (\textbf{internal fragmentation})
+    \item Good file implementation: keep track of the logical blocks, allow efficient access, disk space is utilised effectively. (focus on how to allocate file data on disk)
+  \end{itemize}
+  \subsection{File Block Allocation}
+  \subsubsection{Contiguous}
+  \begin{itemize}
+    \item Allocate consecutive disk blocks to a file
+    \item \textbf{Pros}: simple to keep track (each file only needs startinb block number + length), fast access (only need to seek to first block)
+    \item \textbf{Cons}: External frag, file size needs to be specified in advance
+  \end{itemize}
+  \subsubsection{Linked List}
+  \begin{itemize}
+    \item Keep a linked list of disk blocks, each disk block stores the next disk block numbers (pointer) and actual file data
+    \item File information stores first and last disk block number
+    \item \textbf{Pros}: solve fragmentation
+    \item \textbf{Cons}: slow random access in a file, part of disk block is used for pointer, less reliable
+  \end{itemize}
+  \subsubsection{Linked List Variant: FAT}
+  \begin{itemize}
+    \item All block pointers in a single table: \textbf{File Allocation Table} (FAT)
+    \item \textbf{Pros}: Faster Random Access (linked list done in memory)
+    \item \textbf{Cons}: FAT can be huge when disk is large
+  \end{itemize}
+  \subsubsection{Indexed Allocation}
+  \begin{itemize}
+    \item Each file has an \textbf{index block} (an array of disk block addresses where \texttt{indexBlock[N]} = Nth block address)
+    \item \textbf{Pros}: Lesser memory overhead (only index block of opened file needs to be in memory), fast direct access
+    \item Cons: Limited maximum file size (max no of blocks == no of index block entries), index block overhead
+  \end{itemize}
+  \subsubsection{Indexed Allocation Variations}
+  \begin{itemize}
+    \item Schemes to allow larger file size
+    \item \textbf{Linked scheme}: keep a linked list of index blocks
+    \item \textbf{Multilevel index}: 1st level index block points to a number of 2nd level index blocks. Each 2nd level index blocks point to actual disk block. This can be generalised to any number of levels.
+    \item \textbf{Combined scheme}: combination of direct indexing and multi-level index scheme, e.g. Unix I-node has 12 direct pointers, 1 single indirect, 1 double indirect, 1 triple indirect
+  \end{itemize}
+  \subsection{Free Space Management}
+  \textbf{Free space list} to know which disk block is free during file alloc
+  \subsubsection{Bitmap}
+  \begin{itemize}
+    \item Each disk block represented by a bit, 1 = free, 0 = occupied
+    \item \textbf{Pros}: provide a good set of manipulations using bit-level ops
+    \item \textbf{Cons}: need to keep in memory for efficiency reason
+  \end{itemize}
+  \subsubsection{Linked List}
+  \begin{itemize}
+    \item A linked list of disk blocks, each disk block contains a number of free disk block numbers; a pointer to next free space disk block
+    \item \textbf{Pros}: Easy to locate block, only 1st pointer is needed in memory
+    \item \textbf{Cons}: High overhead (mitigated by storing the list in free blocks)
+  \end{itemize}
+  \subsection{Directory Structure}
+  \begin{itemize}
+    \item Given a full path name, recursively search the directories along the path to arrive at the file information
+    \item Each dir entry stores file name, metadata, (pointer to) file information, disk blocks information
+  \end{itemize}
+  \subsubsection{Linear List}
+  \begin{itemize}
+    \item Directory = a list of files
+    \item Locate a file using list requires a linear search (inefficient for large directories or deep tree traversal). \textbf{Common solution}: use cache to remember the latest few searches
+  \end{itemize}
+  \subsubsection{Hash Table}
+  \begin{itemize}
+    \item Directory = hash table of size $N$
+    \item Locate a file by file name: File name is hashed into index $K \in [0,N)$. \textbf{HashTable[K]} inspected to match file name, using chained collision resolution
+    \item \textbf{Pros}: fast lookup
+    \item \textbf{Cons}: hash table has limited size, depends on good hash function
+  \end{itemize}
+  \subsection{File System in Action}
+  \subsubsection{Create /.../parent/F}
+  \begin{enumerate}
+    \item Use full path name to locate parent dir, search for filename F to avoid duplicates. Search could be on cached dir structure
+    \item Use free space list to find free disk block(s)
+    \item Add an entry to parent directory with relevant file information
+  \end{enumerate}
+  \subsubsection{Process $P$ open file /.../F}
+  \begin{enumerate}
+    \item Search system-wide table for existing entry $E$. Not found, use full pathname to locate file $F$ and load its file information to a new entry $E$ in system-wide table. If not found terminate
+    \item Create an entry in the $P$'s table, pointing to $E$
+    \item Return pointer to this entry.
+  \end{enumerate}
+  \subsection{Disk I/O Scheduling Algorithms}
+  \textbf{Time taken = Seek Time + Rotational Latency + Transfer Time}
+  \begin{itemize}
+    \item Seek time = position disk head over proper track (average 2-10ms, approaches $\frac{1}{3}N$, where N = time for max seek distance)
+    \item Rotational latency = wait for desired sector to rotate under the head (4800-15000 RPM, 12.5ms to 4ms, average 6.25ms at 4800 RPM, 2ms at 15000 RPM)
+    \item Transfer Time = $\frac{\text{xfer size}}{\text{xfer rate}}$ (least sig factor) (xfer rate 70-125 MB/s)
+    \item Problem: due to significant seek \& rotational latency, OS should schedule disk I/O requests to reduce overall waiting time.
+    \item Rotational latency hard to mitigate, focus on reducing seek time
+  \end{itemize}
+  \subsubsection{FCFS}
+  \subsubsection{Shortest Seek First (SSF)}
+  \subsubsection{SCAN family (aka Elevator)}
+  \begin{itemize}
+    \item Bi-directional (innermost <-> outermost) (SCAN)
+    \item unidirectional (outermost -> innermost) (C-SCAN -- Circular SCAN)
+  \end{itemize}
+  \section{File System Case Studies}
+  \subsection{Microsoft FAT}
+  \includegraphics[width=\linewidth]{fatlayout}
+  \begin{itemize}
+    \item FAT12 -> FAT16 -> FAT32
+    \item File data allocated to a number of data blocks/data block clusters
+    \item Allocation info kept as a linked list, kept separately in the File Allocation Table (FAT) which is cached in RAM for linked list traversal: 1 entry per data block/cluster, store disk block information (FREE/EOF/BAD/next block number)
+    \item Dir represented as special type of file
+    \item Root dir is stored in a special location, other dirs are stored in the data blocks.
+    \item Each file/subdir within the dir represented as \textbf{directory entry}
+    \item Directory Entry 32-bytes, 8B+3B for file name+ext (first byte of file name may have special meaning: deleted, end of DE, parent dir, etc.), 1B for attributes, 10B reserved, 2B+2B for creation date+time (Year 1980-2107, time resolution $\pm2$ seconds), for the first disk block index (different variant diff number of bits, 12, 16, 32 for FAT12, FAT16, FAT32 respectively), 4B for file size in bytes.
+  \end{itemize}
+  \subsubsection{Accessing File/Dir}
+  For a dir, disk blocks contain DE for files/subdirs within that dir
+  \begin{enumerate}
+    \item Use first disk block number stored in DE to find starting point
+    \item Use FAT to find out subsequent disk block numbers
+    \item Use disk block number to perform actual disk access on the data blocks.
+  \end{enumerate}
+  \subsubsection{File Deletion}
+  \begin{enumerate}
+    \item ``Delete'' the DE (set first letter in filename to \texttt{0xE5})
+    \item Free data blocks: set FAT entries in linked list to FREE
+  \end{enumerate}
+  Do not keep track of free space information -- must be calculated by going through the FAT
+  \subsubsection{Variants: FAT12, FAT16, FAT32}
+  Support larger hard disk as a single partition
+  \begin{itemize}
+    \item \textbf{Disk cluster}: instead of using a single disk block as smallest alloc unit, use a number of contiguous disk blocks
+    \item \textbf{Pros}: Larger cluster size -> larger usable partition
+    \item \textbf{Cons}: Larger cluster size -> larger internal fragmentation
+    \item On FAT32, further limitation: 32-bit sector count, only 28-bit used in disk block/cluster index.
+    \item \textbf{Bigger FAT Size}
+    \item e.g. 4KB cluster\\
+          \begin{tabular}{| l | l | l |}
+            FAT12                      & FAT16                       & FAT32                     \\ \hline
+            $2^{12}$ clusters          & $2^{16}$ clusters           & $2^{28}$ clusters         \\
+            4KB $\times 2^{12} = 16$MB & 4KB $\times 2^{16} = 256$MB & 4KB $\times 2^{28} = 1$TB \\
+          \end{tabular}
+    \item Actual size is a little lesser, special values (EOF, FREE, etc) reduces total number of valid data block/cluster indices.
+  \end{itemize}
+  \subsubsection{Long File Name Support}
+  \begin{itemize}
+    \item Virtual FAT (VFAT) supports long file names up to 255 chars
+    \item Use multiple DE for a file with long filename.
+    \item Use a previously invalid file attribute so non-VFAT will ignore these additional entries
+    \item Use the first byte in the filename to indicate sequence
+    \item Keep the 8+3 short version for backward compatibility
+  \end{itemize}
+  \includegraphics[width=0.6\linewidth]{vfat}
+  \subsection{Extended-2 File System}
+  \begin{itemize}
+    \item Disk space split into \textbf{blocks}, blocks grouped into \textbf{Block Groups}
+    \item Each file/dir is described by \textbf{I-Node} (Index Node) containing file metadata \& data block addresses
+    \item For all bitmaps, 1 = Occupied, 0 = Free
+  \end{itemize}
+  \includegraphics[width=\linewidth]{ext2layout}
+  \subsubsection{Superblock}
+  \begin{itemize}
+    \item Describes the whole filesystem
+    \item Duplicated in each block group for redundancy
+    \item Includes total I-Nodes number, I-Nodes/group, total disk blocks, disk blocks/group, etc.
+  \end{itemize}
+  \subsubsection{Group Descriptors}
+  \begin{itemize}
+    \item Describes each of the block group -- no of free disk blocks, free I-nodes, location of the bitmaps
+    \item Duplicated in each block group
+  \end{itemize}
+  \subsubsection{Block Bitmap}
+  Keep track of the usage status of blocks of this block group
+  \subsubsection{I-Node Bitmap}
+  Keep track of the usage status of I-Nodes of this block group
+  \subsubsection{I-Node Table}
+  An array of I-Nodes, containing only I-Nodes of this block group
+  \subsubsection{I-Node Structure (128 Bytes)}
+  \begin{itemize}
+    \item 2B for Mode: Filetype (regular, dir, special, etc) + File permission
+    \item 2B user id, 2B group id
+    \item 4B for file size in bytes, 8B for regular files
+    \item 4B each for access, creation, modification, deletion timestamps
+    \item 4B each for 15 data block pointers: 12 direct, 1 single indirect, 1 double indirect, 1 triple indirect
+    \item 2B for refcount (no of times this I-Node is references by DE)
+  \end{itemize}
+  \subsubsection{I-Node Data Block}
+  \begin{itemize}
+    \item Allows fast access to small file, flexibility in handling huge file
+    \item e.g. disk block address = 4B, each disk block is 1KB, so each indirect block can store $\frac{1\text{KB}}{4}=256$ addresses
+    \item Max file size = direct + single indirect + double indirect + triple indirect = $12 \times 1$KB + $256 \times 1$KB + $256^2 \times 1$KB + $256^3 \times 1$KB = 12KB + 256KB + 64MB + 16GB = 16843020 KB
+  \end{itemize}
+  \subsubsection{Directory Structure}
+  Data blocks of a dir store a linked list of DE for files/subdirs information within this dir
+  \begin{itemize}
+    \item I-Node number for that file/subdir (0 indicates unused DE)
+    \item Size of this DE (to locate next DE)
+    \item Length of the file/subdir name
+    \item Type: File/subdir (or other special file type)
+    \item File/subdir name (up to 255 chars)
+  \end{itemize}
+  \subsubsection{Accessing file/dir}
+  \begin{enumerate}
+    \item Root directory has a fixed I-Node (e.g. 2), read the actual I-Node
+    \item Look at the next part in pathname, locate DE in current dir, retrieve I-Node number, read actual I-Node
+    \item If dir, set current dir to this dir (read DE in pointed by I-Node)
+    \item Else if a file, read content from blocks pointed by I-Node
+  \end{enumerate}
+  \subsubsection{File deletion}
+  \begin{enumerate}
+    \item Remove DE from parent dir (point prev entry to the next entry/end, if first entry, DE is replaced with blank record)
+    \item Update I-Node bitmap (mark as free)
+    \item Update block bitmap (mark as free)
+  \end{enumerate}
+  \subsubsection{Hard/Symbolic Link with I-Node}
+  Dir A contains a file X, with I-Node\# N, dir B wants to share X
+  \begin{itemize}
+    \item \textbf{Hard Link}: creates a DE in B, using same I-Node\# N, can have diff filename. Increase refcount of I-Node\# N
+    \item \textbf{Symbolic Link}: creates a new file Y in B, Y contains the pathname of X
+  \end{itemize}
+
+  \section{Additional Notes}
+  \subsection{Internal vs External Fragmentation}
   \textbf{Internal fragmentation} is the wasted space within each allocated block
   because of rounding up from the actual requested allocation to the
   allocation granularity.
-  
+
   \textbf{External fragmentation} is the various free
   spaced holes that are generated in either your memory or disk space.
   External fragmented blocks are available for allocation, but may be
