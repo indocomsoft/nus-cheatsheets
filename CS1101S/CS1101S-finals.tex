@@ -220,7 +220,7 @@ by~indocomsoft,~page~\thepage~of~\pageref{LastPage}
 \setlength\columnseprule{0.1pt}
 \begin{document}
 \setlength{\abovedisplayskip}{0pt}
-  \setlength{\belowdisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
 
 \tiny
 \begin{multicols*}{4}
@@ -234,12 +234,12 @@ by~indocomsoft,~page~\thepage~of~\pageref{LastPage}
     \item Hence, inside \codeblue{fn}: \codeblue{ret = []; arr = ret;} does not mutate the original arr as it is just a pointer, but \codeblue{arr[2]=5;} does mutate the original array.
   \end{itemize}
   \subsection*{math\_<name>, where \codeblue{name} can be:}
-    \begin{descitemize}
-      \item [const:] \codeblue{E, LN10, LN2, LOG10E, LOG2E, PI, SQRT1\_2, SQRT2}
-      \item [Functions:] \codeblue{abs(x), cbrt(x), ceil(x), exp(x), floor(x), log(x), log10(x), log2(x), max(x1,...,xn), min(x1,...,xn), pow(base, exponent), random(), round(x), sqrt(x), trunc(x), acos(x), asin(x), atan(x), cos(x), sin(x), tan(x)}
-    \end{descitemize}
+  \begin{descitemize}
+    \item [const:] \codeblue{E, LN10, LN2, LOG10E, LOG2E, PI, SQRT1\_2, SQRT2}
+    \item [Functions:] \codeblue{abs(x), cbrt(x), ceil(x), exp(x), floor(x), log(x), log10(x), log2(x), max(x1,...,xn), min(x1,...,xn), pow(base, exponent), random(), round(x), sqrt(x), trunc(x), acos(x), asin(x), atan(x), cos(x), sin(x), tan(x)}
+  \end{descitemize}
   \subsection*{General Functions}
-    \begin{itemize}
+  \begin{itemize}
     \begin{minipage}{\columnwidth}
       \setlength\columnseprule{0pt}
       \setlength{\topskip}{0pt}
@@ -249,58 +249,58 @@ by~indocomsoft,~page~\thepage~of~\pageref{LastPage}
         \item \codeblue{display(value)}
         \item \codeblue{prompt(string)}
       \end{multicols*}
-      \end{minipage}
-    \end{itemize}
+    \end{minipage}
+  \end{itemize}
   \subsection*{Primitive Data Type Checks}
-      \begin{itemize}
-      \begin{minipage}{\columnwidth}
-        \setlength\columnseprule{0pt}
-        \setlength{\topskip}{0pt}
-        \begin{multicols*}{3}
-          \item \codeblue{is\_boolean}
-          \item \codeblue{is\_number}
-          \item \codeblue{is\_string}
-          \item \codeblue{is\_function}
-          \item \codeblue{is\_object}
-          \item \codeblue{is\_array}
-        \end{multicols*}
-        \end{minipage}
-      \end{itemize}
-    PS: \codeblue{is\_object(array)} returns \codeblue{true}x
+  \begin{itemize}
+    \begin{minipage}{\columnwidth}
+      \setlength\columnseprule{0pt}
+      \setlength{\topskip}{0pt}
+      \begin{multicols*}{3}
+        \item \codeblue{is\_boolean}
+        \item \codeblue{is\_number}
+        \item \codeblue{is\_string}
+        \item \codeblue{is\_function}
+        \item \codeblue{is\_object}
+        \item \codeblue{is\_array}
+      \end{multicols*}
+    \end{minipage}
+  \end{itemize}
+  PS: \codeblue{is\_object(array)} returns \codeblue{true}x
   \subsection*{List Library}
-    \begin{itemize}
-      \item \codeblue{pair(x,y)}: Makes a pair from x and y.
-      \item \codeblue{head(p)}: Returns the head (first component) of the pair x.
-      \item \codeblue{tail(p)}: Returns the tail (second component) of the pair x.
-      \item \codeblue{set\_head(p,x)}: Sets the head (first component) of the pair p to be x; returns undefined.
-      \item \codeblue{set\_tail(p,x)}: Sets the tail (second component) of the pair p to be x; returns undefined.
-      \item \codeblue{list(x1,x2,...,xn)}: Returns a list with n elements. The first element is x1, the second x2, etc. Iterative process; time: $O(n)$, space: $O(n)$, since the constructed list data structure consists of n pairs, each of which takes up a constant amount of space.
-      \item \codeblue{is\_pair(p)}: Returns true if x is a pair and false otherwise.
-      \item \codeblue{is\_empty\_list(x)}: Returns true if xs is the empty list, and false otherwise.
-      \item \codeblue{is\_list(x)}: Returns true if x is a list as defined in the lectures, and false otherwise. Iterative process; time: O(n), space: O(1), where n is the length of the chain of tail operations that can be applied to x.
-      \item \codeblue{length(xs)}: Returns the length of the list xs. Iterative process; time: O(n), space: O(1), where n is the length of xs.
-      \item \codeblue{map(f,xs)}: Returns the length of the list xs. Iterative process; time: O(n), space: O(1), where n is the length of xs.
-      \item \codeblue{build\_list(n,f)}: Makes a list with n elements by applying the unary function f to the numbers 0 to n - 1. Recursive process; time: O(n), space: O(n).
-      \item \codeblue{for\_each(f,xs)}: Applies f to every element of the list xs, and then returns true. Iterative process; time: O(n), space: O(1), where n is the length of xs
-      \item \codeblue{list\_to\_string(xs)}: Returns a string that represents list xs using the text-based box-and-pointer notation [...].
-      \item \codeblue{reverse(xs)}: Returns list xs in reverse order. Iterative process; time: O(n), space: O(n), where n is the length of xs. The process is iterative, but consumes space O(n) because of the result list.
-      \item \codeblue{append(xs,ys)}: Returns a list that results from appending the list ys to the list xs. Recursive process; time: O(n), space: O(n), where n is the length of xs.
-      \item \codeblue{member(x,xs)}: Returns first postfix sublist whose head is identical to x (===); returns [] if the element does not occur in the list. Iterative process; time: O(n), space: O(1), where n is the length of xs.
-      \item \codeblue{remove(x,xs)}: Returns a list that results from xs by removing the first item from xs that is identical (===) to x. Recursive process; time: O(n), space: O(n), where n is the length of xs.
-      \item \codeblue{remove\_all(x)}:Returns a list that results from xs by removing all items from xs that are identical (===) to x. Recursive process; time: O(n), space: O(n), where n is the length of xs.
-      \item \codeblue{filter(pred,xs)}: Returns a list that contains only those elements for which the one-argument function pred returns true. Recursive process; time: O(n), space: O(n), where n
-      is the length of xs.
-      \item \codeblue{enum\_list(start,end)}: Returns a list that enumerates numbers starting from start using a step size of 1, until the number exceeds (>) end. Recursive process; time: O(n), space: O(n), where n is the length of xs.
-      \item \codeblue{list\_ref(xs,n)}: Returns the element of list xs at position n, where the first element has index 0. Iterative process; time: O(n), space: O(1), where n is the length of xs.
-      \item \codeblue{accumulate(op,initial,xs)}: Applies binary function op to the elements of xs from right-to-left order, first applying op to the last element and the value initial, resulting in r1, then to the second-last element and r1, resulting in r2, etc, and finally to the first element and rn-1, where n is the length of the list. Thus, accumulate(op,zero,list(1,2,3)) results in op(1, op(2, op(3, zero))). Recursive process; time: O(n), space: O(n), where n is the length of xs, assuming op takes constant time.
-      \end{itemize}
-    \subsection*{Misc Functions}
-      \begin{itemize}
-          \item \codeblue{equal(x, y)} - \codeblue{true} if pairs and corrs leaves are \codeblue{===}
-          \item \codeblue{array\_length(arr)} $=1+$(highest index used)
-          \item \codeblue{apply\_in\_underlying\_javascript(f, xs)}:\\ calls the function f with arguments xs. For example:\\
+  \begin{itemize}
+    \item \codeblue{pair(x,y)}: Makes a pair from x and y.
+    \item \codeblue{head(p)}: Returns the head (first component) of the pair x.
+    \item \codeblue{tail(p)}: Returns the tail (second component) of the pair x.
+    \item \codeblue{set\_head(p,x)}: Sets the head (first component) of the pair p to be x; returns undefined.
+    \item \codeblue{set\_tail(p,x)}: Sets the tail (second component) of the pair p to be x; returns undefined.
+    \item \codeblue{list(x1,x2,...,xn)}: Returns a list with n elements. The first element is x1, the second x2, etc. Iterative process; time: $O(n)$, space: $O(n)$, since the constructed list data structure consists of n pairs, each of which takes up a constant amount of space.
+    \item \codeblue{is\_pair(p)}: Returns true if x is a pair and false otherwise.
+    \item \codeblue{is\_empty\_list(x)}: Returns true if xs is the empty list, and false otherwise.
+    \item \codeblue{is\_list(x)}: Returns true if x is a list as defined in the lectures, and false otherwise. Iterative process; time: O(n), space: O(1), where n is the length of the chain of tail operations that can be applied to x.
+    \item \codeblue{length(xs)}: Returns the length of the list xs. Iterative process; time: O(n), space: O(1), where n is the length of xs.
+    \item \codeblue{map(f,xs)}: Returns the length of the list xs. Iterative process; time: O(n), space: O(1), where n is the length of xs.
+    \item \codeblue{build\_list(n,f)}: Makes a list with n elements by applying the unary function f to the numbers 0 to n - 1. Recursive process; time: O(n), space: O(n).
+    \item \codeblue{for\_each(f,xs)}: Applies f to every element of the list xs, and then returns true. Iterative process; time: O(n), space: O(1), where n is the length of xs
+    \item \codeblue{list\_to\_string(xs)}: Returns a string that represents list xs using the text-based box-and-pointer notation [...].
+    \item \codeblue{reverse(xs)}: Returns list xs in reverse order. Iterative process; time: O(n), space: O(n), where n is the length of xs. The process is iterative, but consumes space O(n) because of the result list.
+    \item \codeblue{append(xs,ys)}: Returns a list that results from appending the list ys to the list xs. Recursive process; time: O(n), space: O(n), where n is the length of xs.
+    \item \codeblue{member(x,xs)}: Returns first postfix sublist whose head is identical to x (===); returns [] if the element does not occur in the list. Iterative process; time: O(n), space: O(1), where n is the length of xs.
+    \item \codeblue{remove(x,xs)}: Returns a list that results from xs by removing the first item from xs that is identical (===) to x. Recursive process; time: O(n), space: O(n), where n is the length of xs.
+    \item \codeblue{remove\_all(x)}:Returns a list that results from xs by removing all items from xs that are identical (===) to x. Recursive process; time: O(n), space: O(n), where n is the length of xs.
+    \item \codeblue{filter(pred,xs)}: Returns a list that contains only those elements for which the one-argument function pred returns true. Recursive process; time: O(n), space: O(n), where n
+          is the length of xs.
+    \item \codeblue{enum\_list(start,end)}: Returns a list that enumerates numbers starting from start using a step size of 1, until the number exceeds (>) end. Recursive process; time: O(n), space: O(n), where n is the length of xs.
+    \item \codeblue{list\_ref(xs,n)}: Returns the element of list xs at position n, where the first element has index 0. Iterative process; time: O(n), space: O(1), where n is the length of xs.
+    \item \codeblue{accumulate(op,initial,xs)}: Applies binary function op to the elements of xs from right-to-left order, first applying op to the last element and the value initial, resulting in r1, then to the second-last element and r1, resulting in r2, etc, and finally to the first element and rn-1, where n is the length of the list. Thus, accumulate(op,zero,list(1,2,3)) results in op(1, op(2, op(3, zero))). Recursive process; time: O(n), space: O(n), where n is the length of xs, assuming op takes constant time.
+  \end{itemize}
+  \subsection*{Misc Functions}
+  \begin{itemize}
+    \item \codeblue{equal(x, y)} - \codeblue{true} if pairs and corrs leaves are \codeblue{===}
+    \item \codeblue{array\_length(arr)} $=1+$(highest index used)
+    \item \codeblue{apply\_in\_underlying\_javascript(f, xs)}:\\ calls the function f with arguments xs. For example:\\
           \begin{minipage}{\columnwidth}
-          \begin{minted}{javascript}
+            \begin{minted}{javascript}
 function times(x, y) {
   return x * y;
 }
@@ -308,11 +308,11 @@ apply_in_underlying_javascript(times, list(2, 3));
 // returns 6
           \end{minted}
           \end{minipage}
-          
-      \end{itemize}
-      
-    \subsection*{OOP Inheritance, method declaration, constructor example code}
-      \begin{minted}{javascript}
+
+  \end{itemize}
+
+  \subsection*{OOP Inheritance, method declaration, constructor example code}
+  \begin{minted}{javascript}
 function icsbot(name){ Player.call(this, name); }
 icsbot.Inherits(Player);
 icsbot.prototype.__act = function(){
@@ -321,51 +321,51 @@ icsbot.prototype.__act = function(){
 }
 var anu = new Player("abc");
 \end{minted}
-\subsection*{OOP Syntactic Sugar}
-\begin{descitemize}
-  \item \codeblue{Object.attribute = 5;} =>\\
-  \begin{minipage}{\columnwidth}
-    \begin{minted}{javascript}
+  \subsection*{OOP Syntactic Sugar}
+  \begin{descitemize}
+    \item \codeblue{Object.attribute = 5;} =>\\
+    \begin{minipage}{\columnwidth}
+      \begin{minted}{javascript}
 Object["attribute"] = 5;
     \end{minted}
-  \end{minipage}
-  \item \codeblue{Object.method(arg1, arg2, ...)} =>\\
-  \begin{minipage}{\columnwidth}
-    \begin{minted}{javascript}
+    \end{minipage}
+    \item \codeblue{Object.method(arg1, arg2, ...)} =>\\
+    \begin{minipage}{\columnwidth}
+      \begin{minted}{javascript}
 var newid = object;
 newid["method"].call(newid, arg1, arg2, ...);
 \end{minted}
-  \end{minipage}
-  \item \codeblue{ChildClass.Inherits(ParentClass)} => \\
-  \begin{minipage}{\columnwidth}
-  \begin{minted}{javascript}
+    \end{minipage}
+    \item \codeblue{ChildClass.Inherits(ParentClass)} => \\
+    \begin{minipage}{\columnwidth}
+      \begin{minted}{javascript}
 ChildClass.prototype.__proto__=ParentClass.prototype;
   \end{minted}
-  \end{minipage}
-  \item \codeblue{var anu = new Player("abc");} => \\
-  \begin{minipage}{\columnwidth}
-  \begin{minted}{javascript}
+    \end{minipage}
+    \item \codeblue{var anu = new Player("abc");} => \\
+    \begin{minipage}{\columnwidth}
+      \begin{minted}{javascript}
 var anu = {};
 anu.prototype.__proto__ = Player.prototype;
 Player.call(anu, "abc");
   \end{minted}
-  \end{minipage}
-\end{descitemize}
+    \end{minipage}
+  \end{descitemize}
   \section{Complexity}
-    \begin{descitemize}
+  \begin{descitemize}
     \item [Big Oh $O()$]: Upper bound (worst case)
     \item [Big Omega $\Omega()$]: Lower bound (best case)
     \item [Big Theta $\Theta()$]: Both upper and lower bound
     \item [Order]:\\
     $\Theta(1) < \Theta(\log n) < \Theta(n) < \Theta(n \log n) < \Theta(n^2) < \Theta(n^3) < \Theta(2^n) < \Theta(3^n) < \Theta(n^n)$
-    \end{descitemize}
+  \end{descitemize}
 
   \section{Box-and-Pointer Diagrams}
-\begin{minted}{javascript}
+  \begin{minted}{javascript}
 var w1 = list(1,2); var w2 = list(3,4);
 var w3 = append(w1,w2);
 \end{minted}
-\begin{verbatim}
+  \begin{verbatim}
     +---+   +---+
 w1->|1| |-->|2|/|
     +---+   +---+
@@ -375,24 +375,24 @@ w2-------------------+
 w3->|1| |-->|2| |-->|3| |-->|4|/|
     +---+   +---+   +---+   +---+
 \end{verbatim}
-\begin{minted}{javascript}
+  \begin{minted}{javascript}
 var x = list(pair(1,2), pair(3,4));
 set_tail(head(x), head(tail(x)));
 \end{minted}
-\begin{verbatim}
+  \begin{verbatim}
    +---+   +---+
 x->| | |-->| |/|
    +---+   +---+
     V       V
    +---+   +---+
    |1| |-->|3|4|
-   +---+   +---+ 
+   +---+   +---+
 \end{verbatim}
-\begin{minted}{javascript}
+  \begin{minted}{javascript}
 var input = list(1, pair(2,3), list(4));
 var result = map(function(x){return x;}, input);
 \end{minted}
-\begin{verbatim}
+  \begin{verbatim}
         +---+   +---+   +---+
 input-->|1| |-->| | |-->| |/|
         +---+   +---+   +---+
@@ -408,13 +408,13 @@ result->|1| |-->| | |-->| |/|
 
   \section{List-related}
   \subsection*{contains}
-\begin{minted}{javascript}
+  \begin{minted}{javascript}
 function contains(x, xs) {
     return !is_empty_list(member(x, xs));
 }
 \end{minted}
   \subsection*{Map}
-\begin{minted}{javascript}
+  \begin{minted}{javascript}
 function map(f, xs) {
   return is_empty_list(xs)
             ? []
@@ -431,7 +431,7 @@ function new_map(f, xs) {
 }
 \end{minted}
   \subsection*{Filter}
-\begin{minted}{javascript}
+  \begin{minted}{javascript}
 function filter(pred, xs) {
   if(is_empty_list(xs)) {
     return [];
@@ -449,8 +449,8 @@ function new_filter(pred, xs) {
                     }, [], xs);
 }
 \end{minted}
-\subsection*{Reverse}
-\begin{minted}{javascript}
+  \subsection*{Reverse}
+  \begin{minted}{javascript}
 function reverse(xs) {
   function rev(original, reversed) {
     return is_empty_list(original)
@@ -463,8 +463,8 @@ function reverse(lst) {
   return append(reverse(tail(lst)), list(head(lst)));
 }
 \end{minted}
-\subsection*{next\_nth, every\_n}
-\begin{minted}{javascript}
+  \subsection*{next\_nth, every\_n}
+  \begin{minted}{javascript}
 // every_n returns every n-th element from lst
 function next_nth(lst, n) {
   if (is_empty_list(lst)) {
@@ -528,8 +528,8 @@ function fold_left(op, initial, sequence) {
   return iter(initial, sequence);
 }
   \end{minted}
-\subsection*{Count Pairs}
-\begin{minted}{javascript}
+  \subsection*{Count Pairs}
+  \begin{minted}{javascript}
 function count_pairs(x) {
   var hist = [];
   function helper(x) {
@@ -567,13 +567,13 @@ function twice (f) {
   return function(x) { return f(f(x)); };
 }
 \end{minted}
-Evaluate:\codeblue{(twice(twice(twice)))(twice)(plus\_one)(4)}
-\begin{equation*}
-t^{2^{((2^2)^2)}}=t^{2^{(4)^2}}=t^{2^{16}}=t^{65536}
-\end{equation*}
-\codeblue{twice} does tetration (right-to-left).
-\subsection*{Sum}
-\begin{minted}{javascript}
+  Evaluate:\codeblue{(twice(twice(twice)))(twice)(plus\_one)(4)}
+  \begin{equation*}
+    t^{2^{((2^2)^2)}}=t^{2^{(4)^2}}=t^{2^{16}}=t^{65536}
+  \end{equation*}
+  \codeblue{twice} does tetration (right-to-left).
+  \subsection*{Sum}
+  \begin{minted}{javascript}
 //Sum: term - the operator, next - (de/in)crement counter, a - starting point, b - endpoint
 // recursive version
 function sum(term, a, next, b) {
@@ -634,7 +634,7 @@ function is_number_tree(xs) {
 }
   \end{minted}
   \subsection*{Balanced BST}
-\begin{minted}{javascript}
+  \begin{minted}{javascript}
 function make_node(left_tree, number, right_tree) {
   return list(left_tree, number, right_tree);
 }
@@ -657,9 +657,9 @@ function make_balanced(xs) {
   }
 }
 \end{minted}
-\section{Mutable Data Structure}
-\subsection*{Tortoise and Hare Algorithm (check if list has a loop)}
-\begin{minted}{javascript}
+  \section{Mutable Data Structure}
+  \subsection*{Tortoise and Hare Algorithm (check if list has a loop)}
+  \begin{minted}{javascript}
 function has_loop(lst) {
   function tortoise_and_hare(tortoise, hare) {
     if (is_empty_list(tortoise) || is_empty_list(hare) || is_empty_list(tail(hare))) {
@@ -673,8 +673,8 @@ function has_loop(lst) {
   return tortoise_and_hare(lst, tail(lst));
 }
 \end{minted}
-\subsection*{Circular List}
-\begin{minted}{javascript}
+  \subsection*{Circular List}
+  \begin{minted}{javascript}
 function make_circular_copy(xs) {
   function inner(zs, ys) {
     if (is_empty_list(zs)) {
@@ -724,8 +724,8 @@ function dequeue(q) {
 }
 function peek(q) { return head(head(q)); }
   \end{minted}
-\subsection*{Stack}
-\begin{minted}{javascript}
+  \subsection*{Stack}
+  \begin{minted}{javascript}
 function make_stack() { return pair("stack", []); }
 function is_empty_stack(stack) {
   return is_empty_list(tail(stack));
@@ -747,8 +747,8 @@ function pop(stack) {
     }
 }
 \end{minted}
-\subsection*{Mutable version of list functions}
-\begin{minted}{javascript}
+  \subsection*{Mutable version of list functions}
+  \begin{minted}{javascript}
 function mutable_append(xs, ys) {
   if (is_empty_list(xs)) {
     return ys;
@@ -767,7 +767,7 @@ function mutable_reverse(xs) {
       set_tail(ori, rev);
       return help(temp, ori);
     }
-  } 
+  }
 }
 \end{minted}
   \section{Coin Change}
@@ -789,7 +789,7 @@ function cc(amount, lst) {
 // Given coins in list l, return list of coin permutations that add up to x
 function makeup_amount(x,l) {
   if (is_pair(l)) {
-    return append(map(function(x){ return pair(head(l),x); }, 
+    return append(map(function(x){ return pair(head(l),x); },
                       makeup_amount(x - head(l), tail(l))),
                   makeup_amount(x, tail(l)));
   } else if (x === 0) {
@@ -799,8 +799,8 @@ function makeup_amount(x,l) {
   }
 }
   \end{minted}
-\subsection*{Doubly-linked List}
-\begin{minted}{javascript}
+  \subsection*{Doubly-linked List}
+  \begin{minted}{javascript}
 function make_node(data, prev, next) {
   return list("node", data, prev, next);
 }
@@ -830,12 +830,12 @@ function set_next(n, v) {
 function insert_before(n1, n2) {
     set_prev(n2, get_prev(n1));
     set_next(get_prev(n1), n2);
-    set_prev(n1, n2); set_next(n2, n1);                            
+    set_prev(n1, n2); set_next(n2, n1);
 }
 function insert_after(n1, n2) {
   set_next(n2, get_next(n1));
   set_prev(get_next(n1), n2);
-  set_next(n1, n2); set_prev(n2, n1); 
+  set_next(n1, n2); set_prev(n2, n1);
 }
 function remove(n) {
   var x = get_prev(n); var y = get_next(n);
@@ -887,7 +887,7 @@ function permutations_r(s, r) {
 }
   \end{minted}
   \subsection*{Combinations \textmd{($O\left(\frac{n!}{(n-k)!k!}\right) = O\left(n^{n\div 2}\right)$)}}
-    \begin{minted}{javascript}
+  \begin{minted}{javascript}
 function combinations_k(xs, k) {
   if (k === 0) { return list([]);
   } else if (is_empty_list(xs)) { return [];
@@ -942,7 +942,7 @@ function hanoi(n, A, B, C) {
   \end{minted}
   \section{Sorting functions \& Binary Search}
   \subsection*{Selection Sort \textmd{($\Theta(n^2)$)}}
-    \begin{minted}{javascript}
+  \begin{minted}{javascript}
   function selection_sort(xs) {
     if (is_empty_list(xs)) { return xs;
     } else {
@@ -996,8 +996,8 @@ function merge_sort(xs) {
     if (is_empty_list(xs) || is_empty_list(tail(xs))) {
         return xs;
     } else {
-        var mid = middle(length(xs));  
-        return merge(merge_sort(take(xs, mid)), 
+        var mid = middle(length(xs));
+        return merge(merge_sort(take(xs, mid)),
                      merge_sort(drop(xs, mid)));
     }
 }
@@ -1029,8 +1029,8 @@ function quicksort(xs) {
   }
 }
   \end{minted}
-\subsection*{Binary Search \textmd{($O(\log n)$), returns true/false}}
-\begin{minted}{javascript}
+  \subsection*{Binary Search \textmd{($O(\log n)$), returns true/false}}
+  \begin{minted}{javascript}
 function binary_search(a, v) {
   function search(low, high) {
     if (low > high) {
@@ -1046,8 +1046,8 @@ function binary_search(a, v) {
 }
 \end{minted}
 
-\subsection*{Binary Search on sorted rotated array, \textmd{($O(\log n)$), returns the index if found, -1 if not found}}
-\begin{minted}{javascript}
+  \subsection*{Binary Search on sorted rotated array, \textmd{($O(\log n)$), returns the index if found, -1 if not found}}
+  \begin{minted}{javascript}
 function find(target, arr) {
   function findPivot(low, high) {
     if (low > high) {
@@ -1146,10 +1146,10 @@ function my_filter(pred, xs) {
                     }, [], xs);
 }
   \end{minted}
-  
+
   \subsection*{2048}
   \begin{minipage}{\columnwidth}
-  \begin{minted}{javascript}
+    \begin{minted}{javascript}
 function slideRowToTheLeft(arr) {
   for (var i = 0; i < 4; i = i + 1) {
     for (var j = i + 1; j < 4 ; j = j + 1) {
@@ -1208,9 +1208,9 @@ function performSlide(grid, direction) {
 }
   \end{minted}
   \end{minipage}
-\section{Memoization}
-\subsection*{1D Memoization Abstraction}
-\begin{minted}{javascript}
+  \section{Memoization}
+  \subsection*{1D Memoization Abstraction}
+  \begin{minted}{javascript}
 function memoize(f) {
   var mem = [];
   return function(x) {
@@ -1227,8 +1227,8 @@ var fib=memoize(function(n){
   return n <= 1 ? n : fib(n-1) + fib(n-2);
 });
 \end{minted}
-\subsection*{Memoized Coin Change}
-\begin{minted}{javascript}
+  \subsection*{Memoized Coin Change}
+  \begin{minted}{javascript}
 var mem = [];
 function read(amount, coin_range) {
   return (mem[amount] === undefined) ? undefined : mem[amount][coin_range];
@@ -1251,8 +1251,8 @@ function cc(amount, coin_range) {
   }
 }
 \end{minted}
-\subsection*{Multi-dimensional Memoization (e.g. Tower of Hanoi)}
-\begin{minted}{javascript}
+  \subsection*{Multi-dimensional Memoization (e.g. Tower of Hanoi)}
+  \begin{minted}{javascript}
 var mem = [];
 function read(w, x, y, z) {
   return (mem[w] === undefined) ? undefined
@@ -1261,7 +1261,7 @@ function read(w, x, y, z) {
 }
 function write(w, x, y, z, value) {
   if (mem[w] === undefined) { mem[w] = [];
-  } else {}    
+  } else {}
   if (mem[w][x] === undefined) { mem[w][x] = [];
   } else {}
   if (mem[w][x][y] === undefined) { mem[w][x][y] = [];
@@ -1288,16 +1288,16 @@ function mhanoi(n, A, B, C) {
       var moves_to_final = retriever(n - 1, C, B, A);
       return append(moves_to_helper,
                     pair(the_move, moves_to_final));
-    }  
+    }
   }
 }
 // mhanoi(8, 1, 2, 3);
 \end{minted}
-\subsection*{Variation of Knapsack Problem}
-A thief has a getaway car that can hold at most m kg (m is an integer). Write a program that takes in a list of the gold bar masses and determines the total mass of gold bars he can steal. Time complexity:\\
-\textbf{Non-Memoized}: $O(2^{\texttt{length(bar\_masses)}})$,\\
-\textbf{Memoized}: $O(\texttt{length(bar\_masses)}\cdot m)$
-\begin{minted}{javascript}
+  \subsection*{Variation of Knapsack Problem}
+  A thief has a getaway car that can hold at most m kg (m is an integer). Write a program that takes in a list of the gold bar masses and determines the total mass of gold bars he can steal. Time complexity:\\
+  \textbf{Non-Memoized}: $O(2^{\texttt{length(bar\_masses)}})$,\\
+  \textbf{Memoized}: $O(\texttt{length(bar\_masses)}\cdot m)$
+  \begin{minted}{javascript}
 // Non-memoized version
 function max_loot_mass(bar_masses, m) {
   if(is_empty_list(bar_masses)||head(bar_masses) > m) {
@@ -1343,12 +1343,12 @@ function max_loot_mass(bar_masses, m) {
 }
 \end{minted}
 
-\subsection*{Knapsack Problem: Herbert the Clown}
-Most expensive combination with a given budget from a list of ingredients.\\
-\codeblue{b} = Budget\\
-\codeblue{i\_l} = List of Ingredients Price List\\
-\begin{minipage}{\columnwidth}
-\begin{minted}{javascript}
+  \subsection*{Knapsack Problem: Herbert the Clown}
+  Most expensive combination with a given budget from a list of ingredients.\\
+  \codeblue{b} = Budget\\
+  \codeblue{i\_l} = List of Ingredients Price List\\
+  \begin{minipage}{\columnwidth}
+    \begin{minted}{javascript}
 // Assume all sublists are sorted in ascending order
 function getMaxSpend(b, i_l) {
   function is_sufficient_fund(b, i_l) {
@@ -1374,12 +1374,12 @@ getMaxSpend(11, i_l); // returns 10 (4+5+1)
 getMaxSpend(20, i_l); // returns 19 (8+10+1)
 
 \end{minted}
-\end{minipage}
-\section{Environment Model}
-      \begin{minipage}{\columnwidth}
-        \setlength{\topskip}{0pt}
-\begin{multicols*}{2}
-\begin{minted}{javascript}
+  \end{minipage}
+  \section{Environment Model}
+  \begin{minipage}{\columnwidth}
+    \setlength{\topskip}{0pt}
+    \begin{multicols*}{2}
+      \begin{minted}{javascript}
 var x = 4;
 function foo(x) {
   var y = x * 2;
@@ -1401,32 +1401,32 @@ function ham(x) {
 var h = ham(5);
 h(1);
 \end{minted}
-\end{multicols*}
-\end{minipage}
-\includegraphics[width=1\linewidth]{screenshot003}
-\includegraphics[width=1\linewidth]{screenshot004}
+    \end{multicols*}
+  \end{minipage}
+  \includegraphics[width=1\linewidth]{screenshot003}
+  \includegraphics[width=1\linewidth]{screenshot004}
 
-\section{Contest Entries for "inspiration"}
-{\tiny jk, these are just paddings}\\
-\includegraphics[width=0.49\linewidth]{screenshot006}\hfill
-\includegraphics[width=0.49\linewidth]{screenshot005}
+  \section{Contest Entries for "inspiration"}
+   {\tiny jk, these are just paddings}\\
+  \includegraphics[width=0.49\linewidth]{screenshot006}\hfill
+  \includegraphics[width=0.49\linewidth]{screenshot005}
 
-\includegraphics[width=0.49\linewidth]{screenshot007}\hfill
-\includegraphics[width=0.49\linewidth]{screenshot008}
+  \includegraphics[width=0.49\linewidth]{screenshot007}\hfill
+  \includegraphics[width=0.49\linewidth]{screenshot008}
 
-\includegraphics[width=1\linewidth]{screenshot009}
+  \includegraphics[width=1\linewidth]{screenshot009}
 
-\section{Dank Meme}
-\includegraphics[width=1\linewidth]{screenshot010}
+  \section{Dank Meme}
+  \includegraphics[width=1\linewidth]{screenshot010}
 
-\section{20th Anniversary, from IC1101S to CS1101S, from 1997 to 2017}
-Woah the module is as old as me!\\
-\includegraphics[width=0.49\linewidth]{screenshot011}\hfill
-\includegraphics[width=0.49\linewidth]{screenshot012}
+  \section{20th Anniversary, from IC1101S to CS1101S, from 1997 to 2017}
+  Woah the module is as old as me!\\
+  \includegraphics[width=0.49\linewidth]{screenshot011}\hfill
+  \includegraphics[width=0.49\linewidth]{screenshot012}
 
 
-%   \begin{minted}{javascript}
-    
-%   \end{minted}
+  %   \begin{minted}{javascript}
+
+  %   \end{minted}
 \end{multicols*}
 \end{document}
