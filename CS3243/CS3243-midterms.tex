@@ -1,0 +1,484 @@
+\documentclass[10pt,landscape,a4paper]{article}
+%\usepackage[utf8]{inputenc}
+%\usepackage[ngerman]{babel}
+\usepackage[normalem]{ulem}
+\usepackage{tikz}
+\usetikzlibrary{shapes,positioning,arrows,fit,calc,graphs,graphs.standard}
+\usepackage[nosf]{kpfonts}
+\usepackage[t1]{sourcesanspro}
+%\usepackage[lf]{MyriadPro}
+%\usepackage[lf,minionint]{MinionPro}
+\usepackage{multicol}
+\usepackage{wrapfig}
+\usepackage[top=0mm,bottom=1mm,left=0mm,right=1mm]{geometry}
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage{microtype}
+%\usepackage{physics}
+\usepackage{tabularx}
+\usepackage{hhline}
+\usepackage{makecell}
+\usepackage{mathtools}
+
+\usepackage{listings}
+
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+
+\newcommand\codeblue[1]{\textcolor{blue}{\code{#1}}}
+
+\usepackage{lastpage}
+\usepackage{datetime}
+\yyyymmdddate
+\renewcommand{\dateseparator}{-}
+\let\bar\overline
+
+\definecolor{myblue}{cmyk}{1,.72,0,.38}
+
+\def\firstcircle{(0,0) circle (1.5cm)}
+\def\secondcircle{(0:2cm) circle (1.5cm)}
+
+\colorlet{circle edge}{myblue}
+\colorlet{circle area}{myblue!5}
+
+\tikzset{filled/.style={fill=circle area, draw=circle edge, thick},
+outline/.style={draw=circle edge, thick}}
+
+\pgfdeclarelayer{background}
+\pgfsetlayers{background,main}
+
+%\everymath\expandafter{\the\everymath \color{myblue}}
+%\everydisplay\expandafter{\the\everydisplay \color{myblue}}
+
+
+\renewcommand{\baselinestretch}{.8}
+\pagestyle{empty}
+
+\global\mdfdefinestyle{header}{%
+  linecolor=gray,linewidth=1pt,%
+  leftmargin=0mm,rightmargin=0mm,skipbelow=0mm,skipabove=0mm,
+}
+
+\newcommand{\header}{
+  \begin{mdframed}[style=header]
+    \footnotesize
+    \sffamily
+    CS3243 Finals Cheatsheet v1.0 (\today)\\
+    by~Julius Putra Tanu Setiaji,~page~\thepage~of~\pageref{LastPage}
+  \end{mdframed}
+}
+
+\let\counterwithout\relax
+\let\counterwithin\relax
+\usepackage{chngcntr}
+
+\usepackage{verbatim}
+
+\usepackage{etoolbox}
+\makeatletter
+\preto{\@verbatim}{\topsep=0pt \partopsep=0pt }
+\makeatother
+
+\counterwithin*{equation}{section}
+\counterwithin*{equation}{subsection}
+\usepackage{enumitem}
+\newlist{legal}{enumerate}{10}
+\setlist[legal]{label*=\arabic*.,leftmargin=2.5mm}
+\setlist[itemize]{leftmargin=3mm}
+\setlist[enumerate]{leftmargin=3.5mm}
+\setlist{nosep}
+\usepackage{minted}
+
+\def\code#1{\texttt{#1}}
+
+\newenvironment{descitemize} % a mixture of description and itemize
+{\begin{description}[leftmargin=*,before=\let\makelabel\descitemlabel]}
+{\end{description}}
+
+\newcommand{\descitemlabel}[1]{%
+  \textbullet\ \textbf{#1}%
+}
+\makeatletter
+
+
+
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+  {.2ex}%
+  {.2ex}%x
+{\color{myblue}\sffamily\small\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{1}{0mm}%
+  {.2ex}%
+  {.2ex}%x
+{\sffamily\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{1}{0mm}%
+  {.2ex}%
+  {.2ex}%x
+{\rmfamily\bfseries}}
+
+
+
+\def\multi@column@out{%
+  \ifnum\outputpenalty <-\@M
+    \speci@ls \else
+  \ifvoid\colbreak@box\else
+    \mult@info\@ne{Re-adding forced
+    break(s) for splitting}%
+    \setbox\@cclv\vbox{%
+      \unvbox\colbreak@box
+    \penalty-\@Mv\unvbox\@cclv}%
+  \fi
+  \splittopskip\topskip
+  \splitmaxdepth\maxdepth
+  \dimen@\@colroom
+  \divide\skip\footins\col@number
+  \ifvoid\footins \else
+    \leave@mult@footins
+  \fi
+  \let\ifshr@kingsaved\ifshr@king
+    \ifvbox \@kludgeins
+      \advance \dimen@ -\ht\@kludgeins
+      \ifdim \wd\@kludgeins>\z@
+        \shr@nkingtrue
+      \fi
+    \fi
+    \process@cols\mult@gfirstbox{%
+      %%%%% START CHANGE
+      \ifnum\count@=\numexpr\mult@rightbox+2\relax
+        \setbox\count@\vsplit\@cclv to \dimexpr \dimen@-1cm\relax
+        \setbox\count@\vbox to \dimen@{\vbox to 1cm{\header}\unvbox\count@\vss}%
+      \else
+        \setbox\count@\vsplit\@cclv to \dimen@
+      \fi
+      %%%%% END CHANGE
+      \set@keptmarks
+      \setbox\count@
+      \vbox to\dimen@
+      {\unvbox\count@
+        \remove@discardable@items
+    \ifshr@nking\vfill\fi}%
+    }%
+    \setbox\mult@rightbox
+    \vsplit\@cclv to\dimen@
+    \set@keptmarks
+    \setbox\mult@rightbox\vbox to\dimen@
+    {\unvbox\mult@rightbox
+      \remove@discardable@items
+  \ifshr@nking\vfill\fi}%
+    \let\ifshr@king\ifshr@kingsaved
+  \ifvoid\@cclv \else
+    \unvbox\@cclv
+    \ifnum\outputpenalty=\@M
+  \else
+    \penalty\outputpenalty
+  \fi
+  \ifvoid\footins\else
+    \PackageWarning{multicol}%
+    {I moved some lines to
+      the next page.\MessageBreak
+      Footnotes on page
+    \thepage\space might be wrong}%
+  \fi
+  \ifnum \c@tracingmulticols>\thr@@
+\hrule\allowbreak \fi
+  \fi
+  \ifx\@empty\kept@firstmark
+    \let\firstmark\kept@topmark
+    \let\botmark\kept@topmark
+  \else
+    \let\firstmark\kept@firstmark
+    \let\botmark\kept@botmark
+  \fi
+  \let\topmark\kept@topmark
+  \mult@info\tw@
+  {Use kept top mark:\MessageBreak
+    \meaning\kept@topmark
+    \MessageBreak
+    Use kept first mark:\MessageBreak
+    \meaning\kept@firstmark
+    \MessageBreak
+    Use kept bot mark:\MessageBreak
+    \meaning\kept@botmark
+    \MessageBreak
+    Produce first mark:\MessageBreak
+    \meaning\firstmark
+    \MessageBreak
+    Produce bot mark:\MessageBreak
+    \meaning\botmark
+  \@gobbletwo}%
+  \setbox\@cclv\vbox{\unvbox\partial@page
+  \page@sofar}%
+  \@makecol\@outputpage
+  \global\let\kept@topmark\botmark
+  \global\let\kept@firstmark\@empty
+  \global\let\kept@botmark\@empty
+  \mult@info\tw@
+  {(Re)Init top mark:\MessageBreak
+    \meaning\kept@topmark
+  \@gobbletwo}%
+  \global\@colroom\@colht
+  \global \@mparbottom \z@
+  \process@deferreds
+\@whilesw\if@fcolmade\fi{\@outputpage
+    \global\@colroom\@colht
+  \process@deferreds}%
+  \mult@info\@ne
+  {Colroom:\MessageBreak
+    \the\@colht\space
+    after float space removed
+  = \the\@colroom \@gobble}%
+  \set@mult@vsize \global
+  \fi}
+  \global\let\tikz@ensure@dollar@catcode=\relax
+
+  \def\mathcolor#1#{\@mathcolor{#1}}
+  \def\@mathcolor#1#2#3{%
+    \protect\leavevmode
+    \begingroup
+    \color#1{#2}#3%
+    \endgroup
+  }
+
+  \makeatother
+  \setlength{\parindent}{0pt}
+
+  \setminted{tabsize=2, breaklines}
+  % Remove belowskip of minted
+  \setlength\partopsep{-\topsep}
+
+
+  \newcolumntype{a}{>{\hsize=1.5\hsize}X}
+  \newcolumntype{b}{>{\hsize=.25\hsize}X}
+
+  \setlength\columnsep{1.5pt}
+  \setlength\columnseprule{0.1pt}
+
+\begin{document}
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
+
+
+\scriptsize
+\begin{multicols*}{4}
+  \raggedcolumns
+  \section{Introduction to AI}
+  \subsection{Rational Agent}
+  \begin{itemize}
+    \item An \textbf{agent} is an entity that perceives its \textbf{environment} through sensors and acts through \textbf{actuators}
+    \item An agent's \textbf{percept sequence} is the complete history of everything the agent has ever perceived.
+    \item What is rational depends on: (1) The performane measure that defines success, (2) The agent's prior knowledge of the env, (3) The actions that the agent can perform, (4) The agent's percept sequence to date.
+    \item For each possible percept sequence, a \textbf{Rational Agent} should select an action that is expected to maximise its performance measure, given the evidence provided by the percept sequence and whatever built-in knowledge the agent has.
+  \end{itemize}
+  \subsection{Task Environment}
+  \begin{itemize}
+    \item \textbf{PEAS}: Performance, Environment, Actuators, Sencsors
+    \item \textbf{Fully observable} vs \textbf{Partially observable}:: an agent's sensors give it access to the complete state of the env at each point in time \textbf{VS} if the sensors detect all aspects that are relevant to the choice of action
+    \item \textbf{Single agent} vs \textbf{Multiagent}: whether there are any other agent in the environment, multiagent further divided into \textbf{competitive} and \textbf{cooperative} where \textbf{communication} and \textbf{randomised behaviour} are the typical rational behaviours respectively
+    \item \textbf{Deterministic} vs \textbf{Stochastic}: if the next state of the env is completely determined by the current state and the action executed by the agent \textbf{VS} otherwise. (partially observable env may appear stochastic)
+    \item \textbf{Episodic} vs \textbf{Sequential}: the choice of current action does not depend on prev actions \textbf{VS} otherwise
+    \item \textbf{Static} vs \textbf{Dynamic}: if the environment is unchanged while an agent is deliberating \textbf{VS} otherwise
+    \item \textbf{Discrete} vs \textbf{Continuous}: in terms of state of env, time, percepts and actions
+  \end{itemize}
+  \subsection{The Structure of Agents}
+  \begin{itemize}
+    \item An \textbf{agent program} (takes in current percept) implements the \textbf{agent function} (percept sequence): mapping from percept sequence to actions.
+    \item \textbf{Table-Driven-Agent}: persists the percept sequence from the current percept, and looks up action from table.
+    \item Drawback: Hube table to build and store (time and space), no autonomy (impossible to learn all correct table entries from experience), no guidance on filling in the correct tabel entries
+  \end{itemize}
+  \subsection{Agent Types, in increasing generality}
+  \begin{itemize}
+    \item \textbf{Simple Reflex Agent}: passive, only selects actions on the basis of the current percept (ignoring percept history). Updates state based on percept only
+    \item The rest updates state based on percept, current state, most recent action and model of the world.
+    \item \textbf{Model-based Reflex Agents}: passive, (to handle partial observability, need to build model of the world)
+    \item \textbf{Goal-based Agent}: achieve goal (binary: achieve goal/not).
+    \item \textbf{Utility-based Agent}: maximises utility function (measure of happiness: more than binary).
+    \item \textbf{Learning Agent}: \textbf{Learning element} responsible for making improvements with feedback from the \textbf{critic}, \textbf{performance element} (what was agent) responsible for selecting external actions, \textbf{problem generator} responsible for suggesting actions (do suboptimal now to explore better actions in the long run).
+  \end{itemize}
+
+  \section{Solving Problems by Searching}
+  \subsection{Problem Formulation}
+  \textbf{Initial State}, \textbf{Actions} (set of actions possible given a particular state), \textbf{Transition Models} (description of each action), \textbf{Goal Test} (determines whether a state is a goal state), \textbf{Path Cost } (assigns a numeric cost to each path)
+  \includegraphics[width=\columnwidth]{tree-search}
+  \includegraphics[width=\columnwidth]{graph-search}
+  A \textbf{node} includes state, parent node, action, and path cost.
+  \subsection{Evaluation criteria}
+  \begin{itemize}
+    \item \textbf{Completeness}: always find solution if one exists
+    \item \textbf{Optimality}: finding a least-cost solution
+    \item \textbf{Time complexity}: no of nodes generated
+    \item \textbf{Space complexity}: max. no of nodes in memory
+  \end{itemize}
+  \subsection{Problem parameters}
+  \begin{itemize}
+    \item $b$: max. no of successors of any node
+    \item $d$: depth of shallowest goal node
+    \item $m$: max. depth of search tree
+  \end{itemize}
+  \textbf{Uninformed Search Strategies}
+
+  \begin{tabular}{l|l|l|l|l|l}
+    \textbf{Property} & \textbf{BFS} & \textbf{UCS}                                             & \textbf{DFS} & \textbf{DLS} & \textbf{IDS} \\ \hline
+    \textbf{Complete} & Yes*         & Yes**                                                    & No***        & No           & Yes*         \\
+    \textbf{Optimal}  & No*          & Yes                                                      & No           & No           & No*          \\
+    \textbf{Time}     & $O(b^dt)$    & $O(b^{1+\left\lfloor\frac{C^*}{\epsilon}\right\rfloor})$ & $O(b^m)$     & $O(b^l)$     & $O(b^d)$     \\
+    \textbf{Space}    & $O(b^d)$     & $O(b^{1+\left\lfloor\frac{C^*}{\epsilon}\right\rfloor})$ & $O(bm)$      & $O(bl)$      & $O(bd)$      \\
+  \end{tabular}
+
+  *: BFS, IDS -- complete if $b$ is finite, optimal if step costs are identical
+
+  **: UCS is complete if $b$ is finite and step cost $\geq\epsilon$
+
+  ***: DFS is complete only on infinite depth graphs
+
+  $C^*$ is the optimal cost
+
+  \subsection{Breadth-First Search (BFS)}
+  Expand shallowest unexpanded node, frontier is FIFO
+  \subsection{Uniform-Cost Search (UCS)}
+  Expand least-path-cost unexpanded node, frontier is PQ by path cost. Equivalent to BFS if all step costs are equal
+  \subsection{Depth-First Search (DFS)}
+  \begin{itemize}
+    \item Expand deepest unexpanded node, frontier is LIFO.
+    \item \textbf{Backtraking Search}, space can be $O(m)$ if successor is expanded one at a time (partially expanded node remembers which successor to generate next)
+  \end{itemize}
+  \subsection{Depth-Limited Search (DLS)}
+  Run DFS with depth limit $l$, to solve the infinite-path problem
+  \subsection{Iterative Deepening Search (IDS)}
+  \begin{itemize}
+    \item  Perform DLS with increasing depth limit.
+    \item Preferred if search space is large and depth of solution is not known
+  \end{itemize}
+  \textbf{Informed (Heuristic Search Strategies)}
+
+  Use an \textbf{evaluation function} $f(n)$ for each node $n$
+  \subsection{Greedy best-first search}
+  \begin{itemize}
+    \item $f(n) = h(n) = $ estimated cost of cheapest path from $n$ to goal
+    \item Expands nodes that appear to be closest to the goal
+    \item \textbf{Complete} if $b$ is finite, \textbf{Non-optimal}, \textbf{Time} $O(b^m)$, \textbf{Space} $O(b^m)$
+  \end{itemize}
+  \subsection{A* Search}
+  \begin{itemize}
+    \item $f(n) = g(n) + h(n)$ where $g(n) = $ path cost from start node to node $n$
+    \item Avoids expanding paths that are already expensive
+    \item \textbf{Admissible Heuristic} never overestimates the cost to reach the goal: $\forall n, h(n) \leq h^*(n)$ where $h^*(n) = $ true cost
+    \item \textbf{Consistent Heuristic}: triangle inequality -- $h(n) \leq c(n, n') + h(n')$
+    \item Every consistent heuristic is also admissible.
+    \item Theorem: If $h(n)$ is admissible, then A* tree-search is optimal
+    \item Theorem: If $h(n)$ is consistent, then A* graph-search is optimal (from lemma consistent heuristic always follow optimal path)
+    \item \textbf{Complete} if there is a finite no of nodes with $f(n) \leq f(G)$, \textbf{Optimal}, \textbf{Time} $O^{h^*(s_0) - h(s_0)}$ where $h^*(s_0)$ is the actual cost of getting from root to goal, \textbf{Space} $O(b^m)$
+    \item \textbf{Dominant heuristic}: if $\forall n, h_2(n) \geq h_1(n)$ then $h_2$ \textbf{dominates} $h_1$
+    \item More dominant heuristics incur lower search cost
+  \end{itemize}
+
+  \section{Beyond Classical Search}
+  \begin{itemize}
+    \item Path to goal is irrelevant, the goal state itself is the solution.
+    \item Advantages: (1) use very little/constant memory, (2) can find reasonable solns in large/infinite continuous state spaces
+    \item Useful for \textbf{pure optimization problems}: objective is to find the best state according to an \textbf{objective function}
+  \end{itemize}
+  \subsection{Hill-climbing Search (aka Greedy Local Search)}
+  \begin{itemize}
+    \item Continually moves in the direction of icnreasing value, terminate when reaching a "peak"
+    \item Possible to get stuck in local maxima, only use if OK with approximate solutions.
+  \end{itemize}
+
+  \section{Adversarial Search}
+  \begin{itemize}
+    \item 2 players, zero-sum game
+    \item \textbf{Game formulation}:
+          \begin{itemize}
+            \item $S_0$: The \textbf{initial state}
+            \item PLAYER(s): which player has the move in a state
+            \item ACTIONS(s): returns the set of legal moves in a state.
+            \item RESULT(s, a): The \textbf{transition model}, defines the result of a move
+            \item TERMINAL-TEST(s): A \textbf{terminal test}, true when game is over
+            \item UTILITY(s, p): A \textbf{utility function)}, defines final numeric value for a game that ends in terminal state $s$ for a player $p$
+          \end{itemize}
+  \end{itemize}
+  \subsection{Optimal Decisions in Games}
+  \begin{itemize}
+    \item \textbf{Winning} strategy for one player if for any strategy played by the other player, the game ended with the former as the winner. Similar for \textbf{non-losing} strategy.
+    \item \textbf{Nash Equilibrium} -- when players know the strategies of all opponents, no one wants to change their strategy.
+    \item \textbf{Subgame Perfect Nash Eq} -- every subgame is a \textbf{Nash Eq}
+  \end{itemize}
+  \subsection{Minimax}
+  \begin{itemize}
+    \item Optimal strategy can be determined from the \textbf{minimax value} of each node: utility (for MAX) of being in the state, assuming both players play optimally from there to the end of the game.
+    \item Minimax returns a subperfect Nash equilibrium
+    \item Minimax is \textbf{Complete} (with finite game tree), \textbf{Optimal}, \textbf{Time} $O(b^m)$, \textbf{Space} $O(bm)$
+  \end{itemize}
+  \subsection{$\alpha-\beta$ Pruning}
+  \begin{itemize}
+    \item MAX node n: $\alpha(n) = $ highest observed value found on path from n, initially $-\infty$
+    \item MIN node n: $\beta = $ lowest observed value found on path from n, initially $+\infty$
+    \item If a MIN node has value $v \leq \alpha(n)$, can prune
+    \item If a MAX node has value $v \geq \beta(n)$, can prune
+  \end{itemize}
+
+  \subsection{Imperfect Real-time Decisions}
+  \begin{itemize}
+    \item Although very large search space in typical games is pruned by $\alpha-\beta$ pruning, minimax still has to search all the way to the terminal states.
+    \item Replace utility function with heuristic \textbf{evaluation function} that estimates the position's utility, and replace the terminal test with a \textbf{cutoff test} that decides when to apply EVAL.
+  \end{itemize}
+  \subsection{Evaluation Functions}
+  \begin{itemize}
+    \item A mapping from game states to real values.
+    \item Should be cheap to compute; for non-terminal states, must be strongly correlated with actual chances of winning
+    \item Modern eval function: weighted sum of position features
+    \item Need not return actual expected values, just maintain relative order of states, typically from statistically probabilities
+  \end{itemize}
+  \subsection{Cutting off Search}
+  Stop after a certain depth, can be combined with iterative deepening
+
+  \section{Constraint Satisfaction Problems}
+  Consists of 3 components:
+  \begin{itemize}
+    \item $X$ is a set of variables, $\{X_1, ..., X_n\}$
+    \item $D$ is a set of domains, $\{D_1, ..., D_n\}$, one for each variable
+    \item $C$ is a set of constraints that specify allowable combinations of values
+  \end{itemize}
+  \subsection{Terminologies}
+  \begin{itemize}
+    \item \textbf{Consistent} assignment = does not vilate any constraints
+    \item \textbf{Complete} assignment = every variable is assigned
+    \item Goal: find a consistent and complete assignment
+    \item \textbf{Binary constraint} relates 2 variables
+    \item \textbf{Global constraint} involve an arbitrary number of variables
+    \item Every finite-domain constraint can be reduced to a set of binary constraints if enough auxiliary variables are introduced.
+    \item \textbf{Constraint graph}: nodes are variables, links are constraints
+  \end{itemize}
+  \subsection{Variants}
+  \begin{itemize}
+    \item Domain can be \textbf{discrete} (both \textbf{finite} and \textbf{infinite}) or \textbf{continuous}
+    \item For discrete, infinite domains, a \textbf{constraint language} must be used without enumeration
+  \end{itemize}
+  \subsection{Constraint propagation: Inference in CSP}
+  Try to infer illegal values for variables by performing constraint propagation
+
+  For unary constraints, node consistency; For binary constraints, arc consistency
+
+  \textbf{Arc Consistency} = a variable $X_i$ in CSP is arc-consistent with another variable $X_j$ if for every value in the current domain $D_i$ there is some value in the domain $D_j$ that satisfies the binary constraint on the arc $(X_i,X_j)$. A network is arc-consistent if every variable is arc-consistent with every other variable.
+  \includegraphics[width=\columnwidth]{ac-3}
+  \textbf{Time} $O(n^2d^3)$ where $n$ is number of vars, $d$ is max domain size
+
+  \textbf{$K$-consistency} = if, for any set of $k-1$ vars and for any consistent assignment to thsoe variables, a consistent value can always be assigned to any $k$-th var (arc-consistency is 2-consistency)
+
+  \subsection{Backtracking Search for CSPs}
+  \includegraphics[width=\columnwidth]{backtrack}
+  \begin{itemize}
+    \item Better an just doing search, because CSPs are \textbf{commutative}
+    \item DFS that chooses values for one variable at a time, and backtracks when a var has no legal values left to assign.
+    \item For SELECT-UNASSIGNED-VARIABLE: use \textbf{Most Constrained Variable} choose the var with fewest legal values (Minimum Remaining Values (MRV) heuristic)
+    \item Once a variable is selected, to decide the order to examine its values, use \textbf{Least Constraining Value} heuristic: prefer value that rules out the fewest choices for the neighbouring variables in the constraint graph
+  \end{itemize}
+  \subsection{Local Search for CSPs}
+  \begin{itemize}
+    \item Similar to hill-climbing, but instead with complete states, allow states that violate constraints, then reassign variable values
+    \item In choosing a new value for a variable, herustic: select the value that results in the minimum number of conflicts with other variables
+  \end{itemize}
+  \includegraphics[width=\columnwidth]{min-conflict}
+  \subsection{The structure of problems}
+  \begin{itemize}
+    \item Theorem: if CSP constraint graph (with binary constraints) is a \textbf{tree}, then we can compute a satisfying assignment (or determine one does not exist) in $O(nd^2)$ time (no need to backtrack)
+    \item Proof: Pick any variable to be the root of tree, and choose an ordering of vars such that each var appears after its parent in the tree (Toposort: $O(n)$, each of which must compare up to $d$ possible domain values for the two variables)
+  \end{itemize}
+\end{multicols*}
+\end{document}
