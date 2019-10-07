@@ -1,0 +1,331 @@
+\documentclass[10pt,landscape,a4paper]{article}
+%\usepackage[utf8]{inputenc}
+%\usepackage[ngerman]{babel}
+\usepackage[normalem]{ulem}
+\usepackage{tikz}
+\usetikzlibrary{shapes,positioning,arrows,fit,calc,graphs,graphs.standard}
+\usepackage[nosf]{kpfonts}
+\usepackage[t1]{sourcesanspro}
+%\usepackage[lf]{MyriadPro}
+%\usepackage[lf,minionint]{MinionPro}
+\usepackage{multicol}
+\usepackage{wrapfig}
+\usepackage[top=0mm,bottom=1mm,left=0mm,right=1mm]{geometry}
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage{microtype}
+%\usepackage{physics}
+\usepackage{tabularx}
+\usepackage{hhline}
+\usepackage{makecell}
+\usepackage{mathtools}
+
+\usepackage{listings}
+
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+
+\newcommand\codeblue[1]{\textcolor{blue}{\code{#1}}}
+
+\usepackage{lastpage}
+\usepackage{datetime}
+\yyyymmdddate
+\renewcommand{\dateseparator}{-}
+\let\bar\overline
+
+\definecolor{myblue}{cmyk}{1,.72,0,.38}
+
+\def\firstcircle{(0,0) circle (1.5cm)}
+\def\secondcircle{(0:2cm) circle (1.5cm)}
+
+\colorlet{circle edge}{myblue}
+\colorlet{circle area}{myblue!5}
+
+\tikzset{filled/.style={fill=circle area, draw=circle edge, thick},
+outline/.style={draw=circle edge, thick}}
+
+\pgfdeclarelayer{background}
+\pgfsetlayers{background,main}
+
+%\everymath\expandafter{\the\everymath \color{myblue}}
+%\everydisplay\expandafter{\the\everydisplay \color{myblue}}
+
+
+\renewcommand{\baselinestretch}{.8}
+\pagestyle{empty}
+
+\global\mdfdefinestyle{header}{%
+  linecolor=gray,linewidth=1pt,%
+  leftmargin=0mm,rightmargin=0mm,skipbelow=0mm,skipabove=0mm,
+}
+
+\newcommand{\header}{
+  \begin{mdframed}[style=header]
+    \footnotesize
+    \sffamily
+    CS4223 Finals Cheatsheet v1.0 (\today)\\
+    by~Julius Putra Tanu Setiaji,~page~\thepage~of~\pageref{LastPage}
+  \end{mdframed}
+}
+
+\let\counterwithout\relax
+\let\counterwithin\relax
+\usepackage{chngcntr}
+
+\usepackage{verbatim}
+
+\usepackage{etoolbox}
+\makeatletter
+\preto{\@verbatim}{\topsep=0pt \partopsep=0pt }
+\makeatother
+
+\counterwithin*{equation}{section}
+\counterwithin*{equation}{subsection}
+\usepackage{enumitem}
+\newlist{legal}{enumerate}{10}
+\setlist[legal]{label*=\arabic*.,leftmargin=2.5mm}
+\setlist[itemize]{leftmargin=3mm}
+\setlist[enumerate]{leftmargin=3.5mm}
+\setlist{nosep}
+\usepackage{minted}
+
+\def\code#1{\texttt{#1}}
+
+\newenvironment{descitemize} % a mixture of description and itemize
+{\begin{description}[leftmargin=*,before=\let\makelabel\descitemlabel]}
+{\end{description}}
+
+\newcommand{\descitemlabel}[1]{%
+  \textbullet\ \textbf{#1}%
+}
+\makeatletter
+
+
+
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+  {.2ex}%
+  {.2ex}%x
+{\color{myblue}\sffamily\small\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{1}{0mm}%
+  {.2ex}%
+  {.2ex}%x
+{\sffamily\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{1}{0mm}%
+  {.2ex}%
+  {.2ex}%x
+{\rmfamily\bfseries}}
+
+
+
+\def\multi@column@out{%
+  \ifnum\outputpenalty <-\@M
+    \speci@ls \else
+  \ifvoid\colbreak@box\else
+    \mult@info\@ne{Re-adding forced
+    break(s) for splitting}%
+    \setbox\@cclv\vbox{%
+      \unvbox\colbreak@box
+    \penalty-\@Mv\unvbox\@cclv}%
+  \fi
+  \splittopskip\topskip
+  \splitmaxdepth\maxdepth
+  \dimen@\@colroom
+  \divide\skip\footins\col@number
+  \ifvoid\footins \else
+    \leave@mult@footins
+  \fi
+  \let\ifshr@kingsaved\ifshr@king
+    \ifvbox \@kludgeins
+      \advance \dimen@ -\ht\@kludgeins
+      \ifdim \wd\@kludgeins>\z@
+        \shr@nkingtrue
+      \fi
+    \fi
+    \process@cols\mult@gfirstbox{%
+      %%%%% START CHANGE
+      \ifnum\count@=\numexpr\mult@rightbox+2\relax
+        \setbox\count@\vsplit\@cclv to \dimexpr \dimen@-1cm\relax
+        \setbox\count@\vbox to \dimen@{\vbox to 1cm{\header}\unvbox\count@\vss}%
+      \else
+        \setbox\count@\vsplit\@cclv to \dimen@
+      \fi
+      %%%%% END CHANGE
+      \set@keptmarks
+      \setbox\count@
+      \vbox to\dimen@
+      {\unvbox\count@
+        \remove@discardable@items
+    \ifshr@nking\vfill\fi}%
+    }%
+    \setbox\mult@rightbox
+    \vsplit\@cclv to\dimen@
+    \set@keptmarks
+    \setbox\mult@rightbox\vbox to\dimen@
+    {\unvbox\mult@rightbox
+      \remove@discardable@items
+  \ifshr@nking\vfill\fi}%
+    \let\ifshr@king\ifshr@kingsaved
+  \ifvoid\@cclv \else
+    \unvbox\@cclv
+    \ifnum\outputpenalty=\@M
+  \else
+    \penalty\outputpenalty
+  \fi
+  \ifvoid\footins\else
+    \PackageWarning{multicol}%
+    {I moved some lines to
+      the next page.\MessageBreak
+      Footnotes on page
+    \thepage\space might be wrong}%
+  \fi
+  \ifnum \c@tracingmulticols>\thr@@
+\hrule\allowbreak \fi
+  \fi
+  \ifx\@empty\kept@firstmark
+    \let\firstmark\kept@topmark
+    \let\botmark\kept@topmark
+  \else
+    \let\firstmark\kept@firstmark
+    \let\botmark\kept@botmark
+  \fi
+  \let\topmark\kept@topmark
+  \mult@info\tw@
+  {Use kept top mark:\MessageBreak
+    \meaning\kept@topmark
+    \MessageBreak
+    Use kept first mark:\MessageBreak
+    \meaning\kept@firstmark
+    \MessageBreak
+    Use kept bot mark:\MessageBreak
+    \meaning\kept@botmark
+    \MessageBreak
+    Produce first mark:\MessageBreak
+    \meaning\firstmark
+    \MessageBreak
+    Produce bot mark:\MessageBreak
+    \meaning\botmark
+  \@gobbletwo}%
+  \setbox\@cclv\vbox{\unvbox\partial@page
+  \page@sofar}%
+  \@makecol\@outputpage
+  \global\let\kept@topmark\botmark
+  \global\let\kept@firstmark\@empty
+  \global\let\kept@botmark\@empty
+  \mult@info\tw@
+  {(Re)Init top mark:\MessageBreak
+    \meaning\kept@topmark
+  \@gobbletwo}%
+  \global\@colroom\@colht
+  \global \@mparbottom \z@
+  \process@deferreds
+\@whilesw\if@fcolmade\fi{\@outputpage
+    \global\@colroom\@colht
+  \process@deferreds}%
+  \mult@info\@ne
+  {Colroom:\MessageBreak
+    \the\@colht\space
+    after float space removed
+  = \the\@colroom \@gobble}%
+  \set@mult@vsize \global
+  \fi}
+  \global\let\tikz@ensure@dollar@catcode=\relax
+
+  \def\mathcolor#1#{\@mathcolor{#1}}
+  \def\@mathcolor#1#2#3{%
+    \protect\leavevmode
+    \begingroup
+    \color#1{#2}#3%
+    \endgroup
+  }
+
+  \makeatother
+  \setlength{\parindent}{0pt}
+
+  \setminted{tabsize=2, breaklines}
+  % Remove belowskip of minted
+  \setlength\partopsep{-\topsep}
+
+
+  \newcolumntype{a}{>{\hsize=1.5\hsize}X}
+  \newcolumntype{b}{>{\hsize=.25\hsize}X}
+
+  \setlength\columnsep{1.5pt}
+  \setlength\columnseprule{0.1pt}
+
+\begin{document}
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
+
+
+\scriptsize
+\begin{multicols*}{4}
+  \raggedcolumns
+  \section{Data Dependencies}
+  \begin{itemize}
+    \item \textbf{True Dep} = RAW
+    \item \textbf{Anti Dep} = WAR
+    \item \textbf{Output Dep} = WAW
+  \end{itemize}
+  \section{Cache}
+  \subsection{Memory Access Time}
+  \textbf{Hit rate}, \textbf{Hit time} = cache access time, \textbf{miss rate} = 1 - hit rate, \textbf{miss penalty} = time to replace block cache + hit time\\
+  \textbf{Average access time} = hit rate $\times$ hit time + miss rate $\times$ miss penalty.
+  \subsection{Write Policy}
+  \begin{itemize}
+    \item \textbf{Write-through}, write data both to the cache \& main memory. Problem: write will operate at speed of main memory. Solution: write buffer b/w cache and main memory.
+    \item \textbf{Write-back} cache, only write to cache, write to main memory only when cache block is replaced (evicted). Problem: wasteful to write back every evicted cache. Solution: Use a "dirty bit" if cache content is changed. Write back only if dirty bit is set.
+  \end{itemize}
+  \subsection{Types of Cache Misses}
+  \textbf{Compulsory misses} on first access to a block, \textbf{Conflict misses} on collision, \textbf{Capacity misses} when blocks are discarded as cache is full
+  \subsection{Handling Cache Misses}
+  Read Miss: load data from memory to cache and then to register.
+  Write miss:
+  \begin{itemize}
+    \item \textbf{Write-allocate}: load complete block to cache, change the required word in cache, write to main memory (write policy).
+    \item \textbf{Write-around}: no loading to cache, write to main memory only
+  \end{itemize}
+  \subsection{Direct Mapped Cache \textmd{ -- (index, valid, tag)}}
+  \textbf{How to id}: tag match with only 1 block.\\
+  \textbf{Cache block size} = $2^N$ bytes, \textbf{no of cache blocks} = $2^M$\\
+  \textbf{Offset} = $N$ bits, \textbf{Index} = $M$ bits, \textbf{Tag} = $32 - (N+M)$ bits
+  \subsection{N-way Set Associative Cache}
+  \textbf{How to id}: tag match for all the blocks within the set.\\
+  A block maps to a unique set (each set having $n$ "cache blocks")\\
+  \textbf{Cache block size} = $2^N$ bytes, \textbf{no of cache blocks} = $\frac{\text{size of cache}}{\text{size of block}}$,\\
+  \textbf{no of sets} = $\frac{\text{no of blocks}}{\text{n in n-way}}$ = $2^M$,	\textbf{Offset} = $N$ bits, \textbf{Set Index} = $M$ bits
+  \subsection{Fully Associative Cache \textmd{ -- capacity miss, \underline{no} conflict miss}}
+  \textbf{How to id}: tag match for all the blocks in the cache.\\
+  A memory block can be placed in any location in the cache.\\
+  \textbf{Cache block size} = $2^N$ bytes, \textbf{no of cache blocks} = $2^M$\\
+  \textbf{Offset} = $N$ bits, \textbf{Tag} = $32 - N$ bits (block number = tag)
+
+  \subsection{Block Replacement Policy}
+  \begin{itemize}
+    \item \textbf{Least Recently Used (LRU)}: Replace the block which has not been accessed for the longest time. For temporal locality. \textbf{Problem:} hard to keep track if there are many choices.
+    \item \textbf{FIFO}, \textbf{Random Replacement}, \textbf{Least Frequently Used}
+  \end{itemize}
+
+  \section{Performance}
+  \subsection{Execution Time}
+  Avg Cycle/Instruction: \textbf{CPI} = $\frac{(\text{CPU time} \times \text{clock rate})}{\text{Instruction count}} = \frac{\text{clock cycles}}{\text{instruction count}}$\\
+  CPU time = ${seconds} = {instructions}\times\frac{cycles}{instruction}\times\frac{seconds}{cycle}$\\
+  $CPI = \sum\limits_{k=1}^{n}(CPI_k\times F_k)$ where $F_k = \frac{I_k \text{(Instruction frequency)}}{\text{Instruction count}}$
+
+  \subsubsection{Amdahl's Law (1967)}
+  Speedup of parallel execution is limited by the fraction of the algo that can't be parallelised
+  \begin{itemize}
+    \item $0 \leq f \leq 1$ = sequential fraction (fixed-workload performance)
+    \item $S_p(n) = \frac{T_{best\_seq}(n)}{f\times T_{best\_seq}(n)+\frac{1-f}{p}T_{best\_seq}(n)}$
+    \item Implication: manufacturers are discouraged from making large parallel computers, more research attn shifted towards developing parallelising compilers that reduces $f$
+    \item \textbf{Rebuttal}: in many computing problems, $f$ is not constant, dependent on problem size $n$. An effective parallel algorithm is $\lim\limits_{n\rightarrow\infty}f(n) = 0$, thus speedup $\lim\limits_{n\rightarrow\infty}S_p(n)=\frac{p}{1+(p-1)f(n)}=p$, thus Amdahl's law can be circumvented for large problem size
+  \end{itemize}
+  \subsubsection{Gustafson's Law (1988)}
+  \begin{itemize}
+    \item Main constraint is exec time, then higher computing power is used to improve accuracy/better result
+    \item If $f$ decreases when $n$ increases, then $S_p(n) \leq p$, $\lim\limits_{n\rightarrow\infty}S_p(n)=p$
+    \item Let $T(N)$ = exec time on $N$ processors, $ser(N)$ = exec time of seq portion, $par(N)$ = exec time of par portion
+    \item $T(N) = ser(N) + par(N) = 1$
+    \item $T(1) = ser(N) + N \times par(N)$
+    \item Speedup $ = \frac{T(1)}{T(N)} = ser(N) + N \times (1 - ser(N)) = N - (N - 1) \times ser(N)$
+  \end{itemize}
+
+\end{multicols*}
+\end{document}
