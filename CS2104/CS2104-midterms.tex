@@ -1,0 +1,540 @@
+\documentclass[10pt,landscape,a4paper]{article}
+%\usepackage[utf8]{inputenc}
+%\usepackage[ngerman]{babel}
+\usepackage[normalem]{ulem}
+\usepackage{tikz}
+\usetikzlibrary{shapes,positioning,arrows,fit,calc,graphs,graphs.standard}
+\usepackage[nosf]{kpfonts}
+\usepackage[t1]{sourcesanspro}
+%\usepackage[lf]{MyriadPro}
+%\usepackage[lf,minionint]{MinionPro}
+\usepackage{multicol}
+\usepackage{wrapfig}
+\usepackage[top=0mm,bottom=1mm,left=0mm,right=1mm]{geometry}
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage{microtype}
+%\usepackage{physics}
+\usepackage{tabularx}
+\usepackage{hhline}
+\usepackage{makecell}
+\usepackage{mathtools}
+
+\usepackage{listings}
+
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+
+\newcommand\codeblue[1]{\textcolor{blue}{\code{#1}}}
+
+\usepackage{lastpage}
+\usepackage{datetime}
+\yyyymmdddate
+\renewcommand{\dateseparator}{-}
+\let\bar\overline
+
+\definecolor{myblue}{cmyk}{1,.72,0,.38}
+
+\def\firstcircle{(0,0) circle (1.5cm)}
+\def\secondcircle{(0:2cm) circle (1.5cm)}
+
+\colorlet{circle edge}{myblue}
+\colorlet{circle area}{myblue!5}
+
+\tikzset{filled/.style={fill=circle area, draw=circle edge, thick},
+outline/.style={draw=circle edge, thick}}
+
+\pgfdeclarelayer{background}
+\pgfsetlayers{background,main}
+
+%\everymath\expandafter{\the\everymath \color{myblue}}
+%\everydisplay\expandafter{\the\everydisplay \color{myblue}}
+
+
+\renewcommand{\baselinestretch}{.8}
+\pagestyle{empty}
+
+\global\mdfdefinestyle{header}{%
+  linecolor=gray,linewidth=1pt,%
+  leftmargin=0mm,rightmargin=0mm,skipbelow=0mm,skipabove=0mm,
+}
+
+\newcommand{\header}{
+  \begin{mdframed}[style=header]
+    \footnotesize
+    \sffamily
+    CS2104 Finals Cheatsheet v1.0 (\today)\\
+    by~Julius Putra Tanu Setiaji,~page~\thepage~of~\pageref{LastPage}
+  \end{mdframed}
+}
+
+\let\counterwithout\relax
+\let\counterwithin\relax
+\usepackage{chngcntr}
+
+\usepackage{verbatim}
+
+\usepackage{etoolbox}
+\makeatletter
+\preto{\@verbatim}{\topsep=0pt \partopsep=0pt }
+\makeatother
+
+\counterwithin*{equation}{section}
+\counterwithin*{equation}{subsection}
+\usepackage{enumitem}
+\newlist{legal}{enumerate}{10}
+\setlist[legal]{label*=\arabic*.,leftmargin=2.5mm}
+\setlist[itemize]{leftmargin=3mm}
+\setlist[enumerate]{leftmargin=3.5mm}
+\setlist{nosep}
+\usepackage{minted}
+
+\def\code#1{\texttt{#1}}
+
+\newenvironment{descitemize} % a mixture of description and itemize
+{\begin{description}[leftmargin=*,before=\let\makelabel\descitemlabel]}
+{\end{description}}
+
+\newcommand{\descitemlabel}[1]{%
+  \textbullet\ \textbf{#1}%
+}
+\makeatletter
+
+
+
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+  {.2ex}%
+  {.2ex}%x
+{\color{myblue}\sffamily\small\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{1}{0mm}%
+  {.2ex}%
+  {.2ex}%x
+{\sffamily\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{1}{0mm}%
+  {.2ex}%
+  {.2ex}%x
+{\rmfamily\bfseries}}
+
+
+
+\def\multi@column@out{%
+  \ifnum\outputpenalty <-\@M
+    \speci@ls \else
+  \ifvoid\colbreak@box\else
+    \mult@info\@ne{Re-adding forced
+    break(s) for splitting}%
+    \setbox\@cclv\vbox{%
+      \unvbox\colbreak@box
+    \penalty-\@Mv\unvbox\@cclv}%
+  \fi
+  \splittopskip\topskip
+  \splitmaxdepth\maxdepth
+  \dimen@\@colroom
+  \divide\skip\footins\col@number
+  \ifvoid\footins \else
+    \leave@mult@footins
+  \fi
+  \let\ifshr@kingsaved\ifshr@king
+    \ifvbox \@kludgeins
+      \advance \dimen@ -\ht\@kludgeins
+      \ifdim \wd\@kludgeins>\z@
+        \shr@nkingtrue
+      \fi
+    \fi
+    \process@cols\mult@gfirstbox{%
+      %%%%% START CHANGE
+      \ifnum\count@=\numexpr\mult@rightbox+2\relax
+        \setbox\count@\vsplit\@cclv to \dimexpr \dimen@-1cm\relax
+        \setbox\count@\vbox to \dimen@{\vbox to 1cm{\header}\unvbox\count@\vss}%
+      \else
+        \setbox\count@\vsplit\@cclv to \dimen@
+      \fi
+      %%%%% END CHANGE
+      \set@keptmarks
+      \setbox\count@
+      \vbox to\dimen@
+      {\unvbox\count@
+        \remove@discardable@items
+    \ifshr@nking\vfill\fi}%
+    }%
+    \setbox\mult@rightbox
+    \vsplit\@cclv to\dimen@
+    \set@keptmarks
+    \setbox\mult@rightbox\vbox to\dimen@
+    {\unvbox\mult@rightbox
+      \remove@discardable@items
+  \ifshr@nking\vfill\fi}%
+    \let\ifshr@king\ifshr@kingsaved
+  \ifvoid\@cclv \else
+    \unvbox\@cclv
+    \ifnum\outputpenalty=\@M
+  \else
+    \penalty\outputpenalty
+  \fi
+  \ifvoid\footins\else
+    \PackageWarning{multicol}%
+    {I moved some lines to
+      the next page.\MessageBreak
+      Footnotes on page
+    \thepage\space might be wrong}%
+  \fi
+  \ifnum \c@tracingmulticols>\thr@@
+\hrule\allowbreak \fi
+  \fi
+  \ifx\@empty\kept@firstmark
+    \let\firstmark\kept@topmark
+    \let\botmark\kept@topmark
+  \else
+    \let\firstmark\kept@firstmark
+    \let\botmark\kept@botmark
+  \fi
+  \let\topmark\kept@topmark
+  \mult@info\tw@
+  {Use kept top mark:\MessageBreak
+    \meaning\kept@topmark
+    \MessageBreak
+    Use kept first mark:\MessageBreak
+    \meaning\kept@firstmark
+    \MessageBreak
+    Use kept bot mark:\MessageBreak
+    \meaning\kept@botmark
+    \MessageBreak
+    Produce first mark:\MessageBreak
+    \meaning\firstmark
+    \MessageBreak
+    Produce bot mark:\MessageBreak
+    \meaning\botmark
+  \@gobbletwo}%
+  \setbox\@cclv\vbox{\unvbox\partial@page
+  \page@sofar}%
+  \@makecol\@outputpage
+  \global\let\kept@topmark\botmark
+  \global\let\kept@firstmark\@empty
+  \global\let\kept@botmark\@empty
+  \mult@info\tw@
+  {(Re)Init top mark:\MessageBreak
+    \meaning\kept@topmark
+  \@gobbletwo}%
+  \global\@colroom\@colht
+  \global \@mparbottom \z@
+  \process@deferreds
+\@whilesw\if@fcolmade\fi{\@outputpage
+    \global\@colroom\@colht
+  \process@deferreds}%
+  \mult@info\@ne
+  {Colroom:\MessageBreak
+    \the\@colht\space
+    after float space removed
+  = \the\@colroom \@gobble}%
+  \set@mult@vsize \global
+  \fi}
+  \global\let\tikz@ensure@dollar@catcode=\relax
+
+  \def\mathcolor#1#{\@mathcolor{#1}}
+  \def\@mathcolor#1#2#3{%
+    \protect\leavevmode
+    \begingroup
+    \color#1{#2}#3%
+    \endgroup
+  }
+
+  \makeatother
+  \setlength{\parindent}{0pt}
+
+  \setminted{tabsize=2, breaklines}
+  % Remove belowskip of minted
+  \setlength\partopsep{-\topsep}
+
+
+  \newcolumntype{a}{>{\hsize=1.5\hsize}X}
+  \newcolumntype{b}{>{\hsize=.25\hsize}X}
+
+  \setlength\columnsep{1.5pt}
+  \setlength\columnseprule{0.1pt}
+
+\begin{document}
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
+
+
+\scriptsize
+\begin{multicols*}{4}
+  \raggedcolumns
+  \section{Basic Concepts}
+  \subsection{Local Binder in Haskell}
+  \begin{minted}{haskell}
+let v = e1 in e2
+  \end{minted}
+  Scope of \mintinline{haskell}{v} is in both \mintinline{haskell}{e1} and \mintinline{haskell}{e2}
+  \section{Data \& Constructs}
+  \subsection{Ordinal Types in Haskell}
+  \begin{minted}{haskell}
+data DaysObj = Mon | Tue | Wed | Thu | Fri | Sat | Sun deriving (Show, Enum, Eq)
+data Data = I Int | F Float | S String deriving Show
+  \end{minted}
+  Enumeration is a special case of ADT
+  \begin{minted}{haskell}
+weekend x = case x of
+  Sat -> True
+  Sun -> True
+  _   -> False
+  \end{minted}
+  Pattern matching
+  \subsection{Type Synonym}
+  \begin{minted}{haskell}
+type Student = (String, String, Int)
+type Pair a b = (a, b)
+type String = [Char]
+  \end{minted}
+  Type synonyms cannot be recursive.
+  \subsection{Record}
+  \begin{minted}{haskell}
+data Student = Student { name :: String; matrix :: String; year :: Int }
+  \end{minted}
+  Automatically derive name, matrix, year as access methods
+  \begin{minted}{haskell}
+name :: Student -> String
+matrix :: Student -> String
+year :: Student -> Int
+  \end{minted}
+  Record pattern matching
+  \begin{minted}{haskell}
+f :: Student -> Int
+f Student { year = y } = y
+  \end{minted}
+  \subsection{Product vs Sum Types}
+  \begin{itemize}
+    \item Product types include tuples and records (similar to conjunction), e.g. tuple
+    \item Sum types include ordinals and General ADT (similar to disjunction), e.g. \texttt{Either}
+  \end{itemize}
+  \subsection{Fibonacci}
+  \begin{minted}{haskell}
+fib2 n =
+  let
+    aux n = if n <= 0 then (1, 0) else let (a, b) = aux (n - 1) in (a + b, a)
+  in fst (aux n)
+
+fib = 1 : 1 : [a+b | (a,b) <- zip fib (tail fib)]
+  \end{minted}
+
+  \section{Higher Order Function}
+  \subsection{Strict Evaluation}
+  \begin{minted}{haskell}
+data RealFloat a => Complex a = !a :+ !a
+  \end{minted}
+  In Haskell, if need be, can mark with \texttt{!}
+  \subsection{Composition}
+  \begin{minted}{haskell}
+(.) :: (b -> c) -> (a -> b) -> a -> c
+  \end{minted}
+
+  \section{Other Haskell Features}
+  \subsection{List Comprehension}
+  \begin{minted}{haskell}
+[f x | x <- xs] = map (\x -> f x) xs
+[f x | x <- xs, x>5] = map (\x -> f x) (filter (\x -> x > 5) xs)
+[(x,y) | x <- xs, y <- ys] = concatMap (\x -> map (\y -> (x, y)) ys) xs
+  \end{minted}
+
+  \section{Monad}
+  \begin{minted}{haskell}
+foo1 = getLine >>= readFile >>= putStrLn
+
+foo2 = do
+  filename <- getLine
+  contents <- readFile filename
+  putStrLn contents
+  \end{minted}
+  \texttt{foo1} and \texttt{foo2} are equivalent
+  \subsection{Laws of Monad}
+  \begin{minted}{haskell}
+(return a) >>= k = k a
+m >>= return = m
+(m >>= (\a -> (k a) >>= (\b -> h b)) = (m >>= (\a -> k a) >>= (\b -> h b)
+  \end{minted}
+
+  \section{References}
+  Note: \texttt{Integer} is arbitrary precision, \texttt{Int} is at least 30 bits.
+  \subsection{Enum}
+  \begin{minted}{haskell}
+succ :: Enum a => a -> a
+pred :: Enum a => a -> a
+toEnum :: Enum a => Int -> a
+fromEnum :: Enum a => a -> Int
+enumFrom :: Enum a => a -> [a]
+enumFromThen :: Enum a => a -> a -> [a]
+enumFromTo :: Enum a => a -> a -> [a]
+enumFromThenTo :: Enum a => a -> a -> a -> [a]
+  \end{minted}
+  \subsection{Show}
+  \begin{minted}{haskell}
+showsPrec :: Show a => Int -> a -> ShowS
+show :: Show a => a -> String
+showList :: Show a => [a] -> ShowS
+  \end{minted}
+  \subsection{Eq}
+  \begin{minted}{haskell}
+(==) :: Eq a => a -> a -> Bool
+(/=) :: Eq a => a -> a -> Bool
+  \end{minted}
+  \subsection{Ord}
+  \begin{minted}{haskell}
+data Ordering = LT | EQ | GT
+compare :: Ord a => a -> a -> Ordering
+(<) :: Ord a => a -> a -> Bool
+(<=) :: Ord a => a -> a -> Bool
+(>) :: Ord a => a -> a -> Bool
+(>=) :: Ord a => a -> a -> Bool
+max :: Ord a => a -> a -> a
+min :: Ord a => a -> a -> a
+  \end{minted}
+  \subsection{Num}
+  \begin{minted}{haskell}
+(+) :: Num a => a -> a -> a
+(-) :: Num a => a -> a -> a
+(*) :: Num a => a -> a -> a
+negate :: Num a => a -> a
+abs :: Num a => a -> a
+signum :: Num a => a -> a
+fromInteger :: Num a => Integer -> a
+  \end{minted}
+  \subsection{Integral}
+  \begin{minted}{haskell}
+class (Real a, Enum a) => Integral a where
+  quot :: a -> a -> a
+  rem :: a -> a -> a
+  div :: a -> a -> a
+  mod :: a -> a -> a
+  quotRem :: a -> a -> (a, a)
+  divMod :: a -> a -> (a, a)
+  toInteger :: a -> Integer
+  \end{minted}
+  \subsection{Fractional}
+  \begin{minted}{haskell}
+class Num a => Fractional a where
+  (/) :: a -> a -> a
+  recip :: a -> a
+  fromRational :: Rational -> a
+  \end{minted}
+  \subsection{Floating}
+  \begin{minted}{haskell}
+class Fractional a => Floating a where
+  pi :: a
+  exp :: a -> a
+  log :: a -> a
+  sqrt :: a -> a
+  (**) :: a -> a -> a
+  logBase :: a -> a -> a
+  sin :: a -> a
+  cos :: a -> a
+  tan :: a -> a
+  asin :: a -> a
+  acos :: a -> a
+  atan :: a -> a
+  sinh :: a -> a
+  cosh :: a -> a
+  tanh :: a -> a
+  asinh :: a -> a
+  acosh :: a -> a
+  atanh :: a -> a
+  GHC.Float.log1p :: a -> a
+  GHC.Float.expm1 :: a -> a
+  GHC.Float.log1pexp :: a -> a
+  GHC.Float.log1mexp :: a -> a
+  \end{minted}
+  \subsection{Foldable}
+  \begin{minted}{Haskell}
+all :: Foldable t => (a -> Bool) -> t a -> Bool
+any :: Foldable t => (a -> Bool) -> t a -> Bool
+foldr :: Foldable t => (a -> b -> b) -> b -> t a -> b
+foldl :: Foldable t => (b -> a -> b) -> b -> t a -> b
+length :: Foldable t => t a -> Int
+sum :: (Foldable t, Num a) => t a -> a
+product :: (Foldable t, Num a) => t a -> a
+null :: Foldable t => t a -> Bool
+concatMap :: Foldable t => (a -> [b]) -> t a -> [b]
+  \end{minted}
+  Note:
+
+  \texttt{foldr (-) 0 [1,2,3,4] = (1 - (2 - (3 - (4 - 0)))) = -2}
+
+  \texttt{foldl (-) 0 [1,2,3,4] = ((((0 - 1) - 2) - 3) - 4) = -10}
+
+  \texttt{foldl} is tail-recursive
+  \subsection{Functor}
+  \begin{minted}{haskell}
+fmap :: Functor f => (a -> b) -> f a -> f b
+(<$) :: Functor f => a -> f b -> f a
+(<$>) :: Functor f => (a -> b) -> f a -> f b
+  \end{minted}
+  \subsection{Applicative}
+  \begin{minted}{haskell}
+pure :: Applicative f => a -> f a
+(<*>) :: Applicative f => f (a -> b) -> f a -> f b
+(*>) :: Applicative f => f a -> f b -> f b
+(<*) :: Applicative f => f a -> f b -> f a
+GHC.Base.liftA2 :: Applicative f => (a -> b -> c) -> f a -> f b -> f c
+  \end{minted}
+  \subsection{Monad}
+  \begin{minted}{haskell}
+(>>=) :: Monad m => m a -> (a -> m b) -> m b
+(>>) :: Monad m => m a -> m b -> m b
+return :: Monad m => a -> m a
+fail :: Monad m => String -> m a
+  \end{minted}
+  \subsection{IO}
+  \begin{minted}{haskell}
+getChar :: IO Char
+putChar :: Char -> IO ()
+getLine :: IO String
+putStrLn :: String -> IO ()
+putStr :: String -> IO ()
+  \end{minted}
+  \subsection{GHC.List}
+  \begin{minted}{haskell}
+head :: [a] -> a
+tail :: [a] -> [a]
+last :: [a] -> a
+reverse :: [a] -> [a]
+filter :: (a -> Bool) -> [a] -> [a]
+map :: (a -> b) -> [a] -> [b]
+takeWhile :: (a -> Bool) -> [a] -> [a]
+dropWhile :: (a -> Bool) -> [a] -> [a]
+take :: Int -> [a] -> [a]
+drop :: Int -> [a] -> [a]
+zip :: [a] -> [b] -> [(a, b)]
+(:) :: a -> [a] -> [a]
+(++) :: [a] -> [a] -> [a]
+  \end{minted}
+  \subsection{Array}
+  \begin{minted}{haskell}
+class Ord a => Ix a
+
+range :: Ix a => (a, a) -> [a]
+index :: Ix a => (a, a) -> a -> Int
+GHC.Arr.unsafeIndex :: Ix a => (a, a) -> a -> Int
+inRange :: Ix a => (a, a) -> a -> Bool
+rangeSize :: Ix a => (a, a) -> Int
+GHC.Arr.unsafeRangeSize :: Ix a => (a, a) -> Int
+
+array :: Ix i => (i, i) -> [(i, e)] -> Array i e
+  \end{minted}
+  \subsection{Semigroup}
+  \begin{minted}{haskell}
+class Semigroup a where
+  (<>) :: a -> a -> a
+  GHC.Base.sconcat :: GHC.Base.NonEmpty a -> a
+  GHC.Base.stimes :: Integral b => b -> a -> a
+  \end{minted}
+  \subsection{Monoid}
+  \begin{minted}{haskell}
+class Semigroup a => Monoid a where
+  mempty :: a
+  mappend :: a -> a -> a
+  mconcat :: [a] -> a
+  \end{minted}
+\end{multicols*}
+\subsection{Misc}
+\begin{minted}{haskell}
+error :: [Char] -> a
+data Maybe a = Nothing | Just a
+  \end{minted}
+\end{document}
