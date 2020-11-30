@@ -1,0 +1,482 @@
+\documentclass[10pt,landscape,a4paper]{article}
+%\usepackage[utf8]{inputenc}
+%\usepackage[ngerman]{babel}
+\usepackage[normalem]{ulem}
+\usepackage{tikz}
+\usetikzlibrary{shapes,positioning,arrows,fit,calc,graphs,graphs.standard}
+\usepackage[nosf]{kpfonts}
+\usepackage[t1]{sourcesanspro}
+%\usepackage[lf]{MyriadPro}
+%\usepackage[lf,minionint]{MinionPro}
+\usepackage{multicol}
+\usepackage{wrapfig}
+\usepackage[top=0mm,bottom=1mm,left=0mm,right=1mm]{geometry}
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage{microtype}
+%\usepackage{physics}
+\usepackage{tabularx}
+\usepackage{hhline}
+\usepackage{makecell}
+\usepackage{mathtools}
+
+\usepackage{listings}
+
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+
+\newcommand\codeblue[1]{\textcolor{blue}{\code{#1}}}
+
+\usepackage{lastpage}
+\usepackage{datetime}
+\yyyymmdddate
+\renewcommand{\dateseparator}{-}
+\let\bar\overline
+
+\definecolor{myblue}{cmyk}{1,.72,0,.38}
+
+\def\firstcircle{(0,0) circle (1.5cm)}
+\def\secondcircle{(0:2cm) circle (1.5cm)}
+
+\colorlet{circle edge}{myblue}
+\colorlet{circle area}{myblue!5}
+
+\tikzset{filled/.style={fill=circle area, draw=circle edge, thick},
+  outline/.style={draw=circle edge, thick}}
+
+\pgfdeclarelayer{background}
+\pgfsetlayers{background,main}
+
+%\everymath\expandafter{\the\everymath \color{myblue}}
+%\everydisplay\expandafter{\the\everydisplay \color{myblue}}
+
+
+\renewcommand{\baselinestretch}{.8}
+\pagestyle{empty}
+
+\global\mdfdefinestyle{header}{%
+  linecolor=gray,linewidth=1pt,%
+  leftmargin=0mm,rightmargin=0mm,skipbelow=0mm,skipabove=0mm,
+}
+
+\newcommand{\header}{
+  \begin{mdframed}[style=header]
+    \footnotesize
+    \sffamily
+    CS2105 Finals Cheatsheet v1.0 (\today)\\
+    by~Julius Putra Tanu Setiaji,~page~\thepage~of~\pageref{LastPage}
+  \end{mdframed}
+}
+
+\let\counterwithout\relax
+\let\counterwithin\relax
+\usepackage{chngcntr}
+
+\usepackage{verbatim}
+
+\usepackage{etoolbox}
+\makeatletter
+\preto{\@verbatim}{\topsep=0pt \partopsep=0pt }
+\makeatother
+
+\counterwithin*{equation}{section}
+\counterwithin*{equation}{subsection}
+\usepackage{enumitem}
+\newlist{legal}{enumerate}{10}
+\setlist[legal]{label*=\arabic*.,leftmargin=2.5mm}
+\setlist[itemize]{leftmargin=3mm}
+\setlist[enumerate]{leftmargin=3.5mm}
+\setlist{nosep}
+\usepackage{minted}
+
+\def\code#1{\texttt{#1}}
+
+\newenvironment{descitemize} % a mixture of description and itemize
+{\begin{description}[leftmargin=*,before=\let\makelabel\descitemlabel]}
+    {\end{description}}
+
+\newcommand{\descitemlabel}[1]{%
+  \textbullet\ \textbf{#1}%
+}
+\makeatletter
+
+
+
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+  {.2ex}%
+  {.2ex}%x
+  {\color{myblue}\sffamily\small\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{1}{0mm}%
+  {.2ex}%
+  {.2ex}%x
+  {\sffamily\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{1}{0mm}%
+  {.2ex}%
+  {.2ex}%x
+  {\rmfamily\bfseries}}
+
+
+
+\def\multi@column@out{%
+  \ifnum\outputpenalty <-\@M
+  \speci@ls \else
+  \ifvoid\colbreak@box\else
+    \mult@info\@ne{Re-adding forced
+      break(s) for splitting}%
+    \setbox\@cclv\vbox{%
+      \unvbox\colbreak@box
+      \penalty-\@Mv\unvbox\@cclv}%
+  \fi
+  \splittopskip\topskip
+  \splitmaxdepth\maxdepth
+  \dimen@\@colroom
+  \divide\skip\footins\col@number
+  \ifvoid\footins \else
+    \leave@mult@footins
+  \fi
+  \let\ifshr@kingsaved\ifshr@king
+  \ifvbox \@kludgeins
+    \advance \dimen@ -\ht\@kludgeins
+    \ifdim \wd\@kludgeins>\z@
+      \shr@nkingtrue
+    \fi
+  \fi
+  \process@cols\mult@gfirstbox{%
+    %%%%% START CHANGE
+    \ifnum\count@=\numexpr\mult@rightbox+2\relax
+      \setbox\count@\vsplit\@cclv to \dimexpr \dimen@-1cm\relax
+      \setbox\count@\vbox to \dimen@{\vbox to 1cm{\header}\unvbox\count@\vss}%
+    \else
+      \setbox\count@\vsplit\@cclv to \dimen@
+    \fi
+    %%%%% END CHANGE
+    \set@keptmarks
+    \setbox\count@
+    \vbox to\dimen@
+    {\unvbox\count@
+      \remove@discardable@items
+      \ifshr@nking\vfill\fi}%
+  }%
+  \setbox\mult@rightbox
+  \vsplit\@cclv to\dimen@
+  \set@keptmarks
+  \setbox\mult@rightbox\vbox to\dimen@
+  {\unvbox\mult@rightbox
+    \remove@discardable@items
+    \ifshr@nking\vfill\fi}%
+  \let\ifshr@king\ifshr@kingsaved
+  \ifvoid\@cclv \else
+    \unvbox\@cclv
+    \ifnum\outputpenalty=\@M
+    \else
+      \penalty\outputpenalty
+    \fi
+    \ifvoid\footins\else
+      \PackageWarning{multicol}%
+      {I moved some lines to
+        the next page.\MessageBreak
+        Footnotes on page
+        \thepage\space might be wrong}%
+    \fi
+    \ifnum \c@tracingmulticols>\thr@@
+      \hrule\allowbreak \fi
+  \fi
+  \ifx\@empty\kept@firstmark
+    \let\firstmark\kept@topmark
+    \let\botmark\kept@topmark
+  \else
+    \let\firstmark\kept@firstmark
+    \let\botmark\kept@botmark
+  \fi
+  \let\topmark\kept@topmark
+  \mult@info\tw@
+  {Use kept top mark:\MessageBreak
+    \meaning\kept@topmark
+    \MessageBreak
+    Use kept first mark:\MessageBreak
+    \meaning\kept@firstmark
+    \MessageBreak
+    Use kept bot mark:\MessageBreak
+    \meaning\kept@botmark
+    \MessageBreak
+    Produce first mark:\MessageBreak
+    \meaning\firstmark
+    \MessageBreak
+    Produce bot mark:\MessageBreak
+    \meaning\botmark
+    \@gobbletwo}%
+  \setbox\@cclv\vbox{\unvbox\partial@page
+    \page@sofar}%
+  \@makecol\@outputpage
+  \global\let\kept@topmark\botmark
+  \global\let\kept@firstmark\@empty
+  \global\let\kept@botmark\@empty
+  \mult@info\tw@
+  {(Re)Init top mark:\MessageBreak
+    \meaning\kept@topmark
+    \@gobbletwo}%
+  \global\@colroom\@colht
+  \global \@mparbottom \z@
+  \process@deferreds
+  \@whilesw\if@fcolmade\fi{\@outputpage
+      \global\@colroom\@colht
+      \process@deferreds}%
+    \mult@info\@ne
+    {Colroom:\MessageBreak
+      \the\@colht\space
+      after float space removed
+      = \the\@colroom \@gobble}%
+    \set@mult@vsize \global
+  \fi}
+\global\let\tikz@ensure@dollar@catcode=\relax
+
+\def\mathcolor#1#{\@mathcolor{#1}}
+\def\@mathcolor#1#2#3{%
+  \protect\leavevmode
+  \begingroup
+  \color#1{#2}#3%
+  \endgroup
+}
+
+\makeatother
+\setlength{\parindent}{0pt}
+
+\setminted{tabsize=2, breaklines}
+% Remove belowskip of minted
+\setlength\partopsep{-\topsep}
+
+\setlength\columnsep{1.5pt}
+\setlength\columnseprule{0.1pt}
+
+\begin{document}
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
+
+
+\scriptsize
+\begin{multicols*}{4}
+  \raggedcolumns
+  \section{Computer Networks and the Internet}
+  \subsection{What is the Internet}
+  \subsection{Network Edge}
+  \subsection{Network Core}
+  \subsubsection{Circuit switching}
+  Dedicated circuit per call
+  \begin{itemize}
+    \item call setup required
+    \item circuit-like (guaranteed) performance
+    \item circuit segment idle if not used (no sharing)
+  \end{itemize}
+  \subsubsection{Packet Switching}
+  Data sent through the net in discrete chunks
+  \begin{itemize}
+    \item \textbf{Store-and-forward}: entire packet must arrive at a router before it can be transmitted to the next link.
+    \item \textbf{Addressing}: each packet needs to carry source and destination information
+    \item Users share network resources
+    \item Resources are used on demand
+    \item Excessive congestion is possible
+  \end{itemize}
+
+  \subsection{Delay, Loss and Throughput in Networks}
+  End-to-end packet delay consisting of 4 sources
+  \subsubsection{4 Sources of Packet Delay}
+  \begin{itemize}
+    \item Nodal Processing ($d_{proc}$): check bit errors, determine output link, typically $<$ msec
+    \item Queueing ($d_{queue}$): waiting in queue for transmission, depends on congestion level of router
+    \item Transmission ($d_{trans} = \frac{L}{R}$): L = packet length (bits), R = link bandwidth (bps)
+    \item Propagation ($d_{prop} = \frac{d}{s}$): d = length of physical link, s = propagation speed in medium ($2\times 10^8m/sec$)
+  \end{itemize}
+  \subsubsection{Throughput}
+  \begin{itemize}
+    \item How many bits can be transmitted per unit time
+    \item Measured for end-to-end communication. Compare with link capacity (bandwidth) only for specific link
+  \end{itemize}
+  \subsubsection{Units}
+  \begin{itemize}
+    \item 1 byte = 8 bits
+    \item (-) Prefixes: milli, micro, nano, pico, femto, atto, zepto, yocto
+    \item (+) Prefixes: kilo, mega, giga, tera, peta, exa, zetta, yotta
+  \end{itemize}
+
+  \subsection{Protocol Layers and Service Models}
+  \subsubsection{5 Layers}
+  \begin{itemize}
+    \item \textbf{Application}: supporting network applications, e.g. FTP, SMTP, HTTP
+    \item \textbf{Transport}: process-to-process data transfer, e.g. TCP, UDP
+    \item \textbf{Network}: routing of datagrams from source to destination, e.g. IP, routing protocols
+    \item \textbf{Link}: Data transfer between neighbouring network elements, e.g. Ethernet, 802.11, PPP
+    \item \textbf{Physical}: ``on the wire''
+  \end{itemize}
+
+  \subsubsection{ISO/OSI Reference Model}
+  Theoretical only, 2 additional layers between \textbf{Application} and \textbf{Transport}: \textbf{Presentation} (allow applications to interpret meaning of data, e.g. encryption, compression, machine-specific convention) and \textbf{Session} (synchronisation, checkpointing, recovery of data exchange)
+
+  \section{Application Layer}
+  \subsection{Principles of Network Applications}
+  \subsubsection{Client-Server}
+  \begin{itemize}
+    \item \textbf{Server}: waits for incoming requests, provides requested service to client, data centers for scaling
+    \item \textbf{Client}: initiates contact with server, typically requests service from server, For web, client is usually implemented in browser
+  \end{itemize}
+  \subsubsection{Peer-to-Peer (P2P)}
+  \begin{itemize}
+    \item No always-on server
+    \item Arbitrary end systems directly communicate.
+    \item Peers request service from other peers, provide service in return to other peers
+    \item \textbf{Self-scalability}: new peers bring new service capacity, as well as new service demands
+    \item Peers are intermittently connected and change IP addresses (complex management)
+  \end{itemize}
+  \subsubsection{Requirements of apps}
+  \begin{itemize}
+    \item \textbf{Data integrity}: 100\% reliable vs some data loss
+    \item \textbf{Timing}: some apps require low delay to be ``effective''
+    \item \textbf{Throughput}
+    \item \textbf{Security}
+  \end{itemize}
+  \subsubsection{Definition of App-layer Protocols}
+  \begin{itemize}
+    \item \textbf{Types of Messages exchanged,} e.g. request, response
+    \item \textbf{Message syntax}, e.g. message fields and how they are delineated
+    \item \textbf{Message semantics}: meaning of information in fields
+    \item \textbf{Rules} for when and how application send and respond to messages
+  \end{itemize}
+  \subsubsection{Transport-Layer Protocols}
+  \begin{tabularx}{\columnwidth}{|X|X|}
+    \hline
+    \textbf{TCP}                                                              & \textbf{UDP}                                                      \\
+    \hline
+    \textbf{Reliable} data transfer                                           & \textbf{Unreliable} data transfer                                 \\
+    \hline
+    \textbf{Flow control}: sender won't overwhelm receiver                    & \textbf{No flow control}                                          \\
+    \hline
+    \textbf{Congestion control}: throttle sender when network is overloaded   & \textbf{No congestion control}                                    \\
+    \hline
+    \textbf{Does not provide}: timing, minimum throughput guarantee, security & \textbf{Does not provide}: timing, throughput guarantee, security \\
+    \hline
+  \end{tabularx}
+
+  \subsection{Web and HTTP}
+  \subsubsection{HTTP}
+  \begin{itemize}
+    \item HyperText Transfer Protocol
+    \item Client/server model
+    \item RFC 1945 (HTTP 1.0), RFC 2616 (HTTP 1.1)
+    \item Over TCP
+  \end{itemize}
+  \subsubsection{Persistent HTTP}
+  \begin{itemize}
+    \item Multiple objects can be sent over single TCP connection
+    \item \textbf{Persistent with pipelining}: client may send requests as soon as it encounters a referenced object -- as little as 1RTT for all referenced objects.
+  \end{itemize}
+  \subsubsection{Non-Persistent HTTP}
+  \begin{itemize}
+    \item At most 1 object sent over a TCP connection
+    \item Requires 2 RTTs per object
+    \item Response time $= 2\times RTT + $ file transmission time
+  \end{itemize}
+  Refer to slides for the rest of HTTP
+
+  \subsection{DNS}
+  \begin{itemize}
+    \item \textbf{Distributed, Hierarchical Database}
+    \item \textbf{Root Server}: answers requests for records in the root zone by returning a list of the authoritative name servers for the appropriate TLD
+    \item \textbf{DNS Caching}: based on TTL
+    \item Runs over \textbf{UDP}
+  \end{itemize}
+  \subsubsection{Resource Records (RR)}
+  Stores mapping between hostnames and IP addresses, 4-tuple \texttt{(name, value, type, ttl)}
+  \begin{itemize}
+    \item type = A, \texttt{name} is hostname, \texttt{value} is IP address
+    \item type = NS, \texttt{name} is domain, \texttt{value} is hostname of authoritative name server for the domain
+    \item type = CNAME, \texttt{name} is alias for some canonical name, \texttt{value} is the canonical name
+    \item type = MX, \texttt{value} is the name of mail server assoc with \texttt{name}
+  \end{itemize}
+  \subsubsection{DNS Name Resolution}
+  \begin{itemize}
+    \item \textbf{Iterative query}: Local DNS server makes DNS requests one by one in the hierarchy
+    \item \textbf{Recursive query} (rarely used): each server in the hierarchy asks one server higher in the hierarchy
+  \end{itemize}
+
+  \subsection{Socket Programming}
+  \begin{itemize}
+    \item \textbf{IP address} is used to identify a host device
+    \item \textbf{Process}: program running within a host, identified by \texttt{(IP address :: uint32, port number :: uint16)}
+    \item \textbf{Socket}: the software interface between app processes and transport layer protocols
+  \end{itemize}
+  \subsubsection{UDP}
+  \begin{itemize}
+    \item No ``connection'' between client and server.
+    \item Sender explicitly attaches destination IP address and port number to each packet
+    \item Receiver extracts sender IP address and port number from the received packet
+  \end{itemize}
+  \subsubsection{TCP}
+  \begin{itemize}
+    \item When client creates socket, client TCP establishes a copnnection to server TCP.
+    \item When contacted by client, server TCP creates a new socket for server process to communicate with that client
+    \item Allows server to talk with multiple clients individually.
+    \item Communicates as if there is a pipe between 2 processes, sending process doesn't need to attach a destination IP address and port number in each sending attempt.
+  \end{itemize}
+
+  \section{Transport Layer}
+  \subsection{Transport-layer Services}
+  \begin{itemize}
+    \item Sender: Breaks app messages into \textbf{segments}, passes them to network layer
+    \item Receiver: Reassembles segments into message, passes it to app layer
+    \item Packet switches in between: only check destination IP address to decide routing
+    \item Each IP datagram contains source and dest IP addresses
+  \end{itemize}
+  \subsection{Connectionless Transport: UDP}
+  \begin{itemize}
+    \item UDP addes very little on top of IP
+          \begin{itemize}
+            \item Multiplexing at sender
+            \item Demultiplexing at receiver
+            \item Checksum
+          \end{itemize}
+    \item UDP transmission is unreliable, often used by (loss tolerant \& rate sensitive apps)
+  \end{itemize}
+  \subsubsection{Connectionless De-multiplexing}
+  When UDP receiver receives a UDP segment:
+  \begin{itemize}
+    \item Check destination port number in segment, and direct that segment to the socket with that port number.
+  \end{itemize}
+  \subsubsection{UDP Header}
+  16 bits each for: source port number, dest port number, length, checksum
+  \subsubsection{UDP Checksum}
+  \begin{itemize}
+    \item Treat segment as sequence of 16-bit integers
+    \item Apply binary addition, wraparound carry added to the result
+    \item Compute 1's complement to get the checksum
+  \end{itemize}
+  \subsection{Principles of Reliable Data Transport}
+  Refer to slides for rdt example protocols
+  \subsection{Connection-oriented Transport: TCP}
+  \begin{itemize}
+    \item \textbf{Point-to-point}: 1 sender, 1 receiver
+    \item \textbf{Connection-oriented}: handshake before sending app data
+    \item \textbf{Full duplex service}: bi-directional data flow in the same connection
+    \item \textbf{Reliable, in-order byte stream}: sequence numbers to label bytes
+  \end{itemize}
+  \subsubsection{Connection-oriented de-mux}
+  A TCP connection/socket is identified by 4-tuple \texttt{(srcIPAddr, srcPort, destIPAddr, destPort)}
+  \subsubsection{TCP: buffers and Segments}
+  \begin{itemize}
+    \item two buffers, send and receive, are created after handshaking at both sides
+    \item \textbf{Max Segment Size (MSS)}: typically 1460 bytes, max app-layer data one TCP segment can carry.
+  \end{itemize}
+  \subsubsection{TCP Header}
+  \begin{verbatim}
+|1             16            32|
+| sourcePort#      destPort#   |
+|       sequence number        |
+|    acknowledgement number    |
+|                              |
+|  checksum    |               |
+  \end{verbatim}
+  \begin{itemize}
+    \item \textbf{Sequence Number}: byte number of the first byte of data in a segment
+    \item \textbf{ACK number}: sequence number of the next byte of data expected by the receiver
+    \item \textbf{Cumulative ACK}: TCP ACKs up to the first missing byte in the tream
+  \end{itemize}
+  \subsubsection{TCP ACK Generation, Timeout Value, Fast Retransmission}
+  Refer to Lecture 4,5 Slide 66
+\end{multicols*}
+\end{document}
